@@ -22,7 +22,7 @@ class Redux_Options_google_webfonts {
      * @since Redux_Options 1.0.0
     */
     function render() {
-        echo '<p class="description" style="color:red;">' . __('The fonts provided below are free to use custom fonts from the <a href="http://www.google.com/webfonts" target="_blank">Google Web Fonts directory</a>', Redux_TEXT_DOMAIN) . '</p>';
+        echo '<p class="description" style="color:red;">' . __('The fonts provided below are free to use custom fonts from the <a href="http://www.google.com/webfonts" target="_blank">Google Web Fonts directory</a>', "swiftframework") . '</p>';
 
         echo '<input type="text" id="' . $this->field['id'] . '" name="' . $this->args['opt_name'] . '[' . $this->field['id'] . ']" class="font"  ' . 'value="' . esc_attr($this->value) . '" />';
 

@@ -8,193 +8,6 @@
 	*
 	*/
 	
-	
-	/* SUPER SEARCH
-	================================================== */ 
-	if (!function_exists('sf_super_search')) {
-		function sf_super_search() {
-			
-			$options = get_option('sf_neighborhood_options');
-			$ss_final_text = $options['ss_final_text'];
-			$ss_button_text = $options['ss_button_text'];
-			$field1_text = $options['field1_text'];
-			$field1_filter = $options['field1_filter'];
-			$field1_default_text = $options['field1_default_text'];
-			$field2_text = $options['field2_text'];
-			$field2_filter = $options['field2_filter'];
-			$field2_default_text = $options['field2_default_text'];
-			$field3_text = $options['field3_text'];
-			$field3_filter = $options['field3_filter'];
-			$field3_default_text = $options['field3_default_text'];
-			$field4_text = $options['field4_text'];
-			$field4_filter = $options['field4_filter'];
-			$field4_default_text = $options['field4_default_text'];
-			$field5_text = $options['field5_text'];
-			$field5_filter = $options['field5_filter'];
-			$field5_default_text = $options['field5_default_text'];
-			$field6_text = $options['field6_text'];
-			$field6_filter = $options['field6_filter'];
-			$field6_default_text = $options['field6_default_text'];
-			$shop_url = get_permalink( woocommerce_get_page_id( 'shop' ) );
-							
-			$super_search = $search_text = "";
-			
-			$search_btn_text = $ss_button_text;
-			
-			if ($field1_text != "") {
-			$search_text .= '<span>'.$field1_text.'</span>';
-			$search_text .= sf_super_search_dropdown(1, $field1_filter, $field1_default_text);
-			}
-			if ($field2_text != "") {
-			$search_text .= '<span>'.$field2_text.'</span>';
-			$search_text .= sf_super_search_dropdown(2, $field2_filter, $field2_default_text);
-			}
-			if ($field3_text != "") {
-			$search_text .= '<span>'.$field3_text.'</span>';
-			$search_text .= sf_super_search_dropdown(3, $field3_filter, $field3_default_text);
-			}
-			if ($field4_text != "") {
-			$search_text .= '<span>'.$field4_text.'</span>';
-			$search_text .= sf_super_search_dropdown(4, $field4_filter, $field4_default_text);
-			}
-			if ($field5_text != "") {
-			$search_text .= '<span>'.$field5_text.'</span>';
-			$search_text .= sf_super_search_dropdown(5, $field5_filter, $field5_default_text);
-			}
-			if ($field6_text != "") {
-			$search_text .= '<span>'.$field6_text.'</span>';
-			$search_text .= sf_super_search_dropdown(6, $field6_filter, $field6_default_text);
-			}
-			
-			$search_text .= '<span>'.$ss_final_text.'</span>';
-			
-			$super_search .= '<div id="super-search">';
-			$super_search .= '<div class="container">';
-			$super_search .= '<div class="row">';
-			$super_search .= '<div class="search-options span9">';
-			$super_search .= $search_text;
-			$super_search .= '</div>';
-			$super_search .= '<div class="search-go span3">';
-			$super_search .= '<a href="#" id="super-search-go" class="sf-roll-button" data-home_url="'.get_home_url().'" data-shop_url="'.$shop_url.'"><span>'.$search_btn_text.'</span><span>'.$search_btn_text.'</span></a>';
-			$super_search .= '<a href="#" id="super-search-close" class="sf-roll-button"><span>&times;</span><span>&times;</span></a>';
-			$super_search .= '</div>';
-			$super_search .= '</div><!-- close .row -->';
-			$super_search .= '</div><!-- close .container -->';
-			$super_search .= '</div><!-- close .#super-search -->';
-			
-			return $super_search;
-		}
-	}
-	
-	function sf_super_search_dropdown($index, $option, $text) {
-	
-		global $product;
-		
-		$option_id = $sf_ss_dropdown = $default_term_id = "";
-		
-		$option_id = $option;
-		
-		if ($option != "product_cat" && $option != "price") {
-			$option = 'pa_' . $option;
-		}
-		
-		$default_term = get_term_by('name', $text, $option);
-		
-		if ($default_term) {
-			if ($option == "product_cat") {
-			$default_term_id = $default_term->slug;			
-			} else {
-			$default_term_id = $default_term->term_id;
-			}
-		}
-		
-		$term_args = array(
-		    'parent' => 0,
-		);
-		
-		if ($option == "price") {
-			
-			global $wpdb, $woocommerce;
-			
-			$max = ceil( $wpdb->get_var(
-				$wpdb->prepare('
-					SELECT max(meta_value + 0)
-					FROM %1$s
-					LEFT JOIN %2$s ON %1$s.ID = %2$s.post_id
-					WHERE meta_key = \'%3$s\'
-					', $wpdb->posts, $wpdb->postmeta, '_price' )
-			) );
-				
-			$sf_ss_dropdown .= '<input type="text" pattern="[0-9]*" id="ss-price-min" name="min_price" value="0" />';
-			$sf_ss_dropdown .= '<span>&</span>';
-			$sf_ss_dropdown .= '<input type="text" pattern="[0-9]*" id="ss-price-max" name="max_price" value="'.$max.'" />';
-		
-		} else {
-		
-			$terms = get_terms($option, $term_args);
-						
-			$sf_ss_dropdown .= '<div id="'.$option_id.'" class="ss-dropdown" tabindex="'.$index.'" data-attr_value="'.$default_term_id.'">';
-			$sf_ss_dropdown .= '<span>'.$text.'</span>';
-			$sf_ss_dropdown .= '<ul>';
-			$sf_ss_dropdown .= '<li>';
-			$sf_ss_dropdown .= '<a class="ss-option" href="#" data-attr_value="">'.__("Any", "swiftframework").'</a>';
-			$sf_ss_dropdown .= '<i class="fa-check"></i>';
-			$sf_ss_dropdown .= '</li>';	
-			
-			foreach ($terms as $term) {
-				if ($term->slug == $default_term_id || $term->term_id == $default_term_id) {
-					$sf_ss_dropdown .= '<li class="selected">';
-				} else {
-					$sf_ss_dropdown .= '<li>';
-				}
-				
-				if ($option == "product_cat") {
-					$sf_ss_dropdown .= '<a class="ss-option" href="#" data-attr_value="'.$term->slug.'">'.$term->name.'</a>';
-				} else {
-					$sf_ss_dropdown .= '<a class="ss-option" href="#" data-attr_value="'.$term->term_id.'">'.$term->name.'</a>';
-				}
-				
-				$sf_ss_dropdown .= '<i class="fa-check"></i>';
-				$sf_ss_dropdown .= '</li>';	
-			}
-		
-			$sf_ss_dropdown .= '</ul>';
-			$sf_ss_dropdown .= '</div>';
-		
-		}
-		
-		return $sf_ss_dropdown;
-	}
-	
-	function sf_custom_get_attribute_taxonomies() {
-		$transient_name = 'wc_attribute_taxonomies';
-		$attribute_taxonomies = "";
-		
-		if ( sf_woocommerce_activated() ) {
-        
-	        if ( false === ( $attribute_taxonomies = get_transient( $transient_name ) ) ) {
-	
-	            global $wpdb;
-	
-	            $attribute_taxonomies = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies" );
-	
-	            set_transient( $transient_name, $attribute_taxonomies );
-	        }
-        
-        }
-
-        return apply_filters( 'woocommerce_attribute_taxonomies', $attribute_taxonomies );
-	}
-	
-	function sf_custom_get_attribute_taxonomy_name($name) {
-		$taxonomy = $name;
-		$taxonomy = strtolower( stripslashes( strip_tags( $taxonomy ) ) );
-		$taxonomy = preg_replace( '/&.+?;/', '', $taxonomy ); // Kill entities
-		$taxonomy = str_replace( array( '.', '\'', '"' ), '', $taxonomy ); // Kill quotes and full stops.
-		$taxonomy = str_replace( array( ' ', '_' ), '-', $taxonomy ); // Replace spaces and underscores.
-		return 'pa_' . $taxonomy;
-	}
-	
  	/* TOP BAR
  	================================================== */
  	if (!function_exists('sf_top_bar')) { 
@@ -276,10 +89,20 @@
 			$tb_left_output = $swift_search_output;
 			$tb_right_output = '<div class="tb-text clearfix">'. do_shortcode($tb_right_text). '</div>' . "\n";	
 	
-		} else {
+		} else if ($tb_config == "tb-8") {
 			
 			$tb_left_output = $swift_search_output;
 			$tb_right_output = $tb_menu_output;
+			
+		} else if ($tb_config == "tb-9") {
+			
+			$tb_left_output = sf_aux_links('top-menu');
+			$tb_right_output = '<div class="tb-text clearfix">'. do_shortcode($tb_right_text). '</div>' . "\n";
+			
+		} else if ($tb_config == "tb-10") {
+			
+			$tb_left_output = '<div class="tb-text clearfix">'. do_shortcode($tb_left_text). '</div>' . "\n";
+			$tb_right_output = sf_aux_links('top-menu');
 			
 		}
 
@@ -287,7 +110,7 @@
 		// TOP BAR OUTPUT
 		$tb_output .= '<div id="top-bar" class="'.$tb_config.'">'. "\n";
 		if ($ss_mobile) {
-		$tb_output .= '<div class="tb-ss visible-phone">'.$swift_search_output.'</div>'. "\n";
+		$tb_output .= '<div class="tb-ss hidden-desktop">'.$swift_search_output.'</div>'. "\n";
 		}
 		$tb_output .= '<div class="container">'. "\n";
 		$tb_output .= '<div class="row">'. "\n";
@@ -317,13 +140,21 @@
 		$header_layout = $options['header_layout'];
 		$show_cart = $options['show_cart'];
 		$show_wishlist = $options['show_wishlist'];
+		$disable_search = false;
+		if (isset($options['disable_search'])) {
+			$disable_search = $options['disable_search'];
+		}
+		$header_search_pt = "any";
+		if (isset($options['header_search_pt'])) {
+			$header_search_pt = $options['header_search_pt'];
+		}
 		$header_output = $main_menu = '';
 				
 		if ($header_layout == "header-1") {
 		
 		$header_output .= '<header id="header" class="clearfix">'. "\n";
 		$header_output .= '<div class="container">'. "\n";
-		$header_output .= '<div class="row">'. "\n";
+		$header_output .= '<div class="header-row row">'. "\n";
 		$header_output .= '<div class="header-left span4">'.sf_woo_links('header-menu', 'logo-left').'</div>'. "\n";
 		$header_output .= sf_logo('span4 logo-center');
 		$header_output .= '<div class="header-right span4">'.sf_aux_links('header-menu', TRUE).'</div>'. "\n";
@@ -339,7 +170,7 @@
 		
 		$header_output .= '<header id="header" class="clearfix">'. "\n";
 		$header_output .= '<div class="container">'. "\n";
-		$header_output .= '<div class="row">'. "\n";
+		$header_output .= '<div class="header-row row">'. "\n";
 		$header_output .= sf_logo('span4 logo-left');
 		$header_output .= '<div class="header-right span8">'.sf_aux_links('header-menu').'</div>'. "\n";
 		$header_output .= '</div> <!-- CLOSE .row -->'. "\n";
@@ -354,7 +185,7 @@
 		
 		$header_output .= '<header id="header" class="clearfix">'. "\n";
 		$header_output .= '<div class="container">'. "\n";
-		$header_output .= '<div class="row">'. "\n";
+		$header_output .= '<div class="header-row row">'. "\n";
 		$header_output .= '<div class="header-left span8">'.sf_aux_links('header-menu').'</div>'. "\n";
 		$header_output .= sf_logo('span4 logo-right');
 		$header_output .= '</div> <!-- CLOSE .row -->'. "\n";
@@ -369,16 +200,27 @@
 		
 		$header_output .= '<header id="header" class="clearfix">'. "\n";
 		$header_output .= '<div class="container">'. "\n";
-		$header_output .= '<div class="row">'. "\n";
+		$header_output .= '<div class="header-row row">'. "\n";
 		$header_output .= sf_logo('span4 logo-left');
-		$header_output .= '<div class="header-right span8"><div style="background-color: #fff; width=405px; height: 29px;float: right;clear: left;color: #000;font-weight: bold;padding: 7px;line-height: 28px;text-transform: capitalize;border-radius: 3px;color: #333;"><i class="fa fa-user"></i> <a href="'.get_permalink( 10391 ).'">login</a> | <i class="fa fa-phone"></i> HQ  +9712 5559971 - Fax: +9712 5559972 </div>';
-		$header_output .= '<nav>'. "\n";
+		$header_output .= '<div class="header-right span8">';
+		$header_output .= '<nav class="std-menu">'. "\n";
 		$header_output .= '<ul class="menu">'. "\n";
 		if ($show_cart) {
 		$header_output .= sf_get_cart();
 		}
 		if ( class_exists( 'YITH_WCWL_UI' ) &&  $show_wishlist)  {
 		$header_output .= sf_get_wishlist();
+		}
+		if (!$disable_search) {
+		$header_output .= '<li class="menu-search no-hover"><a href="#"><i class="fa-search"></i></a>'. "\n";
+		$header_output .= '<ul class="sub-menu">'. "\n";
+		$header_output .= '<li><div class="ajax-search-wrap"><div class="ajax-loading"></div><form method="get" class="ajax-search-form" action="'.home_url().'/">';
+		if ( $header_search_pt != "any" ) {
+		    $header_output .= '<input type="hidden" name="post_type" value="' . $header_search_pt . '" />';
+		}
+		$header_output .= '<input type="text" placeholder="'.__("Search", "swiftframework").'" name="s" autocomplete="off" /></form><div class="ajax-search-results"></div></div></li>'. "\n";			
+		$header_output .= '</ul>'. "\n";
+		$header_output .= '</li>'. "\n";
 		}
 		$header_output .= '</ul>'. "\n";
 		$header_output .= '</nav>'. "\n";
@@ -393,17 +235,28 @@
 		
 		$header_output .= '<header id="header" class="clearfix">'. "\n";
 		$header_output .= '<div class="container">'. "\n";
-		$header_output .= '<div class="row">'. "\n";
+		$header_output .= '<div class="header-row row">'. "\n";
 		$header_output .= sf_logo('span4 logo-right');
 		$header_output .= '<div class="header-left span8">';
 		$header_output .= sf_main_menu('main-navigation');
-		$header_output .= '<nav>'. "\n";
+		$header_output .= '<nav class="std-menu">'. "\n";
 		$header_output .= '<ul class="menu">'. "\n";
 		if ($show_cart) {
 		$header_output .= sf_get_cart();
 		}
 		if ( class_exists( 'YITH_WCWL_UI' ) &&  $show_wishlist)  {
 		$header_output .= sf_get_wishlist();
+		}
+		if (!$disable_search) {
+		$header_output .= '<li class="menu-search no-hover"><a href="#"><i class="fa-search"></i></a>'. "\n";
+		$header_output .= '<ul class="sub-menu">'. "\n";
+		$header_output .= '<li><div class="ajax-search-wrap"><div class="ajax-loading"></div><form method="get" class="ajax-search-form" action="'.home_url().'/">';
+		if ( $header_search_pt != "any" ) {
+		    $header_output .= '<input type="hidden" name="post_type" value="' . $header_search_pt . '" />';
+		}
+		$header_output .= '<input type="text" placeholder="'.__("Search", "swiftframework").'" name="s" autocomplete="off" /></form><div class="ajax-search-results"></div></div></li>'. "\n";			
+		$header_output .= '</ul>'. "\n";
+		$header_output .= '</li>'. "\n";
 		}
 		$header_output .= '</ul>'. "\n";
 		$header_output .= '</nav>'. "\n";
@@ -421,6 +274,7 @@
 	}
 	}
 	
+	if (!function_exists('sf_mini_header')) {
 	function sf_mini_header() {
 		
 		$mini_header_output = '';
@@ -431,14 +285,17 @@
 	
 		return $mini_header_output;
 	}
+	}
 	
+	if (!function_exists('sf_mobile_search')) {
 	function sf_mobile_search() {
 		
 		$mobile_search_output = '';
 		
-		$mobile_search_output .= '<form method="get" class="mobile-search-form" action="'.home_url().'/"><input type="text" placeholder="'.__("Search", "swiftframework").'" name="s" autocomplete="off" /></form>';
+		$mobile_search_output .= '<form method="get" class="mobile-search-form container" action="'.home_url().'/"><input type="text" placeholder="'.__("Search", "swiftframework").'" name="s" autocomplete="off" /></form>';
 	
 		return $mobile_search_output;
+	}
 	}
 	
 		
@@ -482,16 +339,16 @@
 		
 		// LOGO OUTPUT
 		$logo_output .= '<div id="logo" class="'.$logo_class.' clearfix">'. "\n";
-		$logo_output .= '<a href="'.$logo_link_url.'">'. "\n";
+		$logo_output .= '<a class="logo-link" href="'.$logo_link_url.'">'. "\n";
 		$logo_output .= '<img class="standard" src="'.$logo.'" alt="'.$logo_alt.'" />'. "\n";
 		$logo_output .= '<img class="retina" src="'.$retina_logo.'" alt="'.$logo_alt.'" />'. "\n";
 		$logo_output .= '</a>'. "\n";
-		$logo_output .= '<a href="#" class="visible-phone show-main-nav"><i class="fa-align-justify"></i></a>'. "\n";
-		if ($show_cart) {
-		$logo_output .= '<a href="'.$woocommerce->cart->get_cart_url().'" class="visible-phone mobile-cart-link"><i class="sf-cart"></i></a>'. "\n";
+		$logo_output .= '<a href="#" class="hidden-desktop show-main-nav"><i class="fa-align-justify"></i></a>'. "\n";
+		if ($woocommerce && $show_cart) {
+		$logo_output .= '<a href="'.$woocommerce->cart->get_cart_url().'" class="hidden-desktop mobile-cart-link"><i class="sf-cart"></i></a>'. "\n";
 		}
 		if (!$disable_search) {
-		$logo_output .= '<a href="#" class="visible-phone mobile-search-link"><i class="fa-search"></i></a>'. "\n";
+		$logo_output .= '<a href="#" class="hidden-desktop mobile-search-link"><i class="fa-search"></i></a>'. "\n";
 		}
 		$logo_output .= '</div>'. "\n";
 		
@@ -515,10 +372,15 @@
 		if (isset($options['disable_search'])) {
 			$disable_search = $options['disable_search'];
 		}
+		$header_search_pt = "any";
+		if (isset($options['header_search_pt'])) {
+			$header_search_pt = $options['header_search_pt'];
+		}
 		$menu_output = $menu_full_output = "";
 		$main_menu_args = array(
 			'echo'            => false,
 			'theme_location' => 'main_navigation',
+			'walker'         => new sf_mega_menu_walker,
 			'fallback_cb' => ''
 		);
 		
@@ -527,7 +389,7 @@
 		if ($id == "mini-navigation") {
 		$menu_output .= '<nav id="'.$id.'" class="mini-menu clearfix">'. "\n";
 		} else {
-		$menu_output .= '<nav id="'.$id.'" class="clearfix">'. "\n";		
+		$menu_output .= '<nav id="'.$id.'" class="std-menu clearfix">'. "\n";		
 		}	
 		if(function_exists('wp_nav_menu')) {
 			$menu_output .= wp_nav_menu( $main_menu_args );
@@ -546,13 +408,17 @@
 			if ($id == "mini-navigation") {
 			$menu_full_output .= '<nav class="mini-menu">'. "\n";
 			} else {
-			$menu_full_output .= '<nav>'. "\n";			
+			$menu_full_output .= '<nav class="std-menu">'. "\n";			
 			}
 			$menu_full_output .= '<ul class="menu">'. "\n";
 			if (!$disable_search) {
 			$menu_full_output .= '<li class="menu-search no-hover"><a href="#"><i class="fa-search"></i></a>'. "\n";
 			$menu_full_output .= '<ul class="sub-menu">'. "\n";
-			$menu_full_output .= '<li><div class="ajax-search-wrap"><div class="ajax-loading"></div><form method="get" class="ajax-search-form" action="'.home_url().'/"><input type="text" placeholder="'.__("Search", "swiftframework").'" name="s" autocomplete="off" /></form><div class="ajax-search-results"></div></div></li>'. "\n";			
+			$menu_full_output .= '<li><div class="ajax-search-wrap"><div class="ajax-loading"></div><form method="get" class="ajax-search-form" action="'.home_url().'/">';
+			if ( $header_search_pt != "any" ) {
+			    $menu_full_output .= '<input type="hidden" name="post_type" value="' . $header_search_pt . '" />';
+			}
+			$menu_full_output .= '<input type="text" placeholder="'.__("Search", "swiftframework").'" name="s" autocomplete="off" /></form><div class="ajax-search-results"></div></div></li>'. "\n";
 			$menu_full_output .= '</ul>'. "\n";
 			$menu_full_output .= '</li>'. "\n";
 			}
@@ -594,7 +460,7 @@
 			}
 			
 			// WOO LINKS OUTPUT
-			$woo_links_output .= '<nav class="'.$position.'">'. "\n";
+			$woo_links_output .= '<nav class="std-menu '.$position.'">'. "\n";
 			$woo_links_output .= '<ul class="menu">'. "\n";
 			if ( sf_woocommerce_activated() ) {
 				if (is_user_logged_in()) {
@@ -652,13 +518,13 @@
 			}
 			
 			// LINKS + SEARCH OUTPUT
-			$aux_links_output .= '<nav class="'.$position.'">'. "\n";
+			$aux_links_output .= '<nav class="std-menu '.$position.'">'. "\n";
 			$aux_links_output .= '<ul class="menu">'. "\n";
 			if ($show_sub) {
 				$aux_links_output .= '<li class="parent"><a href="#">'. __("Subscribe", "swiftframework") .'</a>'. "\n";
 				$aux_links_output .= '<ul class="sub-menu">'. "\n";
 				$aux_links_output .= '<li><div id="header-subscribe" class="clearfix">'. "\n";
-				$aux_links_output .= $sub_code . "\n";
+				$aux_links_output .= do_shortcode($sub_code) . "\n";
 				$aux_links_output .= '</div></li>'. "\n";
 				$aux_links_output .= '</ul>'. "\n";
 				$aux_links_output .= '</li>'. "\n";
@@ -707,15 +573,26 @@
 			
 				global $woocommerce;
 				
+				$options = get_option('sf_neighborhood_options');				
+				$show_cart_count = false;
+				if (isset($options['show_cart_count'])) {
+					$show_cart_count = $options['show_cart_count'];
+				}
+				
 				$cart_total = $woocommerce->cart->get_cart_total();
 				$cart_count = $woocommerce->cart->cart_contents_count;
 				$cart_count_text = sf_product_items_text($cart_count);
 				
-				$cart_output .= '<li class="parent shopping-bag-item"><a class="cart-contents" href="'.$woocommerce->cart->get_cart_url().'" title="'.__("View your shopping cart", "swiftframework").'"><i class="sf-cart"></i>'.$cart_total.'</a>';
+				if ($show_cart_count) {
+					$cart_output .= '<li class="parent shopping-bag-item"><a class="cart-contents" href="'.$woocommerce->cart->get_cart_url().'" title="'.__("View your shopping bag", "swiftframework").'"><i class="sf-cart"></i>'.$cart_total.' ('.$cart_count.')</a>';			
+				} else {
+					$cart_output .= '<li class="parent shopping-bag-item"><a class="cart-contents" href="'.$woocommerce->cart->get_cart_url().'" title="'.__("View your shopping bag", "swiftframework").'"><i class="sf-cart"></i>'.$cart_total.'</a>';
+					
+				}
 	            $cart_output .= '<ul class="sub-menu">';     
 	            $cart_output .= '<li>';                                      
 				$cart_output .= '<div class="shopping-bag">';
-				 
+								
 	            if ( sizeof($woocommerce->cart->cart_contents)>0 ) {
 	            	
 	            	$cart_output .= '<div class="bag-header">'.$cart_count_text.' '.__('in the shopping bag', 'swiftframework').'</div>';
@@ -914,9 +791,16 @@
 	if (!function_exists('sf_ajaxsearch')) {
 		function sf_ajaxsearch() {
 			$search_term = trim($_POST['s']);
+			
+			$options = get_option('sf_neighborhood_options');
+			$header_search_pt = "any";
+			if (isset($options['header_search_pt'])) {
+				$header_search_pt = $options['header_search_pt'];
+			}
+			
 			$search_query_args = array(
 				's' => $search_term,
-				'post_type' => 'any',
+				'post_type' => $header_search_pt,
 				'post_status' => 'publish',
 				'suppress_filters' => false,
 				'numberposts' => -1
@@ -944,12 +828,15 @@
 				$i = 0;
 				foreach ($sorted_posts as $key => $type) {
 					$search_results_ouput .= '<div class="search-result-pt">';
-			        if(isset($post_type[$key]->labels->name)) {
-			            $search_results_ouput .= "<h6>".$post_type[$key]->labels->name."</h6>";
-			        } else if(isset($key)) {
-			            $search_results_ouput .= "<h6>".$key."</h6>";
-			        } else {
-			            $search_results_ouput .= "<h6>".__("Other", "swiftframework")."</h6>";			        
+					
+					if ($header_search_pt == "any") {
+				        if(isset($post_type[$key]->labels->name)) {
+				            $search_results_ouput .= "<h6>".__($post_type[$key]->labels->name, "swiftframework")."</h6>";
+				        } else if(isset($key)) {
+				            $search_results_ouput .= "<h6>".$key."</h6>";
+				        } else {
+				            $search_results_ouput .= "<h6>".__("Other", "swiftframework")."</h6>";			        
+				        }
 			        }
 		
 			        foreach ($type as $post) {

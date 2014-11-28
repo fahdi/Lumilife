@@ -23,6 +23,7 @@ $j(document).ready(function() {
 		'shortcode-icons' : $j('#shortcode-icons'),
 		'shortcode-imagebanner' : $j('#shortcode-imagebanner'),
 		'shortcode-social' : $j('#shortcode-social'),
+		'shortcode-share' : $j('#shortcode-share'),
 		'shortcode-typography' : $j('#shortcode-typography'),
 		'shortcode-tooltip' : $j('#shortcode-tooltip'),
 		'shortcode-modal' : $j('#shortcode-modal'),
@@ -49,6 +50,15 @@ $j(document).ready(function() {
 		$j.shortcode_select[$j(this).val()].css({
 			display: 'block'
 		});
+	});
+	
+	$j('.font-icon-grid').on('click', 'li', function() {
+		var selection = $j(this),
+			iconName = selection.find('i').attr('class');
+		    		
+		$j('.font-icon-grid li').removeClass('selected');
+		selection.addClass('selected');
+		selection.parent().parent().find('input').val(iconName);
 	});
   
 });

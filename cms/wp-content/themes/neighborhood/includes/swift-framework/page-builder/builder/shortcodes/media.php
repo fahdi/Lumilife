@@ -86,10 +86,14 @@ class SwiftPageBuilderShortcode_spb_single_image extends SwiftPageBuilderShortco
         }
         if ($image_link != "") {
         $output .= "\n\t\t\t".'<a class="img-link" href="'.$image_link.'" target="'.$link_target.'">';
+        $output .= '<div class="overlay"><div class="thumb-info">';
+        $output .= '<i class="fa-link"></i>';
+        $output .= '</div></div>';
         $output .= $img['thumbnail'];
         $output .= '</a>';
         } else if ($lightbox == "yes") {
-        $output .= "\n\t\t\t".'<a class="view" href="'.$img_url[0].'" rel="image-gallery">';
+        //$output .= "\n\t\t\t".'<a class="lightbox" data-rel="ilightbox[' . $image . '-' . rand( 0, 1000 ) . ']" href="'.$img_url[0].'" rel="image-gallery">';
+        $output .= "\n\t\t\t".'<a class="lightbox" data-rel="ilightbox[image-gallery]" href="'.$img_url[0].'">';
         $output .= '<div class="overlay"><div class="thumb-info">';
         $output .= '<i class="fa-search"></i>';
         $output .= '</div></div>';
@@ -116,7 +120,7 @@ class SwiftPageBuilderShortcode_spb_single_image extends SwiftPageBuilderShortco
         $old_names = array('yellow_message', 'blue_message', 'green_message', 'button_green', 'button_grey', 'button_yellow', 'button_blue', 'button_red', 'button_orange');
         $new_names = array('alert-block', 'alert-info', 'alert-success', 'btn-success', 'btn', 'btn-info', 'btn-primary', 'btn-danger', 'btn-warning');
         $value = str_ireplace($old_names, $new_names, $value);
-        //$value = __($value, "swift_page_builder");
+        //$value = __($value, 'swift-framework-admin');
         //
         $param_name = isset($param['param_name']) ? $param['param_name'] : '';
         $type = isset($param['type']) ? $param['type'] : '';
@@ -126,7 +130,7 @@ class SwiftPageBuilderShortcode_spb_single_image extends SwiftPageBuilderShortco
             $output .= '<input type="hidden" class="spb_param_value ' . $param_name . ' ' . $type . ' ' . $class . '" name="' . $param_name . '" value="'.$value.'" />';
             if(($param['type'])=='attach_image') {
                 $img = spb_getImageBySize(array( 'attach_id' => (int)preg_replace('/[^\d]/', '', $value), 'thumb_size' => 'thumbnail' ));
-                $output .= ( $img ? $img['thumbnail'] : '<img width="150" height="150" src="' . SwiftPageBuilder::getInstance()->assetURL('img/blank_f7.gif') . '" class="attachment-thumbnail" alt="" title="" />') . '<a href="#" class="column_edit_trigger' . ( $img && !empty($img['p_img_large'][0]) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift_page_builder' ) . '</a>';
+                $output .= ( $img ? $img['thumbnail'] : '<img width="150" height="150" src="' . SwiftPageBuilder::getInstance()->assetURL('img/blank_f7.gif') . '" class="attachment-thumbnail" alt="" title="" />') . '<a href="#" class="column_edit_trigger' . ( $img && !empty($img['p_img_large'][0]) ? ' image-exists' : '' ) . '"><i class="spb-icon-single-image"></i>' . __( 'No image yet! Click here to select it now.', 'swift-framework-admin' ) . '</a>';
             }
         }
         else {

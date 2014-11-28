@@ -19,7 +19,7 @@ if (!function_exists('sf_get_share_links')) {
 	    $twitter_summary = str_replace( '%wishlist_url%', '', get_option( 'yith_wcwl_socials_text' ) );
 	    $summary = urlencode( str_replace( '%wishlist_url%', $normal_url, get_option( 'yith_wcwl_socials_text' ) ) );
 	    $imageurl = urlencode( get_option( 'yith_wcwl_socials_image_url' ) );
-	
+		
 	    $html  = '<div class="yith-wcwl-share">';
 	    $html .= apply_filters( 'yith_wcwl_socials_share_title', '<span>' . __( 'Share on:', 'swiftframework' ) . '</span>' );
 	    $html .= '<ul class="social-icons">';
@@ -35,6 +35,10 @@ if (!function_exists('sf_get_share_links')) {
 	
 	    if( get_option( 'yith_wcwl_share_googleplus' ) == 'yes' )
 	    { $html .= '<li class="googleplus" style="list-style-type: none; display: inline-block;"><a target="_blank" class="googleplus" href="https://plus.google.com/share?url=' . $url . '&amp;title="' . $title . '" onclick=\'javascript:window.open(this.href, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600");return false;\'><i class="fa-google-plus"></i><i class="fa-google-plus"></i></a></li>'; }
+	    
+	    if( get_option( 'yith_wcwl_share_email' ) == 'yes' )
+	    { 
+	    $html .= '<li class="email" style="list-style-type: none; display: inline-block;"><a class="email" href="mailto:?subject=I wanted you to see this site&amp;body= ' . $url . '&amp;title="' . $title . '" ><i class="fa-envelope-o"></i><i class="fa-envelope-o"></i></a></li>'; }
 	
 	    $html .= '</ul>';
 	    $html .= '</div>';

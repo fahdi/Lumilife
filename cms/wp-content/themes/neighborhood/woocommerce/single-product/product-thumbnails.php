@@ -57,7 +57,7 @@ if ( $attachment_ids ) {
 			
 			$image_class = esc_attr( implode( ' ', $classes ) );
 			$image_title = esc_attr( get_the_title( $attachment_id ) );
-			$image_alt = esc_attr( get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true) );
+			$image_alt = esc_attr( sf_get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true) );
 			
 			if ($image) {
 								

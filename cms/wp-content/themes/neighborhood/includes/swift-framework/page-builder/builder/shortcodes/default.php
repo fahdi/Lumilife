@@ -134,9 +134,9 @@
 	        
 	        $output = '';
 	        if ($full_width == "yes") {
-	        $output .= '<div class="spb_divider '. $type .' spb_content_element alt-bg '.$width.$el_class.'">';
+	        $output .= '<div class="spb_divider '. $type .' spb_content_element alt-bg '.$width.' '.$el_class.'">';
 	        } else {
-	        $output .= '<div class="spb_divider '. $type .' spb_content_element '.$width.$el_class.'">';
+	        $output .= '<div class="spb_divider '. $type .' spb_content_element '.$width.' '.$el_class.'">';
 	        }
 	        if ($type == "go_to_top") {
 	        $output .= '<a class="animate-top" href="#">'. $text .'</a>';
@@ -202,7 +202,7 @@
 	    protected function content( $atts, $content = null ) {
 	        $title = $el_class = $open = null;
 	        extract(shortcode_atts(array(
-	            'title' => __("Click to toggle", "swift_page_builder"),
+	            'title' => __("Click to toggle", 'swift-framework-admin'),
 	            'el_class' => '',
 	            'open' => 'false',
 	            'el_position' => '',

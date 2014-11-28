@@ -52,7 +52,7 @@ if ( ! class_exists( 'RWMB_Text_List_Field' ) )
 		 */
 		static function meta( $meta, $post_id, $saved, $field )
 		{
-			$meta = get_post_meta( $post_id, $field['id'], $field['clone'] );
+			$meta = sf_get_post_meta( $post_id, $field['id'], $field['clone'] );
 
 			$meta = ( !$saved && '' === $meta || array() === $meta ) ? $field['std'] : $meta;
 

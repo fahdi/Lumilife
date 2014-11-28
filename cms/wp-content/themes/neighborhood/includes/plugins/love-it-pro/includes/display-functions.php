@@ -23,14 +23,14 @@ function lip_display_love_link($content) {
 		if(isset($lip_options['love_it_text']) && $lip_options['love_it_text'] != '') {
 			$link_text = $lip_options['love_it_text'];
 		} else {
-			$link_text = __('Love It', 'love_it');
+			$link_text = __('Love It', 'swiftframework');
 		}
 		
 		// setup the Already Loved This text
 		if(isset($lip_options['already_loved']) && $lip_options['already_loved'] != '') {
 			$already_loved = $lip_options['already_loved'];
 		} else {
-			$already_loved = __('You have loved this', 'love_it');
+			$already_loved = __('You have loved this', 'swiftframework');
 		}
 	
 		$link = lip_love_it_link($post->ID, $link_text, $already_loved, false);

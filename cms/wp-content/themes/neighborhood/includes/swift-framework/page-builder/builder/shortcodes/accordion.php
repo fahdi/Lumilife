@@ -16,7 +16,7 @@
 	        $title = '';
 	
 	        extract(shortcode_atts(array(
-	            'title' => __("Section", "swift_page_builder")
+	            'title' => __("Section", 'swift-framework-admin')
 	        ), $atts));
 	
 	        $output = '';
@@ -35,7 +35,7 @@
 	
 	    public function contentAdmin( $atts, $content = null ) {
 	        $title = '';
-	        $defaults = array( 'title' => __('Section', 'swift_page_builder') );
+	        $defaults = array( 'title' => __('Section', 'swift-framework-admin') );
 	        extract( shortcode_atts( $defaults, $atts ) );
 	
 	        return '<div class="group">
@@ -91,12 +91,12 @@
 	        foreach ( $this->settings['params'] as $param ) {
 	            if ( $param['param_name'] != 'content' ) {
 	                if ( is_string($param['value']) ) {
-	                    $shortcode_attributes[$param['param_name']] = __($param['value'], "swift_page_builder");
+	                    $shortcode_attributes[$param['param_name']] = __($param['value'], 'swift-framework-admin');
 	                } else {
 	                    $shortcode_attributes[$param['param_name']] = $param['value'];
 	                }
 	            } else if ( $param['param_name'] == 'content' && $content == NULL ) {
-	                $content = __($param['value'], "swift_page_builder");
+	                $content = __($param['value'], 'swift-framework-admin');
 	            }
 	        }
 	        extract(shortcode_atts(

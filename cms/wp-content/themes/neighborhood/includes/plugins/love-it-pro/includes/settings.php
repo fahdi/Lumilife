@@ -9,7 +9,7 @@ function lip_settings_page()
 	?>
 	<div class="wrap">
 		<div id="upb-wrap" class="upb-help">
-			<h2><?php _e('Love It Pro Settings', 'love_it'); ?></h2>
+			<h2><?php _e('Love It Pro Settings', 'swiftframework'); ?></h2>
 			<?php
 			if ( ! isset( $_REQUEST['updated'] ) )
 				$_REQUEST['updated'] = false;
@@ -25,12 +25,12 @@ function lip_settings_page()
 					<tbody>
 						<tr valign="top">
 							<th scope="row">
-								<?php _e('Show on Post Types', 'love_it'); ?>
+								<?php _e('Show on Post Types', 'swiftframework'); ?>
 							</th>
 							<td>
 								<fieldset>
 									<legend class="screen-reader-text">
-										<span><?php _e('Show on Post Types', 'love_it'); ?></span>
+										<span><?php _e('Show on Post Types', 'swiftframework'); ?></span>
 									</legend>
 									<label for="lip_settings[post_types][]">
 										<?php
@@ -39,92 +39,92 @@ function lip_settings_page()
 										foreach($post_types as $post_type) { ?>
 											<input id="lip_settings[post_types][<?php echo $post_type->name; ?>]" name="lip_settings[post_types][<?php echo $post_type->name; ?>]" type="checkbox" value="<?php echo $post_type->name; ?>" <?php checked(true, in_array($post_type->name, $saved_post_types) ); ?>/><span><?php echo $post_type->labels->name; ?></span><br/>
 										<?php } ?>
-										<?php _e( 'Display Love It link at top or bottom of the post/page content?', 'love_it' ); ?>
+										<?php _e( 'Display Love It link at top or bottom of the post/page content?', 'swiftframework' ); ?>
 									</label>
 								</fieldset>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row">
-								<?php _e('Love It Links', 'love_it'); ?>
+								<?php _e('Love It Links', 'swiftframework'); ?>
 							</th>
 							<td>
 								<fieldset>
 									<legend class="screen-reader-text">
-										<span><?php _e('Love It Links', 'love_it'); ?></span>
+										<span><?php _e('Love It Links', 'swiftframework'); ?></span>
 									</legend>
 									<label for="lip_settings[show_links]">
 										<input id="lip_settings[show_links]" name="lip_settings[show_links]" type="checkbox" value="1" <?php checked( '1', $lip_options['show_links'] ); ?>/>
-										<?php _e( 'Display Love It link at top or bottom of the post/page content?', 'love_it' ); ?>
+										<?php _e( 'Display Love It link at top or bottom of the post/page content?', 'swiftframework' ); ?>
 									</label>
 								</fieldset>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row">
-								<?php _e('Position', 'love_it'); ?>
+								<?php _e('Position', 'swiftframework'); ?>
 							</th>
 							<td>
 								<fieldset>
 									<legend class="screen-reader-text">
-										<span><?php _e('Position', 'love_it'); ?></span>
+										<span><?php _e('Position', 'swiftframework'); ?></span>
 									</legend>
 									<label for="lip_settings[post_position]">
-										<?php $positions = array('top' => __('Top', 'love_it'), 'bottom' => __('Bottom', 'love_it')); ?>
+										<?php $positions = array('top' => __('Top', 'swiftframework'), 'bottom' => __('Bottom', 'swiftframework')); ?>
 										<select name="lip_settings[post_position]">
 											<?php foreach ($positions as $key => $option) { ?>
 												<option <?php selected($lip_options['post_position'], $key); ?> value="<?php echo $key; ?>"><?php echo $option; ?></option>
 											<?php } ?>
 										</select>
-										<?php _e( 'Display Love It link at top or bottom of the post/page content?', 'love_it' ); ?>
+										<?php _e( 'Display Love It link at top or bottom of the post/page content?', 'swiftframework' ); ?>
 									</label>
 								</fieldset>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row">
-								<?php _e('Love It Links', 'love_it'); ?>
+								<?php _e('Love It Links', 'swiftframework'); ?>
 							</th>
 							<td>
 								<fieldset>
 									<legend class="screen-reader-text">
-										<span><?php _e('Love It Links', 'love_it'); ?></span>
+										<span><?php _e('Love It Links', 'swiftframework'); ?></span>
 									</legend>
 									<label for="lip_settings[love_it_text]">
 										<input id="lip_settings[love_it_text]" name="lip_settings[love_it_text]" type="text" value="<?php echo $lip_options['love_it_text'];?>" />
-										<?php _e( 'Enter the text you\'d like to use for the "Love It" link', 'love_it' ); ?>
+										<?php _e( 'Enter the text you\'d like to use for the "Love It" link', 'swiftframework' ); ?>
 									</label>
 								</fieldset>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row">
-								<?php _e('Already Loved Text', 'love_it'); ?>
+								<?php _e('Already Loved Text', 'swiftframework'); ?>
 							</th>
 							<td>
 								<fieldset>
 									<legend class="screen-reader-text">
-										<span><?php _e('Love It Links', 'love_it'); ?></span>
+										<span><?php _e('Love It Links', 'swiftframework'); ?></span>
 									</legend>
 									<label for="lip_settings[already_loved]">
 										<input id="lip_settings[already_loved]" name="lip_settings[already_loved]" type="text" value="<?php echo $lip_options['already_loved'];?>" />
-										<?php _e( 'Enter the text you\'d like to use for the "You have already loved this item" text', 'love_it' ); ?>
+										<?php _e( 'Enter the text you\'d like to use for the "You have already loved this item" text', 'swiftframework' ); ?>
 									</label>
 								</fieldset>
 							</td>
 						</tr>
 						<tr valign="top">
 							<th scope="row">
-								<?php _e('Custom CSS', 'love_it'); ?>
+								<?php _e('Custom CSS', 'swiftframework'); ?>
 							</th>
 							<td>
 								<fieldset>
 									<legend class="screen-reader-text">
-										<span><?php _e('Custom CSS', 'love_it'); ?></span>
+										<span><?php _e('Custom CSS', 'swiftframework'); ?></span>
 									</legend>
 									<label for="lip_settings[custom_css]">
 										<textarea id="lip_settings[custom_css]" style="width: 400px; height: 150px;" name="lip_settings[custom_css]" type="text"><?php echo $lip_options['custom_css'];?></textarea><br/>
-										<?php _e( 'Enter custom CSS here to customize the appearance of this plugin. To assist you, a list of available class names are available in the Help tab in the top right.', 'love_it' ); ?>
+										<?php _e( 'Enter custom CSS here to customize the appearance of this plugin. To assist you, a list of available class names are available in the Help tab in the top right.', 'swiftframework' ); ?>
 									</label>
 								</fieldset>
 							</td>
@@ -134,7 +134,7 @@ function lip_settings_page()
 				
 				<!-- save the options -->
 				<p class="submit">
-					<input type="submit" class="button-primary" value="<?php _e( 'Save Options', 'love_it' ); ?>" />
+					<input type="submit" class="button-primary" value="<?php _e( 'Save Options', 'swiftframework' ); ?>" />
 				</p>
 										
 			</form>
@@ -156,7 +156,7 @@ add_action( 'admin_init', 'lip_register_settings' );
 function lip_settings_menu() {
 	global $love_it_page;
 	// add settings page
-	$love_it_page = add_submenu_page('options-general.php', __('Love It Settings', 'love_it'), __('Love It Settings', 'love_it'),'manage_options', 'love-it-settings', 'lip_settings_page');
+	$love_it_page = add_submenu_page('options-general.php', __('Love It Settings', 'swiftframework'), __('Love It Settings', 'swiftframework'),'manage_options', 'love-it-settings', 'lip_settings_page');
 	
 	// load each of the help tabs
 	add_action("load-$love_it_page", "lip_contextual_help");
@@ -176,21 +176,21 @@ function lip_contextual_help($hook) {
 			$screen->add_help_tab(
 				array(
 					'id' => 'general',
-					'title' => __('General', 'love_it'),
+					'title' => __('General', 'swiftframework'),
 					'content' => lip_render_help_tab('general')
 				)
 			);
 			$screen->add_help_tab(
 				array(
 					'id' => 'template_tags',
-					'title' => __('Template Tags', 'love_it'),
+					'title' => __('Template Tags', 'swiftframework'),
 					'content' => lip_render_help_tab('template_tags')
 				)
 			);
 			$screen->add_help_tab(
 				array(
 					'id' => 'custom_css',
-					'title' => __('Custom CSS', 'love_it'),
+					'title' => __('Custom CSS', 'swiftframework'),
 					'content' => lip_render_help_tab('custom_css')
 				)
 			);

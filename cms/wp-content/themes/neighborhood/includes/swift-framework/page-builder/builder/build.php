@@ -137,7 +137,7 @@
 	    public function swiftPageBuilderEditPage() {
 	        $pt_array = $this->swift_page_builder->getPostTypes();
 	        foreach ($pt_array as $pt) {
-	            add_meta_box( 'swift_page_builder', __('Swift Page Builder', "swift_page_builder"), Array($this->swift_page_builder->getLayout(), 'output'), $pt, 'normal', 'high');
+	            add_meta_box( 'swift_page_builder', __('Swift Page Builder', "swift-framework-admin"), Array($this->swift_page_builder->getLayout(), 'output'), $pt, 'normal', 'high');
 	        }
 	    }
 	

@@ -11,7 +11,7 @@
 	
 	function spb_map ( $attributes ) {
 	    if( !isset($attributes['base']) ) {
-	        trigger_error(__("Wrong spb_map object. Base attribute is required", 'swift_page_builder'), E_USER_ERROR);
+	        trigger_error(__("Wrong spb_map object. Base attribute is required", 'swift-framework-admin'), E_USER_ERROR);
 	        die();
 	    }
 	    SPBMap::map($attributes['base'], $attributes);
@@ -145,6 +145,7 @@
 	    return $teaser_width;
 	}
 	
+	if ( ! function_exists( 'spb_translateColumnWidthToSpan' ) ) {
 	function spb_translateColumnWidthToSpan($width) {
 		
 		$sidebars = "";
@@ -239,6 +240,7 @@
 	    }
 	    return $w;
 	}
+	}
 	
 	function spb_js_remove_wpautop($content) {
 	    $content = do_shortcode( shortcode_unautop($content) );
@@ -266,35 +268,6 @@
 	    }
 	}
 	
-	/* Helper function which returs list of site attached images,
-	   and if image is attached to the current post it adds class
-	   'added'
-	---------------------------------------------------------- */
-	if (!function_exists('siteAttachedImages')) {
-	    function siteAttachedImages($att_ids = array()) {
-	        $output = '';
-	
-	        global $wpdb;
-	        $media_images = $wpdb->get_results("SELECT * FROM $wpdb->posts WHERE post_type = 'attachment' order by ID desc");
-	        foreach ( $media_images as $image_post ) {
-	            $thumb_src = wp_get_attachment_image_src($image_post->ID, 'thumbnail');
-	            $thumb_src = $thumb_src[0];
-	
-	            $class = (in_array($image_post->ID, $att_ids)) ? ' class="added"' : '';
-	
-	            $output .= '<li'.$class.'>
-							<img rel="'.$image_post->ID.'" src="'. $thumb_src .'" />
-							<span class="img-added">'. __('Added', "swift_page_builder") .'</span>
-						</li>';
-	        }
-	
-	        if ( $output != '' ) {
-	            $output = '<ul class="gallery_widget_img_select">' . $output . '</ul>';
-	        }
-	        return $output;
-	    } // end siteAttachedImages()
-	}
-	
 	function fieldAttachedImages($att_ids = array()) {
 	    $output = '';
 	    foreach ( $att_ids as $th_id ) {
@@ -304,7 +277,7 @@
 	            $output .= '
 				<li class="added">
 					<img rel="'.$th_id.'" src="'. $thumb_src .'" />
-					<span class="img-added">'. __('Added', "swift_page_builder") .'</span>
+					<span class="img-added">'. __('Added', 'swift-framework-admin') .'</span>
 				</li>';
 	        }
 	    }

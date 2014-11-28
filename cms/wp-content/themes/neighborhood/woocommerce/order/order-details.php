@@ -4,7 +4,7 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     2.1.0
+ * @version     2.2.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -21,7 +21,7 @@ if ( $myaccount_page_id ) {
   $myaccount_page_url = get_permalink( $myaccount_page_id );
 }
 
-$order = new WC_Order( $order_id );
+$order = wc_get_order( $order_id );
 
 ?>
 
@@ -53,8 +53,8 @@ $order = new WC_Order( $order_id );
 			if (sizeof($order->get_items())>0) {
 	
 				foreach($order->get_items() as $item) {
-	
 					$_product = get_product( $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
+					if (!$_product) {return;}
 					$thumbnail = apply_filters( 'woocommerce_in_cart_product_thumbnail', $_product->get_image(), $item );
 					
 					echo '
@@ -117,7 +117,7 @@ $order = new WC_Order( $order_id );
 	
 					// Show any purchase notes
 					if ($order->status=='completed' || $order->status=='processing') {
-						if ($purchase_note = get_post_meta( $_product->id, '_purchase_note', true))
+						if ($purchase_note = sf_get_post_meta( $_product->id, '_purchase_note', true))
 							echo '<tr class="product-purchase-note"><td colspan="3">' . apply_filters('the_content', $purchase_note) . '</td></tr>';
 					}
 	
@@ -164,7 +164,7 @@ $order = new WC_Order( $order_id );
 	?>
 	</dl>
 	
-	<?php if (get_option('woocommerce_ship_to_billing_address_only')=='no') : ?>
+	<?php if ( ! wc_ship_to_billing_address_only() && $order->needs_shipping_address() && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) : ?>
 	
 	<div class="col2-set addresses">
 	
@@ -181,7 +181,7 @@ $order = new WC_Order( $order_id );
 				?>
 			</p></address>
 	
-	<?php if (get_option('woocommerce_ship_to_billing_address_only')=='no') : ?>
+	<?php if ( ! wc_ship_to_billing_address_only() && $order->needs_shipping_address() && get_option( 'woocommerce_calc_shipping' ) !== 'no' ) : ?>
 	
 		</div><!-- /.col-1 -->
 	

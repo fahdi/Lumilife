@@ -22,9 +22,9 @@
 	
 	    public static function map( $name, $attributes ) {
 	        if( empty($attributes['name']) ) {
-	            trigger_error( __("Wrong name for shortcode:" . $name . ". Name required", "swift_page_builder"));
+	            trigger_error( __("Wrong name for shortcode:" . $name . ". Name required", 'swift-framework-admin'));
 	        } elseif( empty($attributes['base']) ) {
-	            trigger_error( __("Wrong base for shortcode:" . $name . ". Base required", "swift_page_builder"));
+	            trigger_error( __("Wrong base for shortcode:" . $name . ". Base required", 'swift-framework-admin'));
 	        } else {
 	            
 	            self::$sc[$name] = $attributes;
@@ -65,9 +65,9 @@
 	    /* Extend params for settings */
 	    public static function addParam($name, $attribute = Array()) {
 	        if( !isset(self::$sc[$name]))
-	            return trigger_error( __("Wrong name for shortcode:" . $name . ". Name required", "swift_page_builder"));
+	            return trigger_error( __("Wrong name for shortcode:" . $name . ". Name required", 'swift-framework-admin'));
 	        elseif (!isset($attribute['param_name'])) {
-	            trigger_error( __("Wrong attribute for '" . $name . "' shortcode. Attribute 'param_name' required", "swift_page_builder"));
+	            trigger_error( __("Wrong attribute for '" . $name . "' shortcode. Attribute 'param_name' required", 'swift-framework-admin'));
 	        } else {
 	
 	            $replaced = false;

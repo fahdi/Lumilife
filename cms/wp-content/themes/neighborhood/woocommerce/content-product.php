@@ -61,7 +61,7 @@
 	<?php }
 	?>
 	<?php } else { ?>
-	<figure>
+	<figure class="no-transition">
 	<?php } ?>
 		<?php
 			
@@ -73,7 +73,8 @@
 		
 			} else if ($product->is_on_sale()) {
 				
-				echo apply_filters('woocommerce_sale_flash', '<span class="onsale">'.__( 'Sale!', 'woocommerce' ).'</span>', $post, $product);				
+				echo apply_filters('woocommerce_sale_flash', '<span class="onsale">'. __( 'Sale!', 'swiftframework' ).'</span>', $post, $product);		
+						
 			} else if (!$product->get_price()) {
 				
 				echo '<span class="free-badge">' . __( 'Free', 'swiftframework' ) . '</span>';
@@ -111,10 +112,10 @@
 						
 						foreach ( $attachment_ids as $attachment_id ) {
 							
-							if ( get_post_meta( $attachment_id, '_woocommerce_exclude_image', true ) )
+							if ( sf_get_post_meta( $attachment_id, '_woocommerce_exclude_image', true ) )
 								continue;
 							
-							echo '<div class="product-image">'.wp_get_attachment_image( $attachment_id, 'shop_catalog' ).'</div>';	
+							echo '<div class="product-image second-image">'.wp_get_attachment_image( $attachment_id, 'shop_catalog' ).'</div>';	
 							
 							$img_count++;
 							
@@ -125,7 +126,7 @@
 					} else {
 					
 						echo '<div class="product-image">'.$image_html.'</div>';					
-						echo '<div class="product-image">'.$image_html.'</div>';
+						echo '<div class="product-image second-image">'.$image_html.'</div>';
 						
 					}
 				
@@ -151,7 +152,7 @@
 				
 						foreach ( $attachments as $key => $attachment ) {
 				
-							if ( get_post_meta( $attachment->ID, '_woocommerce_exclude_image', true ) == 1 )
+							if ( sf_get_post_meta( $attachment->ID, '_woocommerce_exclude_image', true ) == 1 )
 								continue;
 				
 							echo '<div class="product-image">'.wp_get_attachment_image( $attachment->ID, 'shop_catalog' ).'</div>';	
@@ -165,7 +166,7 @@
 					} else {
 					
 						echo '<div class="product-image">'.$image_html.'</div>';					
-						echo '<div class="product-image">'.$image_html.'</div>';
+						echo '<div class="product-image second-image">'.$image_html.'</div>';
 						
 					}
 					
@@ -182,6 +183,15 @@
 	</figure>
 	
 	<div class="product-details">
+		<?php
+			/**
+			 * woocommerce_before_shop_loop_item_title hook
+			 *
+			 * @hooked woocommerce_show_product_loop_sale_flash - 10
+			 * @hooked woocommerce_template_loop_product_thumbnail - 10
+			 */
+			do_action( 'woocommerce_before_shop_loop_item_title' );
+		?>
 		<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 		<?php
 			$size = sizeof( get_the_terms( $post->ID, 'product_cat' ) );

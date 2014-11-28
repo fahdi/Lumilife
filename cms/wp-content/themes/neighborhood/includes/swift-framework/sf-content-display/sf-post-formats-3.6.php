@@ -104,9 +104,9 @@
 						
 			if ($video == "") {
 				if ($use_thumb_content) {
-				$media_video = get_post_meta($postID, 'sf_thumbnail_video_url', true);
+				$media_video = sf_get_post_meta($postID, 'sf_thumbnail_video_url', true);
 				} else {
-				$media_video = get_post_meta($postID, 'sf_detail_video_url', true);
+				$media_video = sf_get_post_meta($postID, 'sf_detail_video_url', true);
 				}
 				
 				$video = video_embed($media_video, $media_width, $video_height);
@@ -115,9 +115,9 @@
 		} else {
 					
 			if ($use_thumb_content) {
-			$media_video = get_post_meta($postID, 'sf_thumbnail_video_url', true);
+			$media_video = sf_get_post_meta($postID, 'sf_thumbnail_video_url', true);
 			} else {
-			$media_video = get_post_meta($postID, 'sf_detail_video_url', true);
+			$media_video = sf_get_post_meta($postID, 'sf_detail_video_url', true);
 			}
 			
 			$video = video_embed($media_video, $media_width, $video_height);
@@ -263,7 +263,7 @@
 		$post_categories = get_the_category_list(', ');
 		$post_comments = get_comments_number();
 		$post_permalink = get_permalink();
-		$custom_excerpt = get_post_meta($postID, 'sf_custom_excerpt', true);
+		$custom_excerpt = sf_get_post_meta($postID, 'sf_custom_excerpt', true);
 		$post_excerpt = '';
 		if ($content_output == "excerpt") {
 			if ($custom_excerpt != '') {
@@ -329,15 +329,15 @@
 		}
 		
 		
-		$thumb_type = get_post_meta($postID, 'sf_thumbnail_type', true);
+		$thumb_type = sf_get_post_meta($postID, 'sf_thumbnail_type', true);
 		$thumb_image = rwmb_meta('sf_thumbnail_image', 'type=image&size=full');
-		$thumb_video = get_post_meta($postID, 'sf_thumbnail_video_url', true);
+		$thumb_video = sf_get_post_meta($postID, 'sf_thumbnail_video_url', true);
 		$thumb_gallery = rwmb_meta( 'sf_thumbnail_gallery', 'type=image&size=blog-image' );
-		$thumb_link_type = get_post_meta($postID, 'sf_thumbnail_link_type', true);
-		$thumb_link_url = get_post_meta($postID, 'sf_thumbnail_link_url', true);
+		$thumb_link_type = sf_get_post_meta($postID, 'sf_thumbnail_link_type', true);
+		$thumb_link_url = sf_get_post_meta($postID, 'sf_thumbnail_link_url', true);
 		$thumb_lightbox_thumb = rwmb_meta( 'sf_thumbnail_image', 'type=image&size=large' );
 		$thumb_lightbox_image = rwmb_meta( 'sf_thumbnail_link_image', 'type=image&size=large' );
-		$thumb_lightbox_video_url = get_post_meta($postID, 'sf_thumbnail_link_video_url', true);
+		$thumb_lightbox_video_url = sf_get_post_meta($postID, 'sf_thumbnail_link_video_url', true);
 		
 		foreach ($thumb_image as $detail_image) {
 			$thumb_img_url = $detail_image['url'];
@@ -361,17 +361,17 @@
 			$link_config = 'href="'.$thumb_link_url.'" class="link-to-url" target="_blank"';
 			$item_icon = "link";
 		} else if ($thumb_link_type == "lightbox_thumb") {
-			$link_config = 'href="'.$thumb_img_url.'" class="view"';
+			$link_config = 'href="'.$thumb_img_url.'" class="lightbox" data-rel="ilightbox['.$post_ID.']"';
 			$item_icon = "search";
 		} else if ($thumb_link_type == "lightbox_image") {
 			$lightbox_image_url = '';
 			foreach ($thumb_lightbox_image as $image) {
 				$lightbox_image_url = $image['full_url'];
 			}
-			$link_config = 'href="'.$lightbox_image_url.'" class="view"';
+			$link_config = 'href="'.$lightbox_image_url.'" class="lightbox" data-rel="ilightbox['.$post_ID.']"';
 			$item_icon = "search";	
 		} else if ($thumb_link_type == "lightbox_video") {
-			$link_config = 'href="'.$thumb_lightbox_video_url.'" rel="prettyphoto"';
+			$link_config = 'href="'.$thumb_lightbox_video_url.'" class="lightbox" data-rel="ilightbox['.$postID.']"';
 			$item_icon = "facetime-video";
 		} else {
 			$link_config = 'href="'.$post_permalink.'" class="link-to-post"';

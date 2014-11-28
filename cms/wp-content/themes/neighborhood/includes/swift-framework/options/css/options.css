@@ -135,7 +135,7 @@
 }
 
 #redux-opts-sidebar {
-	width: 210px;
+	width: 220px;
 	float: left;
 }
 
@@ -173,7 +173,7 @@
 
 #redux-opts-main {
 	background: #FFFFFF;
-	margin-left: 210px;
+	margin-left: 220px;
 	border-left: 1px solid #DFDFDF;
 	padding: 10px 20px;
 }
@@ -225,13 +225,13 @@
 
 #redux-opts-sidebar #redux-opts-group-menu li a:hover {
 	background: #f2f2f2;
-	width: 182px;
+	width: 192px;
 	margin-right: -2px;
 }
 
 #redux-opts-sidebar #redux-opts-group-menu li.active a {
 	background: #ffffff;
-	width: 182px;
+	width: 192px;
 	margin-right: -2px;
 }
 

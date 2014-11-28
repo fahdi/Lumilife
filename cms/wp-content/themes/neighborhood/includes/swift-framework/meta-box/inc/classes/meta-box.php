@@ -250,7 +250,7 @@ if ( ! class_exists( 'RW_Meta_Box' ) )
 					{
 						var rwmb = {
 							validationOptions : jQuery.parseJSON( \'' . json_encode( $this->validation ) . '\' ),
-							summaryMessage : "' . __( 'Please correct the errors highlighted below and try again.', 'rwmb' ) . '"
+							summaryMessage : "' . __( 'Please correct the errors highlighted below and try again.', 'swift-framework-admin' ) . '"
 						};
 					}
 					else
@@ -463,7 +463,7 @@ if ( ! class_exists( 'RW_Meta_Box' ) )
 		 */
 		static function meta( $meta, $post_id, $saved, $field )
 		{
-			$meta = get_post_meta( $post_id, $field['id'], !$field['multiple'] );
+			$meta = sf_get_post_meta( $post_id, $field['id'], !$field['multiple'] );
 
 			// Use $field['std'] only when the meta box hasn't been saved (i.e. the first time we run)
 			$meta = ( !$saved && '' === $meta || array() === $meta ) ? $field['std'] : $meta;
@@ -511,7 +511,7 @@ if ( ! class_exists( 'RW_Meta_Box' ) )
 			foreach ( $this->fields as $field )
 			{
 				$name = $field['id'];
-				$old  = get_post_meta( $post_id, $name, !$field['multiple'] );
+				$old  = sf_get_post_meta( $post_id, $name, !$field['multiple'] );
 				$new  = isset( $_POST[$name] ) ? $_POST[$name] : ( $field['multiple'] ? array() : '' );
 
 				// Allow field class change the value
@@ -740,7 +740,7 @@ if ( ! class_exists( 'RW_Meta_Box' ) )
 		{
 			foreach ( $fields as $field )
 			{
-				$value = get_post_meta( $post_id, $field['id'], !$field['multiple'] );
+				$value = sf_get_post_meta( $post_id, $field['id'], !$field['multiple'] );
 				if (
 					( !$field['multiple'] && '' !== $value )
 					|| ( $field['multiple'] && array() !== $value )

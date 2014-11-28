@@ -125,7 +125,7 @@ function rwmb_meta( $key, $args = array(), $post_id = null )
 	// Set 'multiple' for fields based on 'type'
 	$args['multiple'] = in_array( $args['type'], array( 'checkbox_list', 'file', 'file_advanced', 'image', 'image_advanced', 'plupload_image', 'thickbox_image' ) );
 
-	$meta = get_post_meta( $post_id, $key, !$args['multiple'] );
+	$meta = sf_get_post_meta( $post_id, $key, !$args['multiple'] );
 
 	// Get uploaded files info
 	if ( in_array( $args['type'], array( 'file', 'file_advanced' ) ) )
@@ -239,7 +239,7 @@ function rwmb_image_info( $id, $args = array() )
 		'title'       => $attachment->post_title,
 		'caption'     => $attachment->post_excerpt,
 		'description' => $attachment->post_content,
-		'alt'         => get_post_meta( $id, '_wp_attachment_image_alt', true ),
+		'alt'         => sf_get_post_meta( $id, '_wp_attachment_image_alt', true ),
 	);
 }
 
@@ -255,7 +255,7 @@ function rwmb_image_info( $id, $args = array() )
 function rwmb_meta_map( $key, $args = array(), $post_id = null )
 {
 	$post_id = empty( $post_id ) ? get_the_ID() : $post_id;
-	$loc = get_post_meta( $post_id, $key, true );
+	$loc = sf_get_post_meta( $post_id, $key, true );
 	if ( !$loc )
 		return '';
 

@@ -13,7 +13,7 @@ function lip_user_has_loved_post($user_id, $post_id) {
 // increments a love count
 function lip_mark_post_as_loved($post_id, $user_id) {
 
-	$love_count = get_post_meta($post_id, '_li_love_count', true);
+	$love_count = sf_get_post_meta($post_id, '_li_love_count', true);
 	if($love_count)
 		$love_count = $love_count + 1;
 	else
@@ -42,7 +42,7 @@ function lip_store_loved_id_for_user($user_id, $post_id) {
 
 // returns a love count for a post
 function lip_get_love_count($post_id) {
-	$love_count = get_post_meta($post_id, '_li_love_count', true);
+	$love_count = sf_get_post_meta($post_id, '_li_love_count', true);
 	if($love_count)
 		return $love_count;
 	return 0;

@@ -97,14 +97,14 @@ img[class*="align"], img[class*="wp-image-"], #content .gallery .gallery-icon im
 		margin-top: 0.5em;
 	}
 #edit-modal-header {
-	background: #f7f7f7;
-	border-bottom: 1px solid #e4e4e4;
-	margin: -20px -20px 20px;
-	padding: 22px 15px;
-	border-radius: 3px 3px 0 0;
-	height: auto;
-	overflow: hidden;
-	width: 810px;
+    background: #f7f7f7;
+    border-bottom: 1px solid #e4e4e4;
+    margin: -20px -20px 20px;
+    padding: 22px 20px;
+    border-radius: 3px 3px 0 0;
+    height: auto;
+    overflow: hidden;
+    width: 100%;
 }
 #edit-modal-header h2 {
 	float: left;
@@ -119,18 +119,23 @@ img[class*="align"], img[class*="wp-image-"], #content .gallery .gallery-icon im
 	font-weight: bold;
 }
 .spb_edit_form_elements {
-	width: 800px;
-	margin: 10% auto;
-	padding: 20px;
-	background: #fff;
-	border-radius: 3px;
+    width: 80%;
+    min-width: 800px;
+    margin: 5% auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 3px;
+    height: 80%;
+    max-height: 80%;
+    overflow: hidden;
 }
 .spb_edit_wrap {
-	overflow-y: scroll;
-	height: 300px;
-	padding: 20px;
-	margin: 0 -10px;
+    overflow-y: scroll;
+    height: 86%;
+    padding: 20px;
+    margin: 0 -10px;
 }
+
 #cancel-background-options {
 	float: left;
 	margin-right: 15px;
@@ -163,7 +168,7 @@ img[class*="align"], img[class*="wp-image-"], #content .gallery .gallery-icon im
 	margin-top: 0!important;
 }
 #TB_window {
-	z-index: 9999;
+	z-index: 100050;
 }
 .spb_element_wrapper {
 	border: 1px solid #e3e3e3;
@@ -1095,6 +1100,12 @@ option.alert-block {
 	padding-top: 85px;
 	padding-bottom: 10px;
 }
+.spb_supersearch .spb_element_wrapper {
+    background-image: url(../img/asset_icons/super_search.png);
+    background-position: center 15px;
+    background-repeat: no-repeat;
+    height: 80px;
+}
 .spb_jobs_overview .spb_element_wrapper .job_text, .spb_codesnippet .spb_element_wrapper .content {
 	display: none;
 }
@@ -1703,6 +1714,9 @@ option.alert-block {
 .spb-icon-parallax {
 	background-image: url(../img/menu_icons/menu_parallax.png);
 }
+.spb-icon-supersearch {
+    background-image: url(../img/menu_icons/menu_super_search.png);
+}
 .alert .messagebox_text {
 	padding-left:28px;
 }
@@ -1995,6 +2009,9 @@ option.alert-block {
 	.spb-icon-parallax {
 		background-image: url(../img/menu_icons/menu_parallax@2x.png);
 	}
+	.spb-icon-supersearch {
+	    background-image: url(../img/menu_icons/menu_super_search@2x.png);
+	}
 	
 	.column_decrease {
 		background-image: url(../img/editor_icons/PB_Element_left_arrow@2x.png);
@@ -2163,6 +2180,10 @@ option.alert-block {
 	.spb_single_image .spb-icon-single-image {
 		background-image: url(../img/asset_icons/no_image@2x.png);
 		background-size: 16px 16px;
+	}
+	.spb_supersearch .spb_element_wrapper {
+	    background-image: url(../img/asset_icons/super_search@2x.png);
+	    background-size: 120px 54px;
 	}
 }
 

@@ -18,8 +18,10 @@ $options = get_option('sf_neighborhood_options');
 	<?php do_action( 'woocommerce_product_meta_start' ); ?>
 	
 	<p>
-	<?php if ( $product->is_type( array( 'simple', 'variable' ) ) && get_option( 'woocommerce_enable_sku' ) == 'yes' && $product->get_sku() ) : ?>
-		<span itemprop="productID" class="sku_wrapper"><?php _e( 'Product code:', 'swiftframework' ); ?> <span class="sku"><?php echo $product->get_sku(); ?></span> - </span>
+	<?php if ( wc_product_sku_enabled() && ( $product->get_sku() || $product->is_type( 'variable' ) ) ) : ?>
+
+		<span class="sku_wrapper"><?php _e( 'SKU:', 'woocommerce' ); ?> <span class="sku" itemprop="sku"><?php echo ( $sku = $product->get_sku() ) ? $sku : __( 'N/A', 'woocommerce' ); ?></span> - </span>
+
 	<?php endif; ?>
 	<span class="need-help"><?php _e("Need Help?", "swiftframework"); ?> <a href="#email-form" class="inline" data-toggle="modal"><?php _e("Contact Us", "swiftframework"); ?></a></span>
 	<span class="leave-feedback"><a href="#feedback-form" class="inline" data-toggle="modal"><?php _e("Leave Feedback", "swiftframework"); ?></a></span>

@@ -38,7 +38,7 @@ class SwiftPageBuilderShortcode_spb_parallax extends SwiftPageBuilderShortcode {
 }
 
 SPBMap::map( 'spb_parallax',  array(
-    "name"		=> __("Parallax", "swift_page_builder"),
+    "name"		=> __("Parallax", 'swift-framework-admin'),
     "base"		=> "spb_parallax",
     "class"		=> "",
 	"icon"		=> "spb-icon-parallax",
@@ -47,57 +47,57 @@ SPBMap::map( 'spb_parallax',  array(
     "params"	=> array(
         array(
             "type" => "textfield",
-            "heading" => __("Widget title", "swift_page_builder"),
+            "heading" => __("Widget title", 'swift-framework-admin'),
             "param_name" => "title",
             "value" => "",
-            "description" => __("Heading text. Leave it empty if not needed.", "swift_page_builder")
+            "description" => __("Heading text. Leave it empty if not needed.", 'swift-framework-admin')
         ),
         array(
         	"type" => "attach_image",
-        	"heading" => __("Background Image", "swift_page_builder"),
+        	"heading" => __("Background Image", 'swift-framework-admin'),
         	"param_name" => "bg_image",
         	"value" => "",
         	"description" => "Choose an image to use as the background for the parallax area."
         ),
         array(
             "type" => "dropdown",
-            "heading" => __("Background Type", "swift_page_builder"),
+            "heading" => __("Background Type", 'swift-framework-admin'),
             "param_name" => "bg_type",
             "value" => array(
-            			__("Cover", "swift_page_builder") => "cover",
-            			__("Pattern", "swift_page_builder") => "pattern"
+            			__("Cover", 'swift-framework-admin') => "cover",
+            			__("Pattern", 'swift-framework-admin') => "pattern"
             			),
-            "description" => __("If you're uploading an image that you want to spread across the whole asset, then choose cover. Else choose pattern for an image you want to repeat.", "swift_page_builder")
+            "description" => __("If you're uploading an image that you want to spread across the whole asset, then choose cover. Else choose pattern for an image you want to repeat.", 'swift-framework-admin')
         ),
         array(
             "type" => "textarea_html",
             "holder" => "div",
             "class" => "",
-            "heading" => __("Parallax Content", "swift_page_builder"),
+            "heading" => __("Parallax Content", 'swift-framework-admin'),
             "param_name" => "content",
-            "value" => __("<p>This is a parallax text block. Click the edit button to change this text.</p>", "swift_page_builder"),
-            "description" => __("Enter your content.", "swift_page_builder")
+            "value" => __("<p>This is a parallax text block. Click the edit button to change this text.</p>", 'swift-framework-admin'),
+            "description" => __("Enter your content.", 'swift-framework-admin')
         ),
         array(
             "type" => "dropdown",
-            "heading" => __("Show alt background", "swift_page_builder"),
+            "heading" => __("Show alt background", 'swift-framework-admin'),
             "param_name" => "alt_background",
-            "value" => array(__("None", "swift_page_builder") => "none", __("Alt 1", "swift_page_builder") => "alt-one", __("Alt 2", "swift_page_builder") => "alt-two", __("Alt 3", "swift_page_builder") => "alt-three", __("Alt 4", "swift_page_builder") => "alt-four", __("Alt 5", "swift_page_builder") => "alt-five", __("Alt 6", "swift_page_builder") => "alt-six", __("Alt 7", "swift_page_builder") => "alt-seven", __("Alt 8", "swift_page_builder") => "alt-eight", __("Alt 9", "swift_page_builder") => "alt-nine", __("Alt 10", "swift_page_builder") => "alt-ten"),
-            "description" => __("Show an alternative background around the asset. These can all be set in Neighborhood Options > Asset Background Options. NOTE: This will only use the text color configuration, as the background is set in this asset.", "swift_page_builder")
+            "value" => array(__("None", 'swift-framework-admin') => "none", __("Alt 1", 'swift-framework-admin') => "alt-one", __("Alt 2", 'swift-framework-admin') => "alt-two", __("Alt 3", 'swift-framework-admin') => "alt-three", __("Alt 4", 'swift-framework-admin') => "alt-four", __("Alt 5", 'swift-framework-admin') => "alt-five", __("Alt 6", 'swift-framework-admin') => "alt-six", __("Alt 7", 'swift-framework-admin') => "alt-seven", __("Alt 8", 'swift-framework-admin') => "alt-eight", __("Alt 9", 'swift-framework-admin') => "alt-nine", __("Alt 10", 'swift-framework-admin') => "alt-ten"),
+            "description" => __("Show an alternative background around the asset. These can all be set in Neighborhood Options > Asset Background Options. NOTE: This will only use the text color configuration, as the background is set in this asset.", 'swift-framework-admin')
         ),
         array(
             "type" => "altbg_preview",
-            "heading" => __("Alt Background Preview", "swift_page_builder"),
+            "heading" => __("Alt Background Preview", 'swift-framework-admin'),
             "param_name" => "altbg_preview",
             "value" => "",
-            "description" => __("", "swift_page_builder")
+            "description" => __("", 'swift-framework-admin')
         ),
         array(
             "type" => "textfield",
-            "heading" => __("Extra class name", "swift_page_builder"),
+            "heading" => __("Extra class name", 'swift-framework-admin'),
             "param_name" => "el_class",
             "value" => "",
-            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "swift_page_builder")
+            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-admin')
         )
     )
 ) );

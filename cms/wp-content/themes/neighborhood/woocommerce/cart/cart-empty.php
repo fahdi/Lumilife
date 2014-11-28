@@ -15,9 +15,9 @@ wc_print_notices();
 
 ?>
 
-<h4><?php _e( 'Your Shopping Bag is empty', 'swiftframework' ) ?></h4>
+<h4><?php _e( 'Your shopping bag is empty', 'swiftframework' ) ?></h4>
 
-<p class="no-items"><?php _e( 'You currently have no items in your Shopping Bag.', 'swiftframework' ) ?></p>
+<p class="no-items"><?php _e( 'You currently have no items in your shopping bag.', 'swiftframework' ) ?></p>
 
 <?php do_action('woocommerce_cart_is_empty'); ?>
 

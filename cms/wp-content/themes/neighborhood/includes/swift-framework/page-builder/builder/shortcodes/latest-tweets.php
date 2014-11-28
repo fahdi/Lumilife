@@ -45,52 +45,52 @@ class SwiftPageBuilderShortcode_latest_tweets extends SwiftPageBuilderShortcode 
 }
 
 SPBMap::map( 'latest_tweets', array(
-    "name"		=> __("Latest Tweets", "swift_page_builder"),
+    "name"		=> __("Latest Tweets", 'swift-framework-admin'),
     "base"		=> "latest_tweets",
     "class"		=> "spb-latest-tweets",
     "icon"      => "spb-icon-latest-tweets",
     "params"	=> array(
     	array(
     	    "type" => "textfield",
-    	    "heading" => __("Twitter username", "swift_page_builder"),
+    	    "heading" => __("Twitter username", 'swift-framework-admin'),
     	    "param_name" => "twitter_username",
     	    "value" => "",
-    	    "description" => __("The twitter username you'd like to show the latest tweet for. Make sure to not include the @.", "swift_page_builder")
+    	    "description" => __("The twitter username you'd like to show the latest tweet for. Make sure to not include the @.", 'swift-framework-admin')
     	),
     	array(
     	    "type" => "textfield",
-    	    "heading" => __("Number of Tweets", "swift_page_builder"),
+    	    "heading" => __("Number of Tweets", 'swift-framework-admin'),
     	    "param_name" => "tweets_count",
     	    "value" => "1",
-    	    "description" => __("The number of tweets you'd like to show.", "swift_page_builder")
+    	    "description" => __("The number of tweets you'd like to show.", 'swift-framework-admin')
     	),
     	array(
     	    "type" => "dropdown",
-    	    "heading" => __("Margin below widget", "swift_page_builder"),
+    	    "heading" => __("Margin below widget", 'swift-framework-admin'),
     	    "param_name" => "pb_margin_bottom",
-    	    "value" => array(__('No', "swift_page_builder") => "no", __('Yes', "swift_page_builder") => "yes"),
-    	    "description" => __("Add a bottom margin to the widget.", "swift_page_builder")
+    	    "value" => array(__('No', 'swift-framework-admin') => "no", __('Yes', 'swift-framework-admin') => "yes"),
+    	    "description" => __("Add a bottom margin to the widget.", 'swift-framework-admin')
     	),
     	array(
     	    "type" => "dropdown",
-    	    "heading" => __("Border below widget", "swift_page_builder"),
+    	    "heading" => __("Border below widget", 'swift-framework-admin'),
     	    "param_name" => "pb_border_bottom",
-    	    "value" => array(__('No', "swift_page_builder") => "no", __('Yes', "swift_page_builder") => "yes"),
-    	    "description" => __("Add a bottom border to the widget.", "swift_page_builder")
+    	    "value" => array(__('No', 'swift-framework-admin') => "no", __('Yes', 'swift-framework-admin') => "yes"),
+    	    "description" => __("Add a bottom border to the widget.", 'swift-framework-admin')
     	),
     	array(
     	    "type" => "dropdown",
-    	    "heading" => __("Border above widget", "swift_page_builder"),
+    	    "heading" => __("Border above widget", 'swift-framework-admin'),
     	    "param_name" => "pb_border_top",
-    	    "value" => array(__('No', "swift_page_builder") => "no", __('Yes', "swift_page_builder") => "yes"),
-    	    "description" => __("Add a top border to the widget.", "swift_page_builder")
+    	    "value" => array(__('No', 'swift-framework-admin') => "no", __('Yes', 'swift-framework-admin') => "yes"),
+    	    "description" => __("Add a top border to the widget.", 'swift-framework-admin')
     	),
     	array(
     	    "type" => "textfield",
-    	    "heading" => __("Extra class name", "swift_page_builder"),
+    	    "heading" => __("Extra class name", 'swift-framework-admin'),
     	    "param_name" => "el_class",
     	    "value" => "",
-    	    "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "swift_page_builder")
+    	    "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-admin')
     	)
     )
 ) );

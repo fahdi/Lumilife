@@ -23,13 +23,13 @@
 	            if ( $param['param_name'] != 'content' ) {
 	                //$shortcode_attributes[$param['param_name']] = $param['value'];
 	                if ( is_string($param['value']) ) {
-	                    $shortcode_attributes[$param['param_name']] = __($param['value'], "swift_page_builder");
+	                    $shortcode_attributes[$param['param_name']] = __($param['value'], 'swift-framework-admin');
 	                } else {
 	                    $shortcode_attributes[$param['param_name']] = $param['value'];
 	                }
 	            } else if ( $param['param_name'] == 'content' && $content == NULL ) {
 	                //$content = $param['value'];
-	                $content = __($param['value'], "swift_page_builder");
+	                $content = __($param['value'], 'swift-framework-admin');
 	            }
 	        }
 	        extract(shortcode_atts(

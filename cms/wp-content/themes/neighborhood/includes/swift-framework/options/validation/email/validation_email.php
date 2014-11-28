@@ -11,7 +11,7 @@ class Redux_Validation_email extends Redux_Options {
 	function __construct($field, $value, $current) {
 		parent::__construct();
 		$this->field = $field;
-		$this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('You must provide a valid email for this option.', Redux_TEXT_DOMAIN);
+		$this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('You must provide a valid email for this option.', "swiftframework");
 		$this->value = $value;
 		$this->current = $current;
 		$this->validate();

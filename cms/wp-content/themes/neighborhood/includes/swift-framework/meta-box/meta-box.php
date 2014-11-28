@@ -15,6 +15,35 @@ defined( 'ABSPATH' ) || exit;
 // Script version, used to add version for scripts and styles
 define( 'RWMB_VER', '4.3.3' );
 
+function sf_get_post_meta( $id, $key = "", $single = false ) {
+	
+    $GLOBALS['sf_post_meta'] = isset( $GLOBALS['sf_post_meta'] ) ? $GLOBALS['sf_post_meta'] : array();
+    if ( !isset( $id ) ) {
+        return;
+    }
+    if (!is_array($id)) {
+        if ( ! isset( $GLOBALS['sf_post_meta'][ $id ] ) ) {
+            //$GLOBALS['sf_post_meta'][ $id ] = array();
+            $GLOBALS['sf_post_meta'][ $id ] = get_post_meta( $id );
+        }
+        if ( !empty($key) && isset($GLOBALS['sf_post_meta'][ $id ][$key]) && !empty($GLOBALS['sf_post_meta'][ $id ][$key]) ) {
+            if ( $single )
+                return maybe_unserialize( $GLOBALS['sf_post_meta'][ $id ][$key][0] );
+            else
+                return array_map('maybe_unserialize', $GLOBALS['sf_post_meta'][ $id ][$key] );
+        }
+
+        if ($single)
+            return '';
+        else
+            return array();
+
+    }
+	
+    return get_post_meta($id, $key, $single);
+
+}
+
 // Define plugin URLs, for fast enqueuing scripts and styles
 if ( ! defined( 'RWMB_URL' ) )
 	define( 'RWMB_URL', get_template_directory_uri() . '/includes/swift-framework/meta-box/' );

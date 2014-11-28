@@ -16,10 +16,10 @@
 	$default_left_sidebar = $options['default_product_left_sidebar'];
 	$default_right_sidebar = $options['default_product_right_sidebar'];
 	
-	$show_page_title = get_post_meta($post->ID, 'sf_page_title', true);
-	$page_title_one = get_post_meta($post->ID, 'sf_page_title_one', true);
-	$page_title_bg = get_post_meta($post->ID, 'sf_page_title_bg', true);
-	$no_breadcrumbs = get_post_meta($post->ID, 'sf_no_breadcrumbs', true);
+	$show_page_title = sf_get_post_meta($post->ID, 'sf_page_title', true);
+	$page_title_one = sf_get_post_meta($post->ID, 'sf_page_title_one', true);
+	$page_title_bg = sf_get_post_meta($post->ID, 'sf_page_title_bg', true);
+	$no_breadcrumbs = sf_get_post_meta($post->ID, 'sf_no_breadcrumbs', true);
 	
 	if ($show_page_title == "") {
 		$show_page_title = $default_show_page_heading;
@@ -28,9 +28,9 @@
 		$page_title_bg = $default_page_heading_bg_alt;
 	}
 	
-	$sidebar_config = get_post_meta($post->ID, 'sf_sidebar_config', true);
-	$left_sidebar = get_post_meta($post->ID, 'sf_left_sidebar', true);
-	$right_sidebar = get_post_meta($post->ID, 'sf_right_sidebar', true);
+	$sidebar_config = sf_get_post_meta($post->ID, 'sf_sidebar_config', true);
+	$left_sidebar = sf_get_post_meta($post->ID, 'sf_left_sidebar', true);
+	$right_sidebar = sf_get_post_meta($post->ID, 'sf_right_sidebar', true);
 	
 	if ($sidebar_config == "") {
 		$sidebar_config = $default_sidebar_config;

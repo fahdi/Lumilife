@@ -37,6 +37,7 @@
 		$bg_size = $options['bg_size'];
 		
 		// Header Styling
+		$header_layout = $options['header_layout'];
 		$topbar_bg_color = get_option('topbar_bg_color', '#252525');
 		$topbar_text_color = get_option('topbar_text_color', '#999999');
 		$topbar_link_color = get_option('topbar_link_color', '#ffffff');
@@ -105,10 +106,38 @@
 		
 		// Logo/Nav Spacing
 		$logo_width = $options['logo_width'];
-		$logo_spacing_top = $options['logo_top_spacing'];
-		$logo_spacing_bottom = $options['logo_bottom_spacing'];
-		$nav_top_spacing = $options['nav_top_spacing'];
-			
+		
+		// Header Height
+		$header_height = $logo_height = 0;
+		$logo_padding = 35;
+		$logo = $logo_id = "";
+		if (isset($options['logo_upload'])) {
+			$logo = $options['logo_upload'];
+			$logo_id = sf_get_attachment_id_from_url($logo);
+		}
+		if ($logo_id != "") {
+			$logo_object = wp_get_attachment_image_src($logo_id);
+			$logo_height = intval($logo_object[2], 10);
+		}
+		if (isset($options['logo_padding'])) {
+			if ($options['logo_padding']) {
+				$logo_padding = $options['logo_padding'];
+			}
+		}
+		if ($logo_height < 40) {
+			$logo_height = 40;	
+		}
+		if (isset($options['logo_height'])) {
+			if ($options['logo_height'] != "") {
+				$logo_height = $options['logo_height'];
+			}
+		}
+		if ($logo_height != 0) {
+			$logo_padding = apply_filters('sf_header_padding', $logo_padding);
+			$header_height = $logo_height + (intval($logo_padding, 10) * 2);
+		}
+		
+		
 		// Font
 		$body_font_option = $options['body_font_option'];
 		$standard_font = $options['web_body_font'];
@@ -251,7 +280,7 @@
 		}
 		global $post;
 		if ($post) {
-		$background_image_size = get_post_meta($post->ID, 'sf_background_image_size', true);
+		$background_image_size = sf_get_post_meta($post->ID, 'sf_background_image_size', true);
 		}
 		
 		// Custom CSS
@@ -460,7 +489,7 @@
 		// CUSTOM COLOUR STYLES
 		echo "\n".'/*========== Accent Styles ==========*/'."\n";
 		echo '::selection, ::-moz-selection {background-color: '.$accent_color.'; color: #fff;}'. "\n"; 
-		echo '.recent-post figure, span.highlighted, span.dropcap4, .loved-item:hover .loved-count, .flickr-widget li, .portfolio-grid li, .wpcf7 input.wpcf7-submit[type="submit"], .woocommerce-page nav.woocommerce-pagination ul li span.current, .woocommerce nav.woocommerce-pagination ul li span.current, figcaption .product-added, .woocommerce .wc-new-badge, .yith-wcwl-wishlistexistsbrowse a, .yith-wcwl-wishlistaddedbrowse a, .woocommerce .widget_layered_nav ul li.chosen > *, .woocommerce .widget_layered_nav_filters ul li a {background-color: '.$accent_color.'!important; color: '.$accent_alt_color.';}'. "\n";
+		echo 'span.highlighted, span.dropcap4, .loved-item:hover .loved-count, .flickr-widget li, .portfolio-grid li, .wpcf7 input.wpcf7-submit[type="submit"], .woocommerce-page nav.woocommerce-pagination ul li span.current, .woocommerce nav.woocommerce-pagination ul li span.current, figcaption .product-added, .woocommerce .wc-new-badge, .yith-wcwl-wishlistexistsbrowse a, .yith-wcwl-wishlistaddedbrowse a, .woocommerce .widget_layered_nav ul li.chosen > *, .woocommerce .widget_layered_nav_filters ul li a {background-color: '.$accent_color.'!important; color: '.$accent_alt_color.';}'. "\n";
 		echo '.sf-button.accent {background-color: '.$accent_color.'!important;}'. "\n";
 		echo 'a:hover, #sidebar a:hover, .pagination-wrap a:hover, .carousel-nav a:hover, .portfolio-pagination div:hover > i, #footer a:hover, #copyright a, .beam-me-up a:hover span, .portfolio-item .portfolio-item-permalink, .read-more-link, .blog-item .read-more, .blog-item-details a, .author-link, .comment-meta .edit-link a, .comment-meta .comment-reply a, #reply-title small a, ul.member-contact, ul.member-contact li a, #respond .form-submit input:hover, span.dropcap2, .spb_divider.go_to_top a, love-it-wrapper:hover .love-it, .love-it-wrapper:hover span, .love-it-wrapper .loved, .comments-likes a:hover i, .comments-likes .love-it-wrapper:hover a i, .comments-likes a:hover span, .love-it-wrapper:hover a i, .item-link:hover, #header-translation p a, #swift-slider .flex-caption-large h1 a:hover, .wooslider .slide-title a:hover, .caption-details-inner .details span > a, .caption-details-inner .chart span, .caption-details-inner .chart i, #swift-slider .flex-caption-large .chart i, #breadcrumbs a:hover, .ui-widget-content a:hover, .woocommerce form.cart button.single_add_to_cart_button:hover, .yith-wcwl-add-button a:hover, #product-img-slider li a.zoom:hover, .woocommerce .star-rating span, .mobile-search-link.active {color: '.$accent_color.';}'. "\n";
 		echo '.carousel-wrap > a:hover, .ajax-search-results .all-results:hover, .search-result h5 a:hover {color: '.$accent_color.'!important;}'. "\n";
@@ -498,9 +527,19 @@
 				
 		// HEADER STYLES
 		echo "\n".'/*========== Header Styles ==========*/'."\n";
-		echo '#super-search .search-options .ss-dropdown > span, #super-search .search-options input {color: '.$accent_color.'; border-bottom-color: '.$accent_color.';}'. "\n";
-		echo '#super-search .search-options .ss-dropdown ul li.selected .icon-ok { color: '.$accent_color.';}'. "\n";
-		echo '#super-search-go:hover, #super-search-close:hover { background-color: '.$accent_color.'; border-color: '.$accent_color.'; color: '.$accent_alt_color.';}'. "\n";
+		if ($logo_height != 0) {
+			echo '#logo > a.logo-link {height: '.$logo_height.'px;}';
+		}
+		if ($header_height != 0) {
+			echo '#header-section.header-4 #header nav#main-navigation ul.menu > li, #header-section.header-5 #header nav#main-navigation ul.menu > li, #header-section.header-4 .header-right nav ul.menu > li, #header-section.header-5 .header-left nav ul.menu > li {line-height: '.$header_height.'px;}';
+			echo '#header-section.header-4 #logo > a.logo-link, #header-section.header-5 #logo > a.logo-link {height: '.$header_height.'px;}';
+		} else {
+			echo '#header-section.header-4 #header, #header-section.header-5 #header {padding: 35px 0;}';
+		}
+		echo '.sf-super-search {background-color: ' . $secondary_accent_color . ';}';
+		echo '.sf-super-search .search-options .ss-dropdown > span, .sf-super-search .search-options input {color: ' . $accent_color . '; border-bottom-color: ' . $accent_color . ';}';
+		echo '.sf-super-search .search-options .ss-dropdown ul li .fa-check {color: ' . $accent_color . ';}';
+		echo '.sf-super-search-go:hover, .sf-super-search-close:hover { background-color: ' . $accent_color . '; border-color: ' . $accent_color . '; color: ' . $accent_alt_color . ';}';
 		echo '#top-bar {background: '.$topbar_bg_color.'; color: '.$topbar_text_color.';}'. "\n";
 		echo '#top-bar .tb-welcome {border-color: '.$topbar_divider_color.';}'. "\n";
 		echo '#top-bar a {color: '.$topbar_link_color.';}'. "\n";
@@ -510,10 +549,10 @@
 		echo '#top-bar .show-menu {background-color: '.$topbar_divider_color.';color: '.$secondary_accent_color.';}'. "\n";
 		echo '#header-languages .current-language {background: '.$nav_sm_bg_hover_color.'; color: '.$nav_sm_selected_text_color.';}'. "\n";
 		echo '#header-section:before, #mini-header {background-color: '.$header_bg_color1.';background: -webkit-gradient(linear, 0% 0%, 0% 100%, from('.$header_bg_color2.'), to('.$header_bg_color1.'));background: -webkit-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');background: -moz-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');background: -ms-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');background: -o-linear-gradient(top, '.$header_bg_color1.', '.$header_bg_color2.');}'. "\n";
-		echo '#logo img {padding-top: '.$logo_spacing_top.'px;padding-bottom: '.$logo_spacing_bottom.'px;}'. "\n";
 		if ($logo_width > 0) {
 		echo '#logo img, #logo img.retina {width: '.$logo_width.'px;}'. "\n";
 		}
+		echo '#logo img {height: '.$logo_height.'px;}'. "\n";
 		if ($header_opacity != "100") {
 		echo '#header-section:before {opacity: 0.'.$header_opacity.';}'. "\n";
 		}
@@ -522,7 +561,6 @@
 		}
 		echo '#header-section .header-menu .menu li, #mini-header .header-right nav .menu li {border-left-color: '.$section_divide_color.';}'. "\n";
 		echo '#header-section > #main-nav {border-top-color: '.$section_divide_color.';}'. "\n";
-		echo '#nav-section, #main-navigation {margin-top: '.$nav_top_spacing.'px;}'. "\n";
 		echo '.page-content {border-bottom-color: '.$section_divide_color.';}'. "\n";
 		
 		// NAVIGATION STYLES
@@ -533,6 +571,7 @@
 		echo 'nav .menu .sub-menu .parent > a:after {border-left-color: '.$nav_pointer_color.';}'. "\n";
 		echo 'nav .menu ul.sub-menu {background-color: '.$nav_sm_bg_color.';}'. "\n";
 		echo 'nav .menu ul.sub-menu li {border-bottom-color: '.$nav_divider_color.';border-bottom-style: '.$nav_divider.';}'. "\n";
+		echo 'li.menu-item.sf-mega-menu > ul.sub-menu > li {border-color: '.$nav_divider_color.';border-style: '.$nav_divider.';}'. "\n";
 		echo 'nav .menu > li a, #menubar-controls a {color: '.$nav_text_color.';}'. "\n";
 		echo 'nav .menu > li:hover > a {color: '.$nav_text_hover_color.';}'. "\n";
 		echo 'nav .menu ul.sub-menu li > a, #top-bar nav .menu ul li > a {color: '.$nav_sm_text_color.';}'. "\n";
@@ -540,7 +579,7 @@
 		echo 'nav .menu li.parent > a:after, nav .menu li.parent > a:after:hover {color: #aaa;}'. "\n";
 		echo 'nav .menu li.current-menu-ancestor > a, nav .menu li.current-menu-item > a {color: '.$nav_selected_text_color.';}'. "\n";
 		echo 'nav .menu ul li.current-menu-ancestor > a, nav .menu ul li.current-menu-item > a {color: '.$nav_sm_selected_text_color.'; background: '.$nav_sm_bg_hover_color.';}'. "\n";
-		echo '#main-nav .header-right ul.menu > li, .wishlist-item {border-left-color: '.$nav_divider_color.';}'. "\n";
+		echo '#main-nav .header-right ul.menu > li, .wishlist-item, .header-right .menu-search, .header-left .menu-search {border-left-color: '.$nav_divider_color.';}'. "\n";
 		echo '#nav-search, #mini-search {background: '.$topbar_bg_color.';}'. "\n";
 		echo '#nav-search a, #mini-search a {color: '.$topbar_text_color.';}'. "\n";
 		echo '.bag-header, .bag-product, .bag-empty, .wishlist-empty {border-color: '.$nav_divider_color.';}'. "\n";
@@ -548,7 +587,7 @@
 		echo '.bag-buttons a.checkout-button, .bag-buttons a.create-account-button, .woocommerce input.button.alt, .woocommerce .alt-button, .woocommerce button.button.alt {background: '.$secondary_accent_color.'; color: '.$secondary_accent_alt_color.';}'. "\n";
 		echo '.bag-buttons a:hover, .woocommerce .button.update-cart-button:hover {background: '.$accent_color.'; color: '.$accent_alt_color.';}'. "\n";
 		echo '.bag-buttons a.checkout-button:hover, .woocommerce input.button.alt:hover, .woocommerce .alt-button:hover, .woocommerce button.button.alt:hover {background: '.$accent_color.'; color: '.$accent_alt_color.';}'. "\n";
-		echo '.shopping-bag:before, nav .menu ul.sub-menu li:first-child:before {border-bottom-color: '.$nav_pointer_color.';}'. "\n";
+		echo 'nav.std-menu ul.menu > li.parent > a:after {border-bottom-color: '.$nav_pointer_color.';}'. "\n";
 		
 		// PROMO BAR STYLES
 		echo "\n".'/*========== Page Heading Styles ==========*/'."\n";
@@ -728,9 +767,9 @@
 		echo '.woocommerce-page nav.woocommerce-pagination ul li span.current, .woocommerce nav.woocommerce-pagination ul li span.current { color: '.$accent_alt_color.';}'. "\n";
 		echo 'li.product figcaption a.product-added {color: '.$accent_alt_color.';}'. "\n";
 		echo '.woocommerce ul.products li.product figure figcaption .shop-actions > a, .woocommerce ul.products li.product figure figcaption .shop-actions > a.product-added:hover {color: '.$secondary_accent_alt_color.';}'. "\n";
-		echo '.woocommerce ul.products li.product figure figcaption .shop-actions > a:hover {color: '.$accent_color.';}'. "\n";
+		echo '.woocommerce ul.products li.product figure figcaption .shop-actions > a:hover, ul.social-icons li a:hover {color: '.$accent_color.';}'. "\n";
 		echo '.woocommerce ul.products li.product figure figcaption, .yith-wcwl-add-to-wishlist, .yith-wcwl-add-button a, .woocommerce #account_details .login form p.form-row input[type="submit"], .my-account-login-wrap .login-wrap form.login p.form-row input[type="submit"], .woocommerce .my-account-login-wrap form input[type="submit"], .lost_reset_password p.form-row input[type="submit"], .track_order p.form-row input[type="submit"], .change_password_form p input[type="submit"], .woocommerce .wishlist_table tr td.product-add-to-cart a, .woocommerce input.button[name="save_address"], .woocommerce .woocommerce-message a.button, ul.products li.product a.quick-view-button, #login-form .modal-body form.login p.form-row input[type="submit"], .woocommerce input[name="save_account_details"], .login p.form-row input[type="submit"] { background: '.$secondary_accent_color.'; color: '.$secondary_accent_alt_color.' ;}'. "\n";
-		echo '.woocommerce form.cart button.single_add_to_cart_button, .woocommerce p.cart a.single_add_to_cart_button { background: '.$secondary_accent_color.'!important; color: '.$secondary_accent_alt_color.' ;}'. "\n";
+		echo '.woocommerce form.cart button.single_add_to_cart_button, .woocommerce p.cart a.single_add_to_cart_button, ul.products li.product a.quick-view-button { background: '.$secondary_accent_color.'!important; color: '.$secondary_accent_alt_color.' ;}'. "\n";
 		echo '.woocommerce p.cart a.single_add_to_cart_button:hover {background: '.$secondary_accent_color.'; color: '.$accent_color.' ;}'. "\n";
 		echo '.woocommerce table.shop_table tr td.product-remove .remove:hover, .woocommerce .coupon input.apply-coupon:hover, .woocommerce .shipping-calculator-form .update-totals-button button:hover, .woocommerce .quantity .plus:hover, .woocommerce .quantity .minus:hover, .add_review a:hover, .woocommerce #review_form #respond .form-submit input:hover, .lost_reset_password p.form-row input[type="submit"]:hover, .track_order p.form-row input[type="submit"]:hover, .change_password_form p input[type="submit"]:hover, .woocommerce table.my_account_orders .order-actions .button:hover, .woocommerce .widget_price_filter .price_slider_amount .button:hover, .woocommerce.widget .buttons a:hover, .woocommerce .wishlist_table tr td.product-add-to-cart a:hover, .woocommerce input.button[name="save_address"]:hover, #login-form .modal-body form.login p.form-row input[type="submit"]:hover, .woocommerce input[name="save_account_details"]:hover, .woocommerce input[name="apply_coupon"]:hover, .login p.form-row input[type="submit"]:hover {background: '.$accent_color.'; color: '.$accent_alt_color.';}'. "\n";
 		echo '.woocommerce #account_details .login, .woocommerce #account_details .login h4.lined-heading span, .my-account-login-wrap .login-wrap, .my-account-login-wrap .login-wrap h4.lined-heading span, .woocommerce div.product form.cart table div.quantity {background: '.$alt_bg_color.';}'. "\n";

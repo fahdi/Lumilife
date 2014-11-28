@@ -28,16 +28,16 @@ class Redux_Options_multi_text {
         if(isset($this->value) && is_array($this->value)) {
             foreach($this->value as $k => $value) {
                 if($value != '') {
-                    echo '<li><input type="text" id="' . $this->field['id'] . '-' . $k . '" name="' . $this->args['opt_name'] . '[' . $this->field['id'] . '][]" value="' . esc_attr($value) . '" class="' . $class . '" /> <a href="javascript:void(0);" class="redux-opts-multi-text-remove">' . __('Remove', Redux_TEXT_DOMAIN) . '</a></li>';
+                    echo '<li><input type="text" id="' . $this->field['id'] . '-' . $k . '" name="' . $this->args['opt_name'] . '[' . $this->field['id'] . '][]" value="' . esc_attr($value) . '" class="' . $class . '" /> <a href="javascript:void(0);" class="redux-opts-multi-text-remove">' . __('Remove', "swiftframework") . '</a></li>';
                 }
             }
         } else {
-            echo '<li><input type="text" id="' . $this->field['id'] . '" name="' . $this->args['opt_name'] . '[' . $this->field['id'] . '][]" value="" class="' . $class . '" /> <a href="javascript:void(0);" class="redux-opts-multi-text-remove">' . __('Remove', Redux_TEXT_DOMAIN) . '</a></li>';
+            echo '<li><input type="text" id="' . $this->field['id'] . '" name="' . $this->args['opt_name'] . '[' . $this->field['id'] . '][]" value="" class="' . $class . '" /> <a href="javascript:void(0);" class="redux-opts-multi-text-remove">' . __('Remove', "swiftframework") . '</a></li>';
         }
 
-        echo '<li style="display:none;"><input type="text" id="' . $this->field['id'] . '" name="" value="" class="' . $class . '" /> <a href="javascript:void(0);" class="redux-opts-multi-text-remove">' . __('Remove', Redux_TEXT_DOMAIN) . '</a></li>';
+        echo '<li style="display:none;"><input type="text" id="' . $this->field['id'] . '" name="" value="" class="' . $class . '" /> <a href="javascript:void(0);" class="redux-opts-multi-text-remove">' . __('Remove', "swiftframework") . '</a></li>';
         echo '</ul>';
-        echo '<a href="javascript:void(0);" class="redux-opts-multi-text-add" rel-id="' . $this->field['id'] . '-ul" rel-name="' . $this->args['opt_name'] . '[' . $this->field['id'] . '][]">' . __('Add More', Redux_TEXT_DOMAIN) . '</a><br/>';
+        echo '<a href="javascript:void(0);" class="redux-opts-multi-text-add" rel-id="' . $this->field['id'] . '-ul" rel-name="' . $this->args['opt_name'] . '[' . $this->field['id'] . '][]">' . __('Add More', "swiftframework") . '</a><br/>';
         echo (isset($this->field['desc']) && !empty($this->field['desc'])) ? ' <span class="description">' . $this->field['desc'] . '</span>' : '';
     }
     

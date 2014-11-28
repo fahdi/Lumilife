@@ -41,7 +41,7 @@
 					$post_permalink = get_post_permalink($infocus_post);
 					
 					$thumb_image = rwmb_meta('sf_thumbnail_image', 'type=image&size=full', $post_id);
-					$thumb_video = get_post_meta($post_id, 'sf_thumbnail_video_url', true);
+					$thumb_video = sf_get_post_meta($post_id, 'sf_thumbnail_video_url', true);
 					
 					foreach ($thumb_image as $detail_image) {
 						$thumb_img_url = $detail_image['url'];

@@ -138,6 +138,14 @@ function embedSelectedShortcode() {
 		}
 		
 		/////////////////////////////////////////
+		////	SHARE SHORTCODE OUTPUT
+		/////////////////////////////////////////
+
+		if (shortcode_select == 'shortcode-share') {
+			shortcodeHTML = '[sf_share]';	
+		}
+		
+		/////////////////////////////////////////
 		////	LATEST TWEET SHORTCODE OUTPUT
 		/////////////////////////////////////////
 
@@ -429,7 +437,11 @@ function embedSelectedShortcode() {
 	
 	if (current_shortcode != -1) {
 		activeEditor = window.tinyMCE.activeEditor.id;
-		window.tinyMCE.execInstanceCommand(activeEditor, 'mceInsertContent', false, shortcodeHTML);
+		if (window.tinyMCE.majorVersion >= 4) {
+			window.tinymce.get(activeEditor).insertContent(shortcodeHTML);
+		} else {
+			window.tinyMCE.execInstanceCommand(activeEditor, 'mceInsertContent', false, shortcodeHTML);		
+		}
 		tinyMCEPopup.editor.execCommand('mceRepaint');
 		tinyMCEPopup.close();
 	} else {

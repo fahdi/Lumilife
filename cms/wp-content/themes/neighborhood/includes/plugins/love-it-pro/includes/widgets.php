@@ -7,7 +7,7 @@ class lip_most_loved_widget extends WP_Widget {
 
     /** constructor */
     function lip_most_loved_widget() {
-        parent::WP_Widget(false, $name = __('Most Loved Items', 'love_it'), array('description' => __('Show the most loved items', 'love_it')));	
+        parent::WP_Widget(false, $name = __('Most Loved Items', 'swiftframework'), array('description' => __('Show the most loved items', 'swiftframework')));	
     }
 
     /** @see WP_Widget::widget */
@@ -31,7 +31,7 @@ class lip_most_loved_widget extends WP_Widget {
 						$most_loved = get_posts( $args );
 						foreach( $most_loved as $loved ) : ?>
 							<li class="loved-item">
-							 	<div class="loved-count"><i class="fa-heart"></i><?php echo get_post_meta($loved->ID, '_li_love_count', true); ?></div>
+							 	<div class="loved-count"><i class="fa-heart"></i><?php echo sf_get_post_meta($loved->ID, '_li_love_count', true); ?></div>
 								<a href="<?php echo get_permalink($loved->ID); ?>"><?php echo get_the_title($loved->ID); ?></a><br/>
 							</li>
 						<?php endforeach; ?>

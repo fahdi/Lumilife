@@ -24,7 +24,10 @@
 					'product_cat' => $category,
 					'ignore_sticky_posts'   => 1,
 					'posts_per_page' => $item_count
-				);	    
+				);
+			$args['meta_query'] = array();
+			$args['meta_query'][] = $woocommerce->query->stock_status_meta_query();
+			$args['meta_query'][] = $woocommerce->query->visibility_meta_query();	
 		} else if ($asset_type == "featured-products") {			
 			$args = array(
 				    'post_type' => 'product',
@@ -77,33 +80,44 @@
 
 		} else if ($asset_type == "sale-products") {
 			// Get products on sale
-			$product_ids_on_sale = woocommerce_get_product_ids_on_sale();
-			
-			$meta_query = array();
-			$meta_query[] = $woocommerce->query->visibility_meta_query();
-			$meta_query[] = $woocommerce->query->stock_status_meta_query();
-			
+			$product_ids_on_sale = wc_get_product_ids_on_sale();
+	
+			$meta_query   = array();
+			$meta_query[] = WC()->query->visibility_meta_query();
+			$meta_query[] = WC()->query->stock_status_meta_query();
+			$meta_query   = array_filter( $meta_query );
+	
 			$args = array(
-				'no_found_rows' => 1,
-				'post_status'   => 'publish',
-				'post_type'     => 'product',
-				'orderby'       => 'date',
-				'order'         => 'ASC',
 				'product_cat' => $category,
 				'posts_per_page' => $item_count,
-				'meta_query'    => $meta_query,
-				'post__in'      => $product_ids_on_sale
+				'no_found_rows' 	=> 1,
+				'post_status' 		=> 'publish',
+				'post_type' 		=> 'product',
+				'meta_query' 		=> $meta_query,
+				'post__in'			=> array_merge( array( 0 ), $product_ids_on_sale )
 			);
+		
 		} else {
 			$args = array(
-				'post_type' => 'product',
-				'post_status' => 'publish',
+				'post_type' 			=> 'product',
+				'post_status' 			=> 'publish',
 				'product_cat' => $category,
 				'ignore_sticky_posts'   => 1,
-				'posts_per_page' => $item_count,
-				'meta_key' 		=> 'total_sales',
-				'orderby' 		=> 'meta_value'
-			);	    
+				'posts_per_page'		=> $item_count,
+				'meta_key' 		 		=> 'total_sales',
+				'orderby' 		 		=> 'meta_value_num',
+				'meta_query' 			=> array(
+					array(
+						'key' 		=> '_visibility',
+						'value' 	=> array( 'catalog', 'visible' ),
+						'compare' 	=> 'IN'
+					)
+				)
+			);
+			
+			$args['meta_query'] = array();
+			$args['meta_query'][] = $woocommerce->query->stock_status_meta_query();
+			$args['meta_query'][] = $woocommerce->query->visibility_meta_query();		
 		}
 		
 		// OUTPUT PRODUCTS    
@@ -213,6 +227,139 @@
 			
 			$args = array();
 			
+			global $sidebars;
+			$columns = 4;
+			
+			if ($sidebars == "no-sidebars") {
+				    if ($width == "3/4") {
+			   	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 3 );
+			   	    $columns = 3;	   	    
+				    } else if ($width == "1/2") {
+			   	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 2 );
+			   	    $columns = 2;	
+			   	} else if ($width == "1/4") {
+			   	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 1 );
+			   	    $columns = 1;   	    
+				    } else {
+				    	if ($product_size == "mini") {
+				    		$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 6 );
+				    		$columns = 6;
+				    	} else {
+				    		$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
+				    	}
+				    }
+			} else if ($sidebars == "one-sidebar") {
+				if ($width == "3/4") {
+				    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 3 );
+				    $columns = 3;	   	    
+				} else if ($width == "1/2") {
+				    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 2 );
+				    $columns = 2;	
+				} else if ($width == "1/4") {
+				    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 1 );
+				    $columns = 1;   	    
+				} else {
+					if ($product_size == "mini") {
+						$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
+					} else {
+						$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 3 );
+						$columns = 3;
+					}
+				}
+			} else {
+				if ($width == "3/4") {
+				    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 2 );
+				    $columns = 2;	   	    
+				} else if ($width == "1/2") {
+				    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 1 );
+				    $columns = 1;	
+				} else if ($width == "1/4") {
+				    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 1 );
+				    $columns = 1;   	    
+				} else {
+					if ($product_size == "mini") {
+						$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 3 );
+						$columns = 3;
+					} else {
+						$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 2 );
+						$columns = 2;
+					}
+				}
+			}
+			
+			// CATEGORY ASSET OUTPUT
+			if ($asset_type == "categories") {
+				
+				ob_start();
+				
+				$hide_empty = 1;
+				
+				$args = array(
+					'hide_empty' => $hide_empty,
+					'pad_counts' => true,
+					//'child_of'   => $parent
+				);
+		
+				$product_categories = get_terms( 'product_cat', $args );
+		
+				if ( $hide_empty ) {
+					foreach ( $product_categories as $key => $category ) {
+						if ( $category->count == 0 ) {
+							unset( $product_categories[ $key ] );
+						}
+					}
+				}
+		
+				if ( $item_count ) {
+					$product_categories = array_slice( $product_categories, 0, $item_count );
+				}
+				
+				ob_start();
+		
+				if ( $product_categories ) {
+				
+					if ($carousel == "yes") { ?>
+						
+						<div class="product-carousel" data-columns="<?php echo $columns; ?>">
+							
+							<div class="carousel-overflow">
+						
+							<?php }
+				
+							woocommerce_product_loop_start();
+				
+							foreach ( $product_categories as $category ) {
+				
+								wc_get_template( 'content-product_cat.php', array(
+									'category' => $category
+								) );
+				
+							}
+				
+							woocommerce_product_loop_end();
+						
+						if ($carousel == "yes") { ?>
+							
+							</div>
+							
+							<a href="#" class="prev"><i class="fa-chevron-left"></i></a><a href="#" class="next"><i class="fa-chevron-right"></i></a>
+							
+						</div>
+						
+					<?php }
+				
+				}
+		
+				woocommerce_reset_loop();				
+				$product_list_output = ob_get_contents();
+				ob_end_clean();
+				
+				wp_reset_query();
+				wp_reset_postdata();
+				
+				return $product_list_output;
+			}
+			
 			// ARRAY ARGUMENTS
 			if ($asset_type == "latest-products") {
 				$args = array(
@@ -221,7 +368,10 @@
 						'product_cat' => $category,
 						'ignore_sticky_posts'   => 1,
 						'posts_per_page' => $item_count
-					);	    
+					);
+				$args['meta_query'] = array();
+				$args['meta_query'][] = $woocommerce->query->stock_status_meta_query();
+				$args['meta_query'][] = $woocommerce->query->visibility_meta_query();	
 			} else if ($asset_type == "featured-products") {			
 				$args = array(
 					    'post_type' => 'product',
@@ -274,99 +424,50 @@
 	
 			} else if ($asset_type == "sale-products") {
 				// Get products on sale
-				$product_ids_on_sale = woocommerce_get_product_ids_on_sale();
-				
-				$meta_query = array();
-				$meta_query[] = $woocommerce->query->visibility_meta_query();
-				$meta_query[] = $woocommerce->query->stock_status_meta_query();
-				  
+				$product_ids_on_sale = wc_get_product_ids_on_sale();
+		
+				$meta_query   = array();
+				$meta_query[] = WC()->query->visibility_meta_query();
+				$meta_query[] = WC()->query->stock_status_meta_query();
+				$meta_query   = array_filter( $meta_query );
+		
 				$args = array(
-					'no_found_rows' => 1,
-					'post_status'   => 'publish',
-					'post_type'     => 'product',
-					'orderby'       => 'date',
-					'order'         => 'ASC',
 					'product_cat' => $category,
-					'meta_query'    => $meta_query,
 					'posts_per_page' => $item_count,
-					'post__in'      => $product_ids_on_sale
+					'no_found_rows' 	=> 1,
+					'post_status' 		=> 'publish',
+					'post_type' 		=> 'product',
+					'meta_query' 		=> $meta_query,
+					'post__in'			=> array_merge( array( 0 ), $product_ids_on_sale )
 				);
 			} else {
 				$args = array(
-						'post_type' => 'product',
-						'post_status' => 'publish',
-						'product_cat' => $category,
-						'ignore_sticky_posts'   => 1,
-						'posts_per_page' => $item_count,
-						'meta_key' 		=> 'total_sales',
-						'orderby' 		=> 'meta_value'
-					);	    
+					'post_type' 			=> 'product',
+					'post_status' 			=> 'publish',
+					'product_cat' => $category,
+					'ignore_sticky_posts'   => 1,
+					'posts_per_page'		=> $item_count,
+					'meta_key' 		 		=> 'total_sales',
+					'orderby' 		 		=> 'meta_value_num',
+					'meta_query' 			=> array(
+						array(
+							'key' 		=> '_visibility',
+							'value' 	=> array( 'catalog', 'visible' ),
+							'compare' 	=> 'IN'
+						)
+					)
+				);
+				
+				$args['meta_query'] = array();
+				$args['meta_query'][] = $woocommerce->query->stock_status_meta_query();
+				$args['meta_query'][] = $woocommerce->query->visibility_meta_query();		
 			}
 			
 			ob_start();
 					
 			// OUTPUT PRODUCTS    
 		    $products = new WP_Query( $args );
-		    
-		    global $sidebars;
-		    $columns = 4;
-		    if ($sidebars == "no-sidebars") {
-		   	    if ($width == "3/4") {
-			   	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 3 );
-			   	    $columns = 3;	   	    
-		   	    } else if ($width == "1/2") {
-			   	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 2 );
-			   	    $columns = 2;	
-			   	} else if ($width == "1/4") {
-			   	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 1 );
-			   	    $columns = 1;   	    
-		   	    } else {
-		   	    	if ($product_size == "mini") {
-		   	    		$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 6 );
-		   	    		$columns = 6;
-		   	    	} else {
-		   	    		$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
-		   	    	}
-		   	    }
-		    } else if ($sidebars == "one-sidebar") {
-		    	if ($width == "3/4") {
-		    	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 3 );
-		    	    $columns = 3;	   	    
-		    	} else if ($width == "1/2") {
-		    	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 2 );
-		    	    $columns = 2;	
-		    	} else if ($width == "1/4") {
-		    	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 1 );
-		    	    $columns = 1;   	    
-		    	} else {
-		    		if ($product_size == "mini") {
-						$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
-					} else {
-						$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 3 );
-						$columns = 3;
-					}
-		    	}
-		    } else {
-		    	if ($width == "3/4") {
-		    	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 2 );
-		    	    $columns = 2;	   	    
-		    	} else if ($width == "1/2") {
-		    	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 1 );
-		    	    $columns = 1;	
-		    	} else if ($width == "1/4") {
-		    	    $woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 1 );
-		    	    $columns = 1;   	    
-		    	} else {
-		    		if ($product_size == "mini") {
-		    			$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 3 );
-		    			$columns = 3;
-		    		} else {
-						$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 2 );
-						$columns = 2;
-		    		}
-		    	}
-		    }
-		    	    
+		    		    	    
 			if ( $products->have_posts() ) { ?>
 			   
 				<?php if ($carousel == "yes") { ?>

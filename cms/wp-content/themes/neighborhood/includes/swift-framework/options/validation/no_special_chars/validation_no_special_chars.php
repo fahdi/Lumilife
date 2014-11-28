@@ -11,7 +11,7 @@ class Redux_Validation_no_special_chars extends Redux_Options {
 	function __construct($field, $value, $current) {
 		parent::__construct();
 		$this->field = $field;
-		$this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('You must not enter any special characters in this field, all special characters have been removed.', Redux_TEXT_DOMAIN);
+		$this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('You must not enter any special characters in this field, all special characters have been removed.', "swiftframework");
 		$this->value = $value;
 		$this->current = $current;
 		$this->validate();

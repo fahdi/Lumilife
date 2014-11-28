@@ -41,7 +41,7 @@ class SwiftPageBuilderShortcode_portfolio_carousel extends SwiftPageBuilderShort
     		
     		$count = $columns = 0;
     		    		
-    		$sidebar_config = get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
+    		$sidebar_config = sf_get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
     		
     		if (is_singular('portfolio')) {
     		$sidebar_config = "no-sidebars";
@@ -71,15 +71,15 @@ class SwiftPageBuilderShortcode_portfolio_carousel extends SwiftPageBuilderShort
 								
 				$item_title = get_the_title();
 				
-				$thumb_type = get_post_meta($post->ID, 'sf_thumbnail_type', true);
+				$thumb_type = sf_get_post_meta($post->ID, 'sf_thumbnail_type', true);
 				$thumb_image = rwmb_meta('sf_thumbnail_image', 'type=image&size=full');
-				$thumb_video = get_post_meta($post->ID, 'sf_thumbnail_video_url', true);
+				$thumb_video = sf_get_post_meta($post->ID, 'sf_thumbnail_video_url', true);
 				$thumb_gallery = rwmb_meta( 'sf_thumbnail_gallery', 'type=image&size=thumb-image' );
-				$thumb_link_type = get_post_meta($post->ID, 'sf_thumbnail_link_type', true);
-				$thumb_link_url = get_post_meta($post->ID, 'sf_thumbnail_link_url', true);
+				$thumb_link_type = sf_get_post_meta($post->ID, 'sf_thumbnail_link_type', true);
+				$thumb_link_url = sf_get_post_meta($post->ID, 'sf_thumbnail_link_url', true);
 				$thumb_lightbox_thumb = rwmb_meta( 'sf_thumbnail_image', 'type=image&size=large' );
 				$thumb_lightbox_image = rwmb_meta( 'sf_thumbnail_link_image', 'type=image&size=large' );
-				$thumb_lightbox_video_url = get_post_meta($post->ID, 'sf_thumbnail_link_video_url', true);
+				$thumb_lightbox_video_url = sf_get_post_meta($post->ID, 'sf_thumbnail_link_video_url', true);
 				
 				foreach ($thumb_image as $detail_image) {
 					$thumb_img_url = $detail_image['url'];
@@ -103,17 +103,17 @@ class SwiftPageBuilderShortcode_portfolio_carousel extends SwiftPageBuilderShort
 					$link_config = 'href="'.$thumb_link_url.'" class="link-to-url" target="_blank"';
 					$item_icon = "link";
 				} else if ($thumb_link_type == "lightbox_thumb") {
-					$link_config = 'href="'.$thumb_img_url.'" class="view"';
+					$link_config = 'href="'.$thumb_img_url.'" class="lightbox" data-rel="ilightbox[portfolio]"';
 					$item_icon = "search";
 				} else if ($thumb_link_type == "lightbox_image") {
 					$lightbox_image_url = '';
 					foreach ($thumb_lightbox_image as $image) {
 						$lightbox_image_url = $image['full_url'];
 					}
-					$link_config = 'href="'.$lightbox_image_url.'" class="view"';	
+					$link_config = 'href="'.$lightbox_image_url.'" class="lightbox" data-rel="ilightbox[portfolio]"';	
 					$item_icon = "search";
 				} else if ($thumb_link_type == "lightbox_video") {
-					$link_config = 'href="'.$thumb_lightbox_video_url.'" rel="prettyPhoto"';
+					$link_config = 'href="'.$thumb_lightbox_video_url.'" class="lightbox" data-rel="ilightbox[portfolio]"';
 					$item_icon = "facetime-video";				
 				} else {
 					$link_config = 'href="'.$permalink.'" class="link-to-post"';
@@ -210,53 +210,53 @@ class SwiftPageBuilderShortcode_portfolio_carousel extends SwiftPageBuilderShort
 }
 
 SPBMap::map( 'portfolio_carousel', array(
-    "name"		=> __("Portfolio Carousel", "swift_page_builder"),
+    "name"		=> __("Portfolio Carousel", 'swift-framework-admin'),
     "base"		=> "portfolio_carousel",
     "class"		=> "spb_portfolio_carousel spb_carousel",
     "icon"      => "spb-icon-portfolio-carousel",
     "params"	=> array(
 	    array(
 	        "type" => "textfield",
-	        "heading" => __("Widget title", "swift_page_builder"),
+	        "heading" => __("Widget title", 'swift-framework-admin'),
 	        "param_name" => "title",
 	        "value" => "",
-	        "description" => __("Heading text. Leave it empty if not needed.", "swift_page_builder")
+	        "description" => __("Heading text. Leave it empty if not needed.", 'swift-framework-admin')
 	    ),
         array(
             "type" => "textfield",
             "class" => "",
-            "heading" => __("Number of items", "swift_page_builder"),
+            "heading" => __("Number of items", 'swift-framework-admin'),
             "param_name" => "item_count",
             "value" => "12",
-            "description" => __("The number of portfolio items to show in the carousel.", "swift_page_builder")
+            "description" => __("The number of portfolio items to show in the carousel.", 'swift-framework-admin')
         ),
         array(
             "type" => "select-multiple",
-            "heading" => __("Portfolio category", "swift_page_builder"),
+            "heading" => __("Portfolio category", 'swift-framework-admin'),
             "param_name" => "category",
             "value" => get_category_list('portfolio-category'),
-            "description" => __("Choose the category for the portfolio items.", "swift_page_builder")
+            "description" => __("Choose the category for the portfolio items.", 'swift-framework-admin')
         ),
         array(
             "type" => "dropdown",
-            "heading" => __("Show alt background", "swift_page_builder"),
+            "heading" => __("Show alt background", 'swift-framework-admin'),
             "param_name" => "alt_background",
-            "value" => array(__("None", "swift_page_builder") => "none", __("Alt 1", "swift_page_builder") => "alt-one", __("Alt 2", "swift_page_builder") => "alt-two", __("Alt 3", "swift_page_builder") => "alt-three", __("Alt 4", "swift_page_builder") => "alt-four", __("Alt 5", "swift_page_builder") => "alt-five", __("Alt 6", "swift_page_builder") => "alt-six", __("Alt 7", "swift_page_builder") => "alt-seven", __("Alt 8", "swift_page_builder") => "alt-eight", __("Alt 9", "swift_page_builder") => "alt-nine", __("Alt 10", "swift_page_builder") => "alt-ten"),
-            "description" => __("Show an alternative background around the asset. These can all be set in Neighborhood Options > Asset Background Options. NOTE: This is only available on a page with the no sidebar setup.", "swift_page_builder")
+            "value" => array(__("None", 'swift-framework-admin') => "none", __("Alt 1", 'swift-framework-admin') => "alt-one", __("Alt 2", 'swift-framework-admin') => "alt-two", __("Alt 3", 'swift-framework-admin') => "alt-three", __("Alt 4", 'swift-framework-admin') => "alt-four", __("Alt 5", 'swift-framework-admin') => "alt-five", __("Alt 6", 'swift-framework-admin') => "alt-six", __("Alt 7", 'swift-framework-admin') => "alt-seven", __("Alt 8", 'swift-framework-admin') => "alt-eight", __("Alt 9", 'swift-framework-admin') => "alt-nine", __("Alt 10", 'swift-framework-admin') => "alt-ten"),
+            "description" => __("Show an alternative background around the asset. These can all be set in Neighborhood Options > Asset Background Options. NOTE: This is only available on a page with the no sidebar setup.", 'swift-framework-admin')
         ),
         array(
             "type" => "altbg_preview",
-            "heading" => __("Alt Background Preview", "swift_page_builder"),
+            "heading" => __("Alt Background Preview", 'swift-framework-admin'),
             "param_name" => "altbg_preview",
             "value" => "",
-            "description" => __("", "swift_page_builder")
+            "description" => __("", 'swift-framework-admin')
         ),
         array(
             "type" => "textfield",
-            "heading" => __("Extra class name", "swift_page_builder"),
+            "heading" => __("Extra class name", 'swift-framework-admin'),
             "param_name" => "el_class",
             "value" => "",
-            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "swift_page_builder")
+            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-admin')
         )
     )
 ) );

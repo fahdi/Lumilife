@@ -5,6 +5,8 @@
 
 	// Kill user if not logged in and can edit posts
 	if ( !is_user_logged_in() || !current_user_can('edit_posts') ) wp_die(__('You are not allowed to access this page', 'swiftframework'));
+	
+	$icon_list = sf_get_icons_list();
 ?>
 
 <!-- Swift Framework Shortcode Panel -->
@@ -28,6 +30,7 @@
 		<base target="_self" />
 		<link href="<?php echo get_template_directory_uri() ?>/includes/swift-framework/sf-shortcodes/base.css" rel="stylesheet" type="text/css" />
 		<link href="<?php echo get_template_directory_uri() ?>/includes/swift-framework/sf-shortcodes/style.css" rel="stylesheet" type="text/css" />
+		<link href="<?php echo get_template_directory_uri() ?>/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
 	<!-- CLOSE head -->
 	</head>
@@ -63,6 +66,7 @@
 								<option value="shortcode-progressbar"><?php _e('Progress Bar', 'swiftframework');?></option>
 								<option value="shortcode-responsivevis"><?php _e('Responsive Visiblity', 'swiftframework');?></option>
 								<option value="shortcode-social"><?php _e('Social', 'swiftframework');?></option>
+								<option value="shortcode-share"><?php _e('Share', 'swiftframework');?></option>
 								<option value="shortcode-tables"><?php _e('Table', 'swiftframework');?></option>
 								<option value="shortcode-tooltip"><?php _e('Tooltip', 'swiftframework');?></option>
 								<option value="shortcode-typography"><?php _e('Typography', 'swiftframework');?></option>
@@ -149,28 +153,8 @@
 							</div>
 							<div class="option">
 								<label for="icon-image"><?php _e('Icon image', 'swiftframework');?></label>
-								<select id="icon-image" name="icon-image">
-									<option value="wrench"><?php _e('Options / Tools', 'swiftframework');?></option>
-									<option value="cog"><?php _e('Cog', 'swiftframework');?></option>
-									<option value="search"><?php _e('Magnify', 'swiftframework');?></option>
-									<option value="pencil"><?php _e('Pencil', 'swiftframework');?></option>
-									<option value="bolt"><?php _e('Bolt', 'swiftframework');?></option>
-									<option value="bar-chart"><?php _e('Chart', 'swiftframework');?></option>
-									<option value="globe"><?php _e('Globe', 'swiftframework');?></option>
-									<option value="music"><?php _e('Music', 'swiftframework');?></option>
-									<option value="star"><?php _e('Star', 'swiftframework');?></option>	
-									<option value="briefcase"><?php _e('Briefcase', 'swiftframework');?></option>	
-									<option value="gift"><?php _e('Gift', 'swiftframework');?></option>	
-									<option value="legal"><?php _e('Legal', 'swiftframework');?></option>	
-									<option value="dashboard"><?php _e('Dashboard', 'swiftframework');?></option>	
-									<option value="download"><?php _e('Download', 'swiftframework');?></option>	
-									<option value="envelope"><?php _e('Envelope', 'swiftframework');?></option>	
-									<option value="trophy"><?php _e('Trophy', 'swiftframework');?></option>	
-									<option value="cloud"><?php _e('Cloud', 'swiftframework');?></option>	
-									<option value="phone"><?php _e('Phone', 'swiftframework');?></option>	
-									<option value="magic"><?php _e('Magic', 'swiftframework');?></option>	
-									<option value="road"><?php _e('Road', 'swiftframework');?></option>	
-								</select>
+								<input id="icon-image" name="icon-image" type="text" value="" style="visibility: hidden;"/>
+								<ul class="font-icon-grid"><?php echo $icon_list; ?></ul>
 							</div>
 							<div class="option">
 								<label for="icon-cont"><?php _e('Circular container', 'swiftframework');?></label>
@@ -267,6 +251,20 @@
 									<option value="dark"><?php _e('Dark', 'swiftframework');?></option>
 								</select>
 							</div>
+						</div>
+						
+						
+						<!--//////////////////////////////
+						////	SOCIAL SHARE
+						//////////////////////////////-->
+						
+						<div id="shortcode-share" class="shortcode-option">
+						    <h5><?php _e( 'Social share', 'swift-framework-admin' ); ?></h5>
+						
+						    <div class="option">
+						        <p class="info">This shortcode will embed the social share links asset, for sharing the current post/page on
+						            social media.</p>
+						    </div>
 						</div>
 
 

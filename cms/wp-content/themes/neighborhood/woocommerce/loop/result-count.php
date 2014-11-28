@@ -52,10 +52,15 @@ if ( ! woocommerce_products_will_display() )
 		}
 		?>
 	</p>
-	<?php if ($total > $per_page) { ?>
-	<p class="woocommerce-show-products">
-		<span><?php _e("View", "swiftframework"); ?> </span>
-		<a class="show-products-link" href="?show_products=24">24</a>/<a class="show-products-link" href="?show_products=48">48</a>/<a href="?show_products=<?php echo $total;?>"><?php _e("All", "swiftframework"); ?></a>
-	</p>
+	<?php if ( $total > $per_page ) { ?>
+	    <p class="woocommerce-show-products">
+	        <span><?php _e( "View", "swiftframework" ); ?> </span>
+	        <a class="show-products-link"
+	           href="?show_products=24">24</a>/<a
+	            class="show-products-link"
+	            href="?show_products=48">48</a>/<a
+	            class="show-products-link"
+	            href="?show_products=<?php echo $total; ?>"><?php _e( "All", "swiftframework" ); ?></a>
+	    </p>
 	<?php } ?>
 </div>

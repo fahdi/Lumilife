@@ -37,6 +37,12 @@
 				}
 			}
 			
+			if (isset($options['mobile_header_tabletland'])) {
+				if ($options['mobile_header_tabletland']) {
+					$page_class .= 'mh-tabletland ';
+				}
+			}
+			
 			
 			if ($enable_page_shadow) { 
 			$page_class .= "page-shadow ";
@@ -71,7 +77,7 @@
 			global $post;
 			$extra_page_class = "";
 			if ($post) {
-			$extra_page_class = get_post_meta($post->ID, 'sf_extra_page_class', true);
+			$extra_page_class = sf_get_post_meta($post->ID, 'sf_extra_page_class', true);
 			}
 		?>
 		
@@ -172,6 +178,7 @@
 			<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<script src="<?php echo get_template_directory_uri(); ?>/js/excanvas.compiled.js"></script>
+		<script src="<?php echo get_template_directory_uri(); ?>/js/respond.min.js"></script>
 		<![endif]-->
 		
 		<!--// WORDPRESS HEAD HOOK //-->
@@ -192,7 +199,7 @@
 			
 			<?php
 				if ($ss_enable && sf_woocommerce_activated()) {
-					echo sf_super_search();
+					echo sf_super_search('header');
 				}
 			?>
 			
@@ -229,8 +236,8 @@
 			<div id="main-container" class="clearfix">
 				
 				<?php if (is_page()) {
-						$show_posts_slider = get_post_meta($post->ID, 'sf_posts_slider', true);
-						$rev_slider_alias = get_post_meta($post->ID, 'sf_rev_slider_alias', true);
+						$show_posts_slider = sf_get_post_meta($post->ID, 'sf_posts_slider', true);
+						$rev_slider_alias = sf_get_post_meta($post->ID, 'sf_rev_slider_alias', true);
 						if ($show_posts_slider) {
 							sf_swift_slider();
 						} else if ($rev_slider_alias != "") { ?>

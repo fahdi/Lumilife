@@ -61,7 +61,7 @@ if ( !class_exists( 'RWMB_Select_Field' ) )
 		static function meta( $meta, $post_id, $saved, $field )
 		{
 			$single = $field['clone'] || !$field['multiple'];
-			$meta = get_post_meta( $post_id, $field['id'], $single );
+			$meta = sf_get_post_meta( $post_id, $field['id'], $single );
 			$meta = ( !$saved && '' === $meta || array() === $meta ) ? $field['std'] : $meta;
 
 			$meta = array_map( 'esc_attr', (array) $meta );

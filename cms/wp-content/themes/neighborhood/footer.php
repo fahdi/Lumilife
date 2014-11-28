@@ -219,12 +219,14 @@
 				$sf_inc_class .= "has-products ";
 			}
 			
-			$content = $post->post_content;
-			
-			if (function_exists('has_shortcode')) {
-				if (has_shortcode( $content, 'product_category' ) || has_shortcode( $content, 'featured_products' ) || has_shortcode( $content, 'products' ) || has_shortcode( $content, 'recent_products' ) || has_shortcode( $content, 'product' )) {
-					$sf_inc_class .= "has-products ";
-					$include_isotope = true;
+			if ($post) {
+				$content = $post->post_content;
+				
+				if (function_exists('has_shortcode')) {
+					if (has_shortcode( $content, 'product_category' ) || has_shortcode( $content, 'featured_products' ) || has_shortcode( $content, 'products' ) || has_shortcode( $content, 'recent_products' ) || has_shortcode( $content, 'product' )) {
+						$sf_inc_class .= "has-products ";
+						$include_isotope = true;
+					}
 				}
 			}
 			

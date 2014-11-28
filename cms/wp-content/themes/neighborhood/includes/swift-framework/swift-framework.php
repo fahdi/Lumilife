@@ -43,8 +43,16 @@
 	
 	
 	/* WOOCOMMERCE FILTERS/HOOKS
-	================================================== */  
+	================================================== */
+	if ( sf_woocommerce_activated() ) {
+	    include_once( SF_FRAMEWORK_PATH . '/sf-supersearch.php' );
+	}  
 	include(SF_FRAMEWORK_PATH . '/sf-woocommerce.php');
+	
+	
+	/* MEGA MENU
+	================================================== */
+	include_once( SF_FRAMEWORK_PATH . '/sf-megamenu/sf-megamenu.php' );
 	
 	
 	/* SHORTCODES

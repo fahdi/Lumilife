@@ -1,7 +1,5 @@
 <?php
 
-
-
 function aq_resize( $url, $width, $height = null, $crop = null, $single = true ) {
 	
 	//validate inputs
@@ -25,7 +23,14 @@ function aq_resize( $url, $width, $height = null, $crop = null, $single = true )
 	}
 		
 	//check if $img_url is local
-	//if(strpos( $url, home_url() ) === false) return false;
+	if(strpos( $url, home_url() ) === false) {
+		$image = array (
+			0 => $url,
+			1 => $width,
+			2 => $height
+		);
+		return $image;
+	}
 	
 	//define path of image
 	$rel_path = str_replace( $upload_url, '', $url);

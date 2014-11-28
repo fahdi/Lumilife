@@ -37,10 +37,10 @@
 		$output = '';
 		
 		$options = get_option('sf_neighborhood_options');
-		$posts_slider_type = get_post_meta($post->ID, 'sf_posts_slider_type', true);
-		$posts_category = get_post_meta($post->ID, 'sf_posts_slider_category', true);
-		$portfolio_category = get_post_meta($post->ID, 'sf_posts_slider_portfolio_category', true);
-		$count = get_post_meta($post->ID, 'sf_posts_slider_count', true);
+		$posts_slider_type = sf_get_post_meta($post->ID, 'sf_posts_slider_type', true);
+		$posts_category = sf_get_post_meta($post->ID, 'sf_posts_slider_category', true);
+		$portfolio_category = sf_get_post_meta($post->ID, 'sf_posts_slider_portfolio_category', true);
+		$count = sf_get_post_meta($post->ID, 'sf_posts_slider_count', true);
 		
 		$args = array();
 		
@@ -90,13 +90,13 @@
 				$post_permalink = get_permalink();
 				$post_author = get_the_author_link();
 				$post_date = get_the_date();
-				$post_client = get_post_meta($post->ID, 'sf_portfolio_client', true);
+				$post_client = sf_get_post_meta($post->ID, 'sf_portfolio_client', true);
 				$post_categories = get_the_category_list(', ');
 				if ($posts_slider_type == "portfolio") {
 				$post_categories = get_the_term_list($post->ID, 'portfolio-category', '', ', ');
 				}
 				$post_comments = get_comments_number();
-				$custom_excerpt = get_post_meta($post->ID, 'sf_custom_excerpt', true);
+				$custom_excerpt = sf_get_post_meta($post->ID, 'sf_custom_excerpt', true);
 				$post_excerpt = '';
 				if ($custom_excerpt != '') {
 				$post_excerpt = custom_excerpt($custom_excerpt, 20);
@@ -104,7 +104,7 @@
 				$post_excerpt = excerpt(20);
 				}
 				$posts_slider_image = rwmb_meta('sf_posts_slider_image', 'type=image&size=full');
-				$caption_position = get_post_meta($post->ID, 'sf_caption_position', true);
+				$caption_position = sf_get_post_meta($post->ID, 'sf_caption_position', true);
 				
 				$accent_color = get_option('accent_color', '#fb3c2d');
 				$secondary_accent_color = get_option('secondary_accent_color', '#2e2e36');

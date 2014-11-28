@@ -1,13 +1,6 @@
 <?php
 /*
  *
- * Set the text domain for the theme or plugin.
- *
- */
-define('Redux_TEXT_DOMAIN', 'sf-options');
-
-/*
- *
  * Require the framework class before doing anything else, so we can use the defined URLs and directories.
  * If you are running on Windows you may have URL problems which can be fixed by defining the framework url first.
  *
@@ -29,8 +22,8 @@ if(!class_exists('Redux_Options')){
 function add_another_section($sections){
     //$sections = array();
     $sections[] = array(
-        'title' => __('A Section added by hook', Redux_TEXT_DOMAIN),
-        'desc' => __('<p class="description">This is a section created by adding a filter to the sections array. Can be used by child themes to add/remove sections from the options.</p>', Redux_TEXT_DOMAIN),
+        'title' => __('A Section added by hook', 'swift-framework-admin'),
+        'desc' => __('<p class="description">This is a section created by adding a filter to the sections array. Can be used by child themes to add/remove sections from the options.</p>', 'swift-framework-admin'),
         // Redux ships with the glyphicons free icon pack, included in the options folder.
         // Feel free to use them, add your own icons, or leave this blank for the default.
         'icon' => trailingslashit(get_template_directory_uri()) . 'options/img/icons/glyphicons_062_attach.png',
@@ -85,13 +78,13 @@ function setup_framework_options(){
     $args['admin_stylesheet'] = 'custom';
 
     // Add HTML before the form.
-    //$args['intro_text'] = __('<p>This text is displayed above the options panel. It isn\'t required, but more info is always better! The intro_text field accepts all HTML.</p>', Redux_TEXT_DOMAIN);
+    //$args['intro_text'] = __('<p>This text is displayed above the options panel. It isn\'t required, but more info is always better! The intro_text field accepts all HTML.</p>', 'swift-framework-admin');
 
     // Add content after the form.
-    //$args['footer_text'] = __('<p>This text is displayed below the options panel. It isn\'t required, but more info is always better! The footer_text field accepts all HTML.</p>', Redux_TEXT_DOMAIN);
+    //$args['footer_text'] = __('<p>This text is displayed below the options panel. It isn\'t required, but more info is always better! The footer_text field accepts all HTML.</p>', 'swift-framework-admin');
 
     // Set footer/credit line.
-    //$args['footer_credit'] = __('<p>This text is displayed in the options panel footer across from the WordPress version (where it normally says \'Thank you for creating with WordPress\'). This field accepts all HTML.</p>', Redux_TEXT_DOMAIN);
+    //$args['footer_credit'] = __('<p>This text is displayed in the options panel footer across from the WordPress version (where it normally says \'Thank you for creating with WordPress\'). This field accepts all HTML.</p>', 'swift-framework-admin');
 
     // Setup custom links in the footer for share icons
 //    $args['share_icons']['twitter'] = array(
@@ -114,15 +107,15 @@ function setup_framework_options(){
 
     // Set a custom title for the options page.
     // Default: Options
-    $args['menu_title'] = __('Theme Options', Redux_TEXT_DOMAIN);
+    $args['menu_title'] = __('Theme Options', 'swift-framework-admin');
 
     // Set a custom page title for the options page.
     // Default: Options
-    $args['page_title'] = __('Theme Options', Redux_TEXT_DOMAIN);
+    $args['page_title'] = __('Theme Options', 'swift-framework-admin');
 	
 	// Set the class for the import/export tab icon.
 	$args['import_icon_type'] = 'iconfont';
-	$args['import_icon_class'] = 'icon-large';
+	$args['import_icon_class'] = 'fa-lg';
 
 	// Set the class for the dev mode tab icon.	
 	$args['dev_mode_icon_type'] = 'iconfont';
@@ -159,17 +152,17 @@ function setup_framework_options(){
     // Set ANY custom page help tabs, displayed using the new help tab API. Tabs are shown in order of definition.
     $args['help_tabs'][] = array(
         'id' => 'redux-opts-1',
-        'title' => __('Theme Information 1', Redux_TEXT_DOMAIN),
-        'content' => __('<p>This is the tab content, HTML is allowed.</p>', Redux_TEXT_DOMAIN)
+        'title' => __('Theme Information 1', 'swift-framework-admin'),
+        'content' => __('<p>This is the tab content, HTML is allowed.</p>', 'swift-framework-admin')
     );
     $args['help_tabs'][] = array(
         'id' => 'redux-opts-2',
-        'title' => __('Theme Information 2', Redux_TEXT_DOMAIN),
-        'content' => __('<p>This is the tab content, HTML is allowed.</p>', Redux_TEXT_DOMAIN)
+        'title' => __('Theme Information 2', 'swift-framework-admin'),
+        'content' => __('<p>This is the tab content, HTML is allowed.</p>', 'swift-framework-admin')
     );
 
     // Set the help sidebar for the options page.                                        
-    $args['help_sidebar'] = __('<p>This is the sidebar content, HTML is allowed.</p>', Redux_TEXT_DOMAIN);
+    $args['help_sidebar'] = __('<p>This is the sidebar content, HTML is allowed.</p>', 'swift-framework-admin');
 	
 	$args['bg_image_path'] = get_template_directory_uri() . '/images/preset-backgrounds/'; // change this to where you store your bg images
 	
@@ -191,8 +184,8 @@ function setup_framework_options(){
     $sections = array();
     
     //$sections[] = array(
-    //				'title' => __('Getting Started', Redux_TEXT_DOMAIN),
-    //				'desc' => __('<p class="description">This is the description field for the Section. HTML is allowed</p>', Redux_TEXT_DOMAIN),
+    //				'title' => __('Getting Started', 'swift-framework-admin'),
+    //				'desc' => __('<p class="description">This is the description field for the Section. HTML is allowed</p>', 'swift-framework-admin'),
     				//all the glyphicons are included in the options folder, so you can hook into them, or link to your own custom ones.
     				//You dont have to though, leave it blank for default.
     //				'icon' => Redux_OPTIONS_URL.'img/glyphicons/glyphicons_062_attach.png'
@@ -203,15 +196,15 @@ function setup_framework_options(){
     				
     $sections[] = array(
     				'icon' => 'cog',
-    				'icon_class' => 'icon-large',
-    				'title' => __('General Options', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">These are the general options for the theme</p>', Redux_TEXT_DOMAIN),
+    				'icon_class' => 'fa-lg',
+    				'title' => __('General Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the general options for the theme</p>', 'swift-framework-admin'),
     				'fields' => array(	
     					array(
     						'id' => 'enable_maintenance',
     						'type' => 'button_set',
-    						'title' => __('Enable Maintenance', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable the themes maintenance mode.', Redux_TEXT_DOMAIN),
+    						'title' => __('Enable Maintenance', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable the themes maintenance mode.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '0'
@@ -219,8 +212,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'enable_responsive',
     						'type' => 'button_set',
-    						'title' => __('Enable Responsive', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable/Disable the responsive behaviour of the theme', Redux_TEXT_DOMAIN),
+    						'title' => __('Enable Responsive', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable/Disable the responsive behaviour of the theme', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -228,8 +221,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'page_layout',
     						'type' => 'radio_img',
-    						'title' => __('Page Layout', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Select the page layout type', Redux_TEXT_DOMAIN),
+    						'title' => __('Page Layout', 'swift-framework-admin'), 
+    						'sub_desc' => __('Select the page layout type', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array(
     										'boxed' => array('title' => 'Boxed', 'img' => Redux_OPTIONS_URL.'img/page-bordered.png'),
@@ -240,8 +233,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'enable_page_shadow',
     						'type' => 'button_set',
-    						'title' => __('Page shadow (boxed layout only)', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable the shadow for the boxed layout', Redux_TEXT_DOMAIN),
+    						'title' => __('Page shadow (boxed layout only)', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable the shadow for the boxed layout', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -249,46 +242,46 @@ function setup_framework_options(){
     					array(
     						'id' => 'custom_favicon',
     						'type' => 'upload',
-    						'title' => __('Custom favicon', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Upload a 16px x 16px Png/Gif image that will represent your website favicon', Redux_TEXT_DOMAIN),
+    						'title' => __('Custom favicon', 'swift-framework-admin'), 
+    						'sub_desc' => __('Upload a 16px x 16px Png/Gif image that will represent your website favicon', 'swift-framework-admin'),
     						'desc' => ''
     						),
     					array(
     						'id' => 'rss_feed_url',
     						'type' => 'text',
-    						'title' => __('RSS Feed URL', Redux_TEXT_DOMAIN),
-    						'sub_desc' => __('The rss feed URL for your blog.', Redux_TEXT_DOMAIN),
+    						'title' => __('RSS Feed URL', 'swift-framework-admin'),
+    						'sub_desc' => __('The rss feed URL for your blog.', 'swift-framework-admin'),
     						'desc' => '',
     						'std' => '?feed=rss2'
     						),
     					array(
     						'id' => 'custom_css',
     						'type' => 'textarea',
-    						'title' => __('Custom CSS', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Quickly add some CSS to your theme by adding it to this textarea.', Redux_TEXT_DOMAIN),
+    						'title' => __('Custom CSS', 'swift-framework-admin'), 
+    						'sub_desc' => __('Quickly add some CSS to your theme by adding it to this textarea.', 'swift-framework-admin'),
     						'desc' => '',
     						'std' => ''
     						),
     					array(
     						'id' => 'google_analytics',
     						'type' => 'textarea',
-    						'title' => __('Tracking code', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Paste your Google Analytics (or other) tracking code here. This will be added into the footer template of your theme. NOTE: Please include the script tag.', Redux_TEXT_DOMAIN),
+    						'title' => __('Tracking code', 'swift-framework-admin'), 
+    						'sub_desc' => __('Paste your Google Analytics (or other) tracking code here. This will be added into the footer template of your theme. NOTE: Please include the script tag.', 'swift-framework-admin'),
     						'desc' => '',
     						'std' => ''
     						),
     					array(
     						'id' => 'custom_admin_login_logo',
     						'type' => 'upload',
-    						'title' => __('Custom admin login logo', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Upload a 254 x 95px image here to replace the admin login logo.', Redux_TEXT_DOMAIN),
+    						'title' => __('Custom admin login logo', 'swift-framework-admin'), 
+    						'sub_desc' => __('Upload a 254 x 95px image here to replace the admin login logo.', 'swift-framework-admin'),
     						'desc' => ''
     						),
     					array(
     						'id' => 'enable_styleswitcher',
     						'type' => 'button_set',
-    						'title' => __('Enable Front End Style Switcher', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable/Disable the front end styleswitcher.', Redux_TEXT_DOMAIN),
+    						'title' => __('Enable Front End Style Switcher', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable/Disable the front end styleswitcher.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '0'
@@ -296,16 +289,33 @@ function setup_framework_options(){
     					)
     				);
     $sections[] = array(
-    				'icon' => 'picture',
-    				'icon_class' => 'icon-large',
-    				'title' => __('Background Options', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">These are the options for the background.</p>', Redux_TEXT_DOMAIN),
+    				'icon' => 'dashboard',
+    				'icon_class' => 'fa-lg',
+    				'title' => __('Performance Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the performance options for the theme</p>', 'swift-framework-admin'),
+    				'fields' => array(	
+    					array(
+    						'id' => 'enable_min_scripts',
+    						'type' => 'button_set',
+    						'title' => __('Enable Performance', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable this option to load pre-minified scripts, without the need for any plugins.', 'swift-framework-admin'),
+    						'desc' => '',
+    						'options' => array('1' => 'On','0' => 'Off'),
+    						'std' => '0'
+    						),
+    					)
+    				);
+    $sections[] = array(
+    				'icon' => 'photo',
+    				'icon_class' => 'fa-lg',
+    				'title' => __('Background Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the options for the background.</p>', 'swift-framework-admin'),
     				'fields' => array(
     					array(
     						'id' => 'use_bg_image',
     						'type' => 'button_set',
-    						'title' => __('Use Background Image', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Check this to use an image for the body background (boxed layout only).', Redux_TEXT_DOMAIN),
+    						'title' => __('Use Background Image', 'swift-framework-admin'), 
+    						'sub_desc' => __('Check this to use an image for the body background (boxed layout only).', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -313,15 +323,15 @@ function setup_framework_options(){
     					array(
     						'id' => 'custom_bg_image',
     						'type' => 'upload',
-    						'title' => __('Upload Background Image', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Either upload or provide a link to your own background here, or choose from the presets below.', Redux_TEXT_DOMAIN),
+    						'title' => __('Upload Background Image', 'swift-framework-admin'), 
+    						'sub_desc' => __('Either upload or provide a link to your own background here, or choose from the presets below.', 'swift-framework-admin'),
     						'desc' => ''
     						),
     					array(
     						'id' => 'bg_size',
     						'type' => 'button_set',
-    						'title' => __('Background Size', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', Redux_TEXT_DOMAIN),
+    						'title' => __('Background Size', 'swift-framework-admin'), 
+    						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('cover' => 'Cover','auto' => 'Auto'),
     						'std' => 'auto'
@@ -329,8 +339,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'preset_bg_image',
     						'type' => 'radio_img_bg',
-    						'title' => __('Preset body background image', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Select a preset background image for the body background.', Redux_TEXT_DOMAIN),
+    						'title' => __('Preset body background image', 'swift-framework-admin'), 
+    						'sub_desc' => __('Select a preset background image for the body background.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array(
     										$args['bg_image_path'] . '45degree_fabric.png' => $args['bg_image_path'] . '45degree_fabric.png',
@@ -432,14 +442,23 @@ function setup_framework_options(){
     $sections[] = array(
     				'icon_type' => 'image',
     				'icon' => Redux_OPTIONS_URL.'img/header.png',
-    				'title' => __('Header Options', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">These are the options for the header.</p>', Redux_TEXT_DOMAIN),
+    				'title' => __('Header Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the options for the header.</p>', 'swift-framework-admin'),
     				'fields' => array(
+    					array(
+    						'id' => 'mobile_header_tabletland',
+    						'type' => 'button_set',
+    						'title' => __('Display Mobile Header on Tablet Landscape (< 1024px)', 'swift-framework-admin'), 
+    						'sub_desc' => __('Choose if you would like to show the mobile header on tablet landscape, rather than the standard menu.', 'swift-framework-admin'),
+    						'desc' => '',
+    						'options' => array('1' => 'On','0' => 'Off'),
+    						'std' => '0'
+    						),
     					array(
     						'id' => 'enable_tb',
     						'type' => 'button_set',
-    						'title' => __('Enable Top Bar', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('If enabled, the top bar will show with the menu and social config.', Redux_TEXT_DOMAIN),
+    						'title' => __('Enable Top Bar', 'swift-framework-admin'), 
+    						'sub_desc' => __('If enabled, the top bar will show with the menu and social config.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -447,7 +466,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'tb_config',
     						'type' => 'select',
-    						'title' => __('Top Bar Config', Redux_TEXT_DOMAIN),
+    						'title' => __('Top Bar Config', 'swift-framework-admin'),
     						'sub_desc' => "Choose the config for the Top Bar. This will define the options below for what you have on the left/right of the Top Bar.",
     						'options' => array(
     							'tb-1'	=> 'Text / Text',
@@ -457,7 +476,9 @@ function setup_framework_options(){
     							'tb-5'	=> 'Welcome + Super Search / Text',
     							'tb-6'	=> 'Welcome + Super Search / Alt Menu',
     							'tb-7'	=> 'Super Search / Text',
-    							'tb-8'  => 'Super Search / Alt Menu'
+    							'tb-8'  => 'Super Search / Alt Menu',
+    							'tb-9'  => 'Links / Text',
+    							'tb-10'  => 'Text / Links',
     							),
     						'desc' => '',
     						'std' => 'tb-1'
@@ -465,7 +486,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'tb_left_text',
     						'type' => 'text',
-    						'title' => __('Top Bar left text config', Redux_TEXT_DOMAIN),
+    						'title' => __('Top Bar left text config', 'swift-framework-admin'),
     						'sub_desc' => "The text that is shown on the left of the Top Bar. You can use shortcodes in here if you like, (i.e. social). NOTE: Make sure you use single quotes (') for parameters with no spaces in between.",
     						'desc' => '',
     						'std' => "The premier destination for premium products"
@@ -473,7 +494,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'tb_right_text',
     						'type' => 'text',
-    						'title' => __('Top Bar right text config', Redux_TEXT_DOMAIN),
+    						'title' => __('Top Bar right text config', 'swift-framework-admin'),
     						'sub_desc' => "The text that is shown on the right of the Top Bar. You can use shortcodes in here if you like, (i.e. social). NOTE: Make sure you use single quotes (') for parameters with no spaces in between.",
     						'desc' => '',
     						'std' => "[social size='small' style='light' type='twitter,facebook,dribbble']"
@@ -481,7 +502,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'tb_search_text',
     						'type' => 'text',
-    						'title' => __('Search text config', Redux_TEXT_DOMAIN),
+    						'title' => __('Search text config', 'swift-framework-admin'),
     						'sub_desc' => "The text that is shown to the right of the search icon in the top bar / header.",
     						'desc' => '',
     						'std' => "Personal Shopper"
@@ -489,8 +510,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'show_sub',
     						'type' => 'button_set',
-    						'title' => __('Show subscribe aux option', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Check this to show the suscribe dropdown in the links output, allowing users to subscribe via inputting their email address. If you use this, be sure to enter a Mailchimp form action URL in the box below.', Redux_TEXT_DOMAIN),
+    						'title' => __('Show subscribe aux option', 'swift-framework-admin'), 
+    						'sub_desc' => __('Check this to show the suscribe dropdown in the links output, allowing users to subscribe via inputting their email address. If you use this, be sure to enter a Mailchimp form action URL in the box below.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '0'
@@ -498,8 +519,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'show_translation',
     						'type' => 'button_set',
-    						'title' => __('Show translation aux option', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Check this to show the translation dropdown in the links output.', Redux_TEXT_DOMAIN),
+    						'title' => __('Show translation aux option', 'swift-framework-admin'), 
+    						'sub_desc' => __('Check this to show the translation dropdown in the links output.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '0'
@@ -507,8 +528,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'show_account',
     						'type' => 'button_set',
-    						'title' => __('Show account aux option', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Check this to show the account sign in / my account in the links output.', Redux_TEXT_DOMAIN),
+    						'title' => __('Show account aux option', 'swift-framework-admin'), 
+    						'sub_desc' => __('Check this to show the account sign in / my account in the links output.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -516,8 +537,17 @@ function setup_framework_options(){
     					array(
     						'id' => 'show_cart',
     						'type' => 'button_set',
-    						'title' => __('Show cart aux option', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Check this to show the WooCommerce cart dropdown in the header.', Redux_TEXT_DOMAIN),
+    						'title' => __('Show cart aux option', 'swift-framework-admin'), 
+    						'sub_desc' => __('Check this to show the WooCommerce cart dropdown in the header.', 'swift-framework-admin'),
+    						'desc' => '',
+    						'options' => array('1' => 'On','0' => 'Off'),
+    						'std' => '0'
+    						),
+    					array(
+    						'id' => 'show_cart_count',
+    						'type' => 'button_set',
+    						'title' => __('Cart aux item count', 'swift-framework-admin'),
+    						'sub_desc' => __('Enable this to include the item count within the cart.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '0'
@@ -525,8 +555,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'show_wishlist',
     						'type' => 'button_set',
-    						'title' => __('Show wishlist aux option', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Check this to show the WooCommerce wishlist dropdown in the header. NOTE: You will need the YITH Wishlist plugin to be enabled.', Redux_TEXT_DOMAIN),
+    						'title' => __('Show wishlist aux option', 'swift-framework-admin'), 
+    						'sub_desc' => __('Check this to show the WooCommerce wishlist dropdown in the header. NOTE: You will need the YITH Wishlist plugin to be enabled.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '0'
@@ -534,7 +564,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'sub_code',
     						'type' => 'textarea',
-    						'title' => __('Subscribe form code', Redux_TEXT_DOMAIN),
+    						'title' => __('Subscribe form code', 'swift-framework-admin'),
     						'sub_desc' => "Enter the form code (e.g. Mailchimp) that will be used for the subscribe dropdown.",
     						'desc' => '',
     						'std' => ""
@@ -542,8 +572,8 @@ function setup_framework_options(){
        					array(
     						'id' => 'header_layout',
     						'type' => 'radio_img',
-    						'title' => __('Header Layout', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Select a header layout option from the examples.', Redux_TEXT_DOMAIN),
+    						'title' => __('Header Layout', 'swift-framework-admin'), 
+    						'sub_desc' => __('Select a header layout option from the examples.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array(
 								'header-1' => array('title' => '', 'img' => Redux_OPTIONS_URL.'img/nhood_header_type1_centre.jpg'),
@@ -557,49 +587,49 @@ function setup_framework_options(){
     					array(
     						'id' => 'logo_upload',
     						'type' => 'upload',
-    						'title' => __('Logo', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Upload your logo here (any size).', Redux_TEXT_DOMAIN),
+    						'title' => __('Logo', 'swift-framework-admin'), 
+    						'sub_desc' => __('Upload your logo here (any size).', 'swift-framework-admin'),
     						'desc' => ''
     						),
     					array(
     						'id' => 'retina_logo_upload',
     						'type' => 'upload',
-    						'title' => __('Retina Logo', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Upload the retina version of your logo here.', Redux_TEXT_DOMAIN),
+    						'title' => __('Retina Logo', 'swift-framework-admin'), 
+    						'sub_desc' => __('Upload the retina version of your logo here.', 'swift-framework-admin'),
     						'desc' => ''
     						),
     					array(
     						'id' => 'logo_width',
     						'type' => 'text',
-    						'title' => __('Logo Width', Redux_TEXT_DOMAIN),
-    						'sub_desc' => __('Please enter the width of your logo here (standard size), so that it is restricted for the retina version. Numerical value (no px).', Redux_TEXT_DOMAIN),
+    						'title' => __('Logo Width', 'swift-framework-admin'),
+    						'sub_desc' => __('Please enter the width of your logo here (standard size), so that it is restricted for the retina version. Numerical value (no px).', 'swift-framework-admin'),
     						'desc' => '',
     						'std' => '0',
     						'class' => 'mini'
     						),
     					array(
-    						'id' => 'logo_top_spacing',
+    						'id' => 'logo_height',
     						'type' => 'text',
-    						'title' => __('Logo Top spacing', Redux_TEXT_DOMAIN),
-    						'sub_desc' => '',
+    						'title' => __('Logo Height Override', 'swift-framework-admin'),
+    						'sub_desc' => __('If you would like to override the logo height, please provide it here. Numerical value (no px).', 'swift-framework-admin'),
     						'desc' => '',
-    						'std' => '0',
+    						'std' => '',
     						'class' => 'mini'
     						),
     					array(
-    						'id' => 'logo_bottom_spacing',
+    						'id' => 'logo_padding',
     						'type' => 'text',
-    						'title' => __('Logo Bottom spacing', Redux_TEXT_DOMAIN),
-    						'sub_desc' => '',
+    						'title' => __('Logo Padding', 'swift-framework-admin'),
+    						'sub_desc' => __('Please enter the desired value for padding above/below the logo. Default is 35. Numerical value (no px).', 'swift-framework-admin'),
     						'desc' => '',
-    						'std' => '0',
+    						'std' => '35',
     						'class' => 'mini'
     						),
-    					array(
+       					array(
     						'id' => 'header_overlay',
     						'type' => 'button_set',
-    						'title' => __('Enable Header Overlay', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('If enabled, the header will overlay the top of the page (page heading / page content).', Redux_TEXT_DOMAIN),
+    						'title' => __('Enable Header Overlay', 'swift-framework-admin'), 
+    						'sub_desc' => __('If enabled, the header will overlay the top of the page (page heading / page content).', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '0'
@@ -607,8 +637,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'header_opacity',
     						'type' => 'slider',
-    						'title' => __('Header Opacity', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Select the percentage opacity of the header.', Redux_TEXT_DOMAIN),
+    						'title' => __('Header Opacity', 'swift-framework-admin'), 
+    						'sub_desc' => __('Select the percentage opacity of the header.', 'swift-framework-admin'),
     						'desc' => '',
     						'from' => '0',
     						'to' => '100',
@@ -617,19 +647,10 @@ function setup_framework_options(){
     						'std' => '100'
     						),
     					array(
-    						'id' => 'nav_top_spacing',
-    						'type' => 'text',
-    						'title' => __('Main Nav Top spacing', Redux_TEXT_DOMAIN),
-    						'sub_desc' => 'Add spacing here if you need extra spacing above the main navigation (i.e. if you have a large logo). Numerical value (no px).',
-    						'desc' => '',
-    						'std' => '0',
-    						'class' => 'mini'
-    						),
-    					array(
     						'id' => 'enable_mini_header',
     						'type' => 'button_set',
-    						'title' => __('Mini header', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable the mini header when scrolling down the page.', Redux_TEXT_DOMAIN),
+    						'title' => __('Mini header', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable the mini header when scrolling down the page.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -637,8 +658,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'enable_logo_fade',
     						'type' => 'button_set',
-    						'title' => __('Logo hover fade', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable the fade effect when you hover the logo.', Redux_TEXT_DOMAIN),
+    						'title' => __('Logo hover fade', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable the fade effect when you hover the logo.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -646,17 +667,26 @@ function setup_framework_options(){
     					array(
     						'id' => 'enable_header_shadow',
     						'type' => 'button_set',
-    						'title' => __('Header Shadow', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable the shadow below the header.', Redux_TEXT_DOMAIN),
+    						'title' => __('Header Shadow', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable the shadow below the header.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
     						),
     					array(
+    						'id' => 'header_search_pt',
+    						'type' => 'button_set',
+    						'title' => __('Header Search Post Type', 'swift-framework-admin'), 
+    						'sub_desc' => __('Set whether you would like the site search limited to products, or all content.', 'swift-framework-admin'),
+    						'desc' => '',
+    						'options' => array('any' => 'All', 'product' => 'Products'),
+    						'default' => 'any'
+    						),
+    					array(
     						'id' => 'disable_search',
     						'type' => 'button_set',
-    						'title' => __('Disable Search', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable this option to disable the search option in the header.', Redux_TEXT_DOMAIN),
+    						'title' => __('Disable Search', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable this option to disable the search option in the header.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '0'
@@ -666,14 +696,14 @@ function setup_framework_options(){
     $sections[] = array(
     				'icon_type' => 'image',
     				'icon' => Redux_OPTIONS_URL.'img/footer.png',
-    				'title' => __('Footer Options', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">These are the options for the footer.</p>', Redux_TEXT_DOMAIN),
+    				'title' => __('Footer Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the options for the footer.</p>', 'swift-framework-admin'),
     				'fields' => array(
     					array(
     						'id' => 'enable_footer',
     						'type' => 'button_set',
-    						'title' => __('Enable Footer', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable the footer widgets section.', Redux_TEXT_DOMAIN),
+    						'title' => __('Enable Footer', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable the footer widgets section.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -681,8 +711,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'enable_footer_divider',
     						'type' => 'button_set',
-    						'title' => __('Footer Divider', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable the footer divider above the footer.', Redux_TEXT_DOMAIN),
+    						'title' => __('Footer Divider', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable the footer divider above the footer.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -690,8 +720,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'footer_layout',
     						'type' => 'radio_img',
-    						'title' => __('Footer Layout', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Select the footer column layout.', Redux_TEXT_DOMAIN),
+    						'title' => __('Footer Layout', 'swift-framework-admin'), 
+    						'sub_desc' => __('Select the footer column layout.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array(
     										'footer-1' => array('title' => '', 'img' => Redux_OPTIONS_URL.'img/footer-1.png'),
@@ -709,8 +739,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'enable_copyright',
     						'type' => 'button_set',
-    						'title' => __('Enable Copyright', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable the footer copyright section.', Redux_TEXT_DOMAIN),
+    						'title' => __('Enable Copyright', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable the footer copyright section.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -718,8 +748,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'enable_copyright_divider',
     						'type' => 'button_set',
-    						'title' => __('Copyright Divider', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable the copyright divider above the copyright.', Redux_TEXT_DOMAIN),
+    						'title' => __('Copyright Divider', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable the copyright divider above the copyright.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -727,7 +757,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'footer_copyright_text',
     						'type' => 'textarea',
-    						'title' => __('Footer Copyright Text', Redux_TEXT_DOMAIN),
+    						'title' => __('Footer Copyright Text', 'swift-framework-admin'),
     						'sub_desc' => 'The copyright text that appears in the footer.',
     						'desc' => '',
     						'std' => "&copy;[the-year] Neighborhood &middot; Built with love by <a href='http://www.swiftideas.net'>Swift Ideas</a> using [wp-link]."
@@ -735,8 +765,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'show_backlink',
     						'type' => 'button_set',
-    						'title' => __('Show Swift Ideas Backlink', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('If checked, a backlink to our site will be shown in the footer. This is not compulsory, but always appreciated :)', Redux_TEXT_DOMAIN),
+    						'title' => __('Show Swift Ideas Backlink', 'swift-framework-admin'), 
+    						'sub_desc' => __('If checked, a backlink to our site will be shown in the footer. This is not compulsory, but always appreciated :)', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -744,7 +774,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'footer_gotop_text',
     						'type' => 'text',
-    						'title' => __('Go To Top Button Text', Redux_TEXT_DOMAIN),
+    						'title' => __('Go To Top Button Text', 'swift-framework-admin'),
     						'sub_desc' => 'The text for the go to top button in the bottom right of the footer.',
     						'desc' => '',
     						'std' => ""
@@ -753,16 +783,16 @@ function setup_framework_options(){
     				);
 	
 	$sections[] = array(
-					'icon' => 'zoom-in',
-					'icon_class' => 'icon-large',
-					'title' => __('Super Search Options', Redux_TEXT_DOMAIN),
-					'desc' => __('<p class="description">These are the options for the super search. There are 4 fields that you can set. If you leave any of the filters set to none, then that filter will be ignored.</p>', Redux_TEXT_DOMAIN),
+					'icon' => 'search-plus',
+					'icon_class' => 'fa-lg',
+					'title' => __('Super Search Options', 'swift-framework-admin'),
+					'desc' => __('<p class="description">These are the options for the super search. There are 4 fields that you can set. If you leave any of the filters set to none, then that filter will be ignored.</p>', 'swift-framework-admin'),
 					'fields' => array(
 						array(
 							'id' => 'ss_enable',
 							'type' => 'button_set',
-							'title' => __('Enable Super Search', Redux_TEXT_DOMAIN), 
-							'sub_desc' => __('If enabled, the super search option will be included on the page. You will also need to choose the option below.', Redux_TEXT_DOMAIN),
+							'title' => __('Enable Super Search', 'swift-framework-admin'), 
+							'sub_desc' => __('If enabled, the super search option will be included on the page. You will also need to choose the option below.', 'swift-framework-admin'),
 							'desc' => '',
 							'options' => array('1' => 'On','0' => 'Off'),
 							'std' => '1'
@@ -770,8 +800,8 @@ function setup_framework_options(){
 						array(
 							'id' => 'ss_mobile',
 							'type' => 'button_set',
-							'title' => __('Enable Super Search on Mobile', Redux_TEXT_DOMAIN), 
-							'sub_desc' => __('If enabled, the super search option will show at the top of the page on mobile devices.', Redux_TEXT_DOMAIN),
+							'title' => __('Enable Super Search on Mobile', 'swift-framework-admin'), 
+							'sub_desc' => __('If enabled, the super search option will show at the top of the page on mobile devices.', 'swift-framework-admin'),
 							'desc' => '',
 							'options' => array('1' => 'On','0' => 'Off'),
 							'std' => '1'
@@ -779,7 +809,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field1_text',
 							'type' => 'text',
-							'title' => __('Field 1 Text', Redux_TEXT_DOMAIN),
+							'title' => __('Field 1 Text', 'swift-framework-admin'),
 							'sub_desc' => 'The text that precedes the first dropdown select.',
 							'desc' => '',
 							'std' => "I'm looking for"
@@ -787,7 +817,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field1_filter',
 							'type' => 'select',
-							'title' => __('Field 1 Filter', Redux_TEXT_DOMAIN),
+							'title' => __('Field 1 Filter', 'swift-framework-admin'),
 							'sub_desc' => "The first filter in the search text, shows after field 1 text.",
 							'options' => get_woo_product_filters_array(),
 							'desc' => '',
@@ -796,7 +826,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field1_default_text',
 							'type' => 'text',
-							'title' => __('Field 1 Label', Redux_TEXT_DOMAIN),
+							'title' => __('Field 1 Label', 'swift-framework-admin'),
 							'sub_desc' => 'The default label text for the field 1 filter.',
 							'desc' => '',
 							'std' => "product"
@@ -808,7 +838,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field2_text',
 							'type' => 'text',
-							'title' => __('Field 2 Text', Redux_TEXT_DOMAIN),
+							'title' => __('Field 2 Text', 'swift-framework-admin'),
 							'sub_desc' => 'The text that precedes the second dropdown select.',
 							'desc' => '',
 							'std' => "in a size"
@@ -816,7 +846,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field2_filter',
 							'type' => 'select',
-							'title' => __('Field 2 Filter', Redux_TEXT_DOMAIN),
+							'title' => __('Field 2 Filter', 'swift-framework-admin'),
 							'sub_desc' => "The second filter in the search text, shows after field 2 text.",
 							'options' => get_woo_product_filters_array(),
 							'desc' => '',
@@ -825,7 +855,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field2_default_text',
 							'type' => 'text',
-							'title' => __('Field 2 Label', Redux_TEXT_DOMAIN),
+							'title' => __('Field 2 Label', 'swift-framework-admin'),
 							'sub_desc' => 'The default label text for the field 2 filter.',
 							'desc' => '',
 							'std' => "size"
@@ -837,7 +867,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field3_text',
 							'type' => 'text',
-							'title' => __('Field 3 Text', Redux_TEXT_DOMAIN),
+							'title' => __('Field 3 Text', 'swift-framework-admin'),
 							'sub_desc' => 'The text that precedes the third dropdown select.',
 							'desc' => '',
 							'std' => ". Show me the"
@@ -845,7 +875,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field3_filter',
 							'type' => 'select',
-							'title' => __('Field 3 Filter', Redux_TEXT_DOMAIN),
+							'title' => __('Field 3 Filter', 'swift-framework-admin'),
 							'sub_desc' => "The third filter in the search text, shows after field 3 text.",
 							'options' => get_woo_product_filters_array(),
 							'desc' => '',
@@ -854,7 +884,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field3_default_text',
 							'type' => 'text',
-							'title' => __('Field 3 Label', Redux_TEXT_DOMAIN),
+							'title' => __('Field 3 Label', 'swift-framework-admin'),
 							'sub_desc' => 'The default label text for the field 3 filter.',
 							'desc' => '',
 							'std' => "colour"
@@ -866,7 +896,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field4_text',
 							'type' => 'text',
-							'title' => __('Field 4 Text', Redux_TEXT_DOMAIN),
+							'title' => __('Field 4 Text', 'swift-framework-admin'),
 							'sub_desc' => 'The text that precedes the fourth dropdown select.',
 							'desc' => '',
 							'std' => ""
@@ -874,7 +904,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field4_filter',
 							'type' => 'select',
-							'title' => __('Field 4 Filter', Redux_TEXT_DOMAIN),
+							'title' => __('Field 4 Filter', 'swift-framework-admin'),
 							'sub_desc' => "The fourth filter in the search text, shows after field 4 text.",
 							'options' => get_woo_product_filters_array(),
 							'desc' => '',
@@ -883,7 +913,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field4_default_text',
 							'type' => 'text',
-							'title' => __('Field 4 Label', Redux_TEXT_DOMAIN),
+							'title' => __('Field 4 Label', 'swift-framework-admin'),
 							'sub_desc' => 'The default label text for the field 4 filter.',
 							'desc' => '',
 							'std' => ""
@@ -895,7 +925,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field5_text',
 							'type' => 'text',
-							'title' => __('Field 5 Text', Redux_TEXT_DOMAIN),
+							'title' => __('Field 5 Text', 'swift-framework-admin'),
 							'sub_desc' => 'The text that precedes the fifth dropdown select.',
 							'desc' => '',
 							'std' => ""
@@ -903,7 +933,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field5_filter',
 							'type' => 'select',
-							'title' => __('Field 5 Filter', Redux_TEXT_DOMAIN),
+							'title' => __('Field 5 Filter', 'swift-framework-admin'),
 							'sub_desc' => "The fifth filter in the search text, shows after field 5 text.",
 							'options' => get_woo_product_filters_array(),
 							'desc' => '',
@@ -912,7 +942,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field5_default_text',
 							'type' => 'text',
-							'title' => __('Field 5 Label', Redux_TEXT_DOMAIN),
+							'title' => __('Field 5 Label', 'swift-framework-admin'),
 							'sub_desc' => 'The default label text for the field 5 filter.',
 							'desc' => '',
 							'std' => ""
@@ -924,7 +954,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field6_text',
 							'type' => 'text',
-							'title' => __('Field 6 Text', Redux_TEXT_DOMAIN),
+							'title' => __('Field 6 Text', 'swift-framework-admin'),
 							'sub_desc' => 'The text that precedes the sixth dropdown select.',
 							'desc' => '',
 							'std' => ""
@@ -932,7 +962,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field6_filter',
 							'type' => 'select',
-							'title' => __('Field 6 Filter', Redux_TEXT_DOMAIN),
+							'title' => __('Field 6 Filter', 'swift-framework-admin'),
 							'sub_desc' => "The sixth filter in the search text, shows after field 6 text.",
 							'options' => get_woo_product_filters_array(),
 							'desc' => '',
@@ -941,7 +971,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'field6_default_text',
 							'type' => 'text',
-							'title' => __('Field 6 Label', Redux_TEXT_DOMAIN),
+							'title' => __('Field 6 Label', 'swift-framework-admin'),
 							'sub_desc' => 'The default label text for the field 6 filter.',
 							'desc' => '',
 							'std' => ""
@@ -953,7 +983,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'ss_final_text',
 							'type' => 'text',
-							'title' => __('Final Text', Redux_TEXT_DOMAIN),
+							'title' => __('Final Text', 'swift-framework-admin'),
 							'sub_desc' => 'The text that appears after the last filter.',
 							'desc' => '',
 							'std' => "items."
@@ -961,7 +991,7 @@ function setup_framework_options(){
 						array(
 							'id' => 'ss_button_text',
 							'type' => 'text',
-							'title' => __('Super Search Button Text', Redux_TEXT_DOMAIN),
+							'title' => __('Super Search Button Text', 'swift-framework-admin'),
 							'sub_desc' => 'The text for the super search button.',
 							'desc' => '',
 							'std' => "Super Search"
@@ -971,15 +1001,15 @@ function setup_framework_options(){
 	
     $sections[] = array(
     				'icon' => 'bullhorn',
-    				'icon_class' => 'icon-large',
-    				'title' => __('Promo Bar Options', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">These are the promo bar options for the banner that appears below the header.</p>', Redux_TEXT_DOMAIN),
+    				'icon_class' => 'fa-lg',
+    				'title' => __('Promo Bar Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the promo bar options for the banner that appears below the header.</p>', 'swift-framework-admin'),
     				'fields' => array(
     					array(
     						'id' => 'enable_promo_bar',
     						'type' => 'button_set',
-    						'title' => __('Enable Promo Bar', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Enable the sitewide promo bar under the header', Redux_TEXT_DOMAIN),
+    						'title' => __('Enable Promo Bar', 'swift-framework-admin'), 
+    						'sub_desc' => __('Enable the sitewide promo bar under the header', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '0'
@@ -987,7 +1017,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'promo_bar_text',
     						'type' => 'text',
-    						'title' => __('Promo Bar Text', Redux_TEXT_DOMAIN),
+    						'title' => __('Promo Bar Text', 'swift-framework-admin'),
     						'sub_desc' => 'The text for the go to top button in the bottom right of the footer.',
     						'desc' => '',
     						'std' => 'Enter your feedback modal content here. (Text/HTML/Shortcodes accepted).'
@@ -998,15 +1028,15 @@ function setup_framework_options(){
     if ( sf_is_current_color_settings_empty() ){
     	   	
     	$sections[] = array(
-    				'icon' => 'eye-open',
-    				'icon_class' => 'icon-large',
-    				'title' => __('Colour Scheme Options', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">Create, import, and export color schemas.</p>', Redux_TEXT_DOMAIN),
+    				'icon' => 'eye',
+    				'icon_class' => 'fa-lg',
+    				'title' => __('Colour Scheme Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">Create, import, and export color schemas.</p>', 'swift-framework-admin'),
     				'fields' => array(
     					array(
     						'id' => 'colour_scheme_select_scheme',
     						'type' => 'select',
-    						'title' => __('Select an existing colour scheme to preview', Redux_TEXT_DOMAIN),
+    						'title' => __('Select an existing colour scheme to preview', 'swift-framework-admin'),
     						'sub_desc' => "",
     						'options' => sf_get_color_scheme_list(),
     						'desc' => '',
@@ -1015,27 +1045,27 @@ function setup_framework_options(){
     					array(
     					    'id' => 'colour_scheme_import',
     					    'type' => 'upload_scheme',
-    					    'title' => __('Import a Color Scheme', Redux_TEXT_DOMAIN), 
-    					    'sub_desc' => __('File must be csv format.', Redux_TEXT_DOMAIN)
+    					    'title' => __('Import a Color Scheme', 'swift-framework-admin'), 
+    					    'sub_desc' => __('File must be csv format.', 'swift-framework-admin')
     						),
     					array(
     					    'id' => 'colour_scheme_export',
     					    'type' => 'raw_html_narrow',
-    					    'title' => __('Export Current Settings As Schema', Redux_TEXT_DOMAIN), 
-    					    'sub_desc' => __('Export the CURRENT COLORS IN THE SCHEMA PREVIEW as a csv file.', Redux_TEXT_DOMAIN),
+    					    'title' => __('Export Current Settings As Schema', 'swift-framework-admin'), 
+    					    'sub_desc' => __('Export the CURRENT COLORS IN THE SCHEMA PREVIEW as a csv file.', 'swift-framework-admin'),
     					    'html' => sf_export_color_scheme_html()
     						),
     					array(
     					    'id' => 'colour_scheme_preview',
     					    'type' => 'raw_html_narrow',
-    					    'title' => __('Color Scheme Preview', Redux_TEXT_DOMAIN), 
+    					    'title' => __('Color Scheme Preview', 'swift-framework-admin'), 
     					    'sub_desc' => __('<span id="scheme-preview-text">These colors are what currently exist in the WordPress theme customizer.</span>'
     					    				 .'<div class="scheme-buttons" id="scheme-buttons">'
     					    				 .'<input class="save-this-scheme-name" name="save-this-scheme-name" placeholder="Name This Scheme"   style="display:none;" />'					    				 
     					    				 .'<a class="save-this-scheme button-secondary"   style="display:none;">Save This Scheme</a>'
     					    				 .'<a class="delete-this-scheme button-secondary"  style="display:none;">Delete This Scheme</a>'
     					    				 .'<a class="use-this-scheme button-secondary"  style="display:none;">Use This Scheme</a>'
-    					    				 .'</div>', Redux_TEXT_DOMAIN),
+    					    				 .'</div>', 'swift-framework-admin'),
     					    'html' => sf_get_current_color_scheme_html_preview()
     						)
     					)
@@ -1045,15 +1075,15 @@ function setup_framework_options(){
        	} else {
        	
     	$sections[] = array(
-				'icon' => 'eye-open',
-				'icon_class' => 'icon-large',
-				'title' => __('Colour Scheme Options', Redux_TEXT_DOMAIN),
-				'desc' => __('<p class="description">Create, import, and export color schemas.</p>', Redux_TEXT_DOMAIN),
+				'icon' => 'eye',
+				'icon_class' => 'fa-lg',
+				'title' => __('Colour Scheme Options', 'swift-framework-admin'),
+				'desc' => __('<p class="description">Create, import, and export color schemas.</p>', 'swift-framework-admin'),
 				'fields' => array(
 					array(
 						'id' => 'colour_scheme_select_scheme',
 						'type' => 'select',
-						'title' => __('Select an existing colour scheme to preview', Redux_TEXT_DOMAIN),
+						'title' => __('Select an existing colour scheme to preview', 'swift-framework-admin'),
 						'sub_desc' => "",
 						'options' => sf_get_color_scheme_list(),
 						'desc' => '',
@@ -1062,27 +1092,27 @@ function setup_framework_options(){
 					array(
 					    'id' => 'colour_scheme_import',
 					    'type' => 'upload_scheme',
-					    'title' => __('Import a Color Scheme', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('File must be csv format.', Redux_TEXT_DOMAIN)
+					    'title' => __('Import a Color Scheme', 'swift-framework-admin'), 
+					    'sub_desc' => __('File must be csv format.', 'swift-framework-admin')
 						),
 					array(
 					    'id' => 'colour_scheme_export',
 					    'type' => 'raw_html_narrow',
-					    'title' => __('Export Current Settings As Schema', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('Export the CURRENT COLORS IN THE SCHEMA PREVIEW as a csv file.', Redux_TEXT_DOMAIN),
+					    'title' => __('Export Current Settings As Schema', 'swift-framework-admin'), 
+					    'sub_desc' => __('Export the CURRENT COLORS IN THE SCHEMA PREVIEW as a csv file.', 'swift-framework-admin'),
 					    'html' => sf_export_color_scheme_html()
 						),
 					array(
 					    'id' => 'colour_scheme_preview',
 					    'type' => 'raw_html_narrow',
-					    'title' => __('Color Scheme Preview', Redux_TEXT_DOMAIN), 
+					    'title' => __('Color Scheme Preview', 'swift-framework-admin'), 
 					    'sub_desc' => __('<span id="scheme-preview-text">These colors are what currently exist in the WordPress theme customizer.</span>'
 					    				 .'<div class="scheme-buttons" id="scheme-buttons">'
 					    				 .'<input class="save-this-scheme-name" name="save-this-scheme-name" placeholder="Name This Scheme" />'					    				 
 					    				 .'<a class="save-this-scheme button-secondary">Save This Scheme</a>'
 					    				 .'<a class="delete-this-scheme button-secondary"  style="display:none;">Delete This Scheme</a>'
 					    				 .'<a class="use-this-scheme button-secondary"  style="display:none;">Use This Scheme</a>'
-					    				 .'</div>', Redux_TEXT_DOMAIN),
+					    				 .'</div>', 'swift-framework-admin'),
 					    'html' => sf_get_current_color_scheme_html_preview()
 						)
 					)
@@ -1093,15 +1123,15 @@ function setup_framework_options(){
     
     $sections[] = array(
     				'icon' => 'tasks',
-    				'icon_class' => 'icon-large',
-    				'title' => __('Default Meta Options', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">These are the options to set the defaults for the meta options.</p>', Redux_TEXT_DOMAIN),
+    				'icon_class' => 'fa-lg',
+    				'title' => __('Default Meta Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the options to set the defaults for the meta options.</p>', 'swift-framework-admin'),
     				'fields' => array(
     					array(
     						'id' => 'default_show_page_heading',
     						'type' => 'button_set',
-    						'title' => __('Default Show Page Heading', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Choose the default state for the page heading, shown/hidden.', Redux_TEXT_DOMAIN),
+    						'title' => __('Default Show Page Heading', 'swift-framework-admin'), 
+    						'sub_desc' => __('Choose the default state for the page heading, shown/hidden.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('1' => 'On','0' => 'Off'),
     						'std' => '1'
@@ -1109,7 +1139,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'default_page_heading_bg_alt',
     						'type' => 'select',
-    						'title' => __('Default Page Heading Background', Redux_TEXT_DOMAIN),
+    						'title' => __('Default Page Heading Background', 'swift-framework-admin'),
     						'sub_desc' => "Choose the default alt background configuration for the page heading.",
     						'options' => array(
     							'none'		=> 'None',
@@ -1134,7 +1164,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'default_sidebar_config',
     						'type' => 'select',
-    						'title' => __('Default Sidebar Config', Redux_TEXT_DOMAIN),
+    						'title' => __('Default Sidebar Config', 'swift-framework-admin'),
     						'sub_desc' => "Choose the default sidebar config for pages/posts",
     						'options' => array(
     							'no-sidebars'		=> 'No Sidebars',
@@ -1148,7 +1178,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'default_left_sidebar',
     						'type' => 'select',
-    						'title' => __('Default Left Sidebar', Redux_TEXT_DOMAIN),
+    						'title' => __('Default Left Sidebar', 'swift-framework-admin'),
     						'sub_desc' => "Choose the default left sidebar for pages/posts",
     						'options' => sf_sidebars_array(),
     						'desc' => '',
@@ -1157,7 +1187,7 @@ function setup_framework_options(){
     					array(
     						'id' => 'default_right_sidebar',
     						'type' => 'select',
-    						'title' => __('Default Right Sidebar', Redux_TEXT_DOMAIN),
+    						'title' => __('Default Right Sidebar', 'swift-framework-admin'),
     						'sub_desc' => "Choose the default right sidebar for pages/posts",
     						'options' => sf_sidebars_array(),
     						'desc' => '',
@@ -1166,15 +1196,15 @@ function setup_framework_options(){
     					)
     				);
 	$sections[] = array(
-				'icon' => 'eye-open',
-				'icon_class' => 'icon-large',
-				'title' => __('Asset Background Options', Redux_TEXT_DOMAIN),
-				'desc' => __('<p class="description">These are the options for the alternative backgrounds that you can set for page headings / full width page builder assets.</p>', Redux_TEXT_DOMAIN),
+				'icon' => 'paint-brush',
+				'icon_class' => 'fa-lg',
+				'title' => __('Asset Background Options', 'swift-framework-admin'),
+				'desc' => __('<p class="description">These are the options for the alternative backgrounds that you can set for page headings / full width page builder assets.</p>', 'swift-framework-admin'),
 				'fields' => array(
 					array(
 						'id' => 'filter_wrap_bg',
 						'type' => 'select',
-						'title' => __('Filter Wrap Alt Background', Redux_TEXT_DOMAIN),
+						'title' => __('Filter Wrap Alt Background', 'swift-framework-admin'),
 						'sub_desc' => "Choose the alt background configuration for the filter wrap that appears within portfolio/blog page builder elements.",
 						'options' => array(
 							'none'		=> 'None',
@@ -1199,29 +1229,29 @@ function setup_framework_options(){
 					array(
 					    'id' => 'alt_one_bg_color',
 					    'type' => 'color',
-					    'title' => __('Alt 1 Background Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The background color for the Alt-1 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 1 Background Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The background color for the Alt-1 alternative background.', 'swift-framework-admin'),
 					    'std' => '#FFFFFF'
 						),
 					array(
 					    'id' => 'alt_one_text_color',
 					    'type' => 'color',
-					    'title' => __('Alt 1 Text Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The text color for the Alt-1 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 1 Text Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The text color for the Alt-1 alternative background.', 'swift-framework-admin'),
 					    'std' => '#222222'
 						),
 					array(
 						'id' => 'alt_one_bg_image',
 						'type' => 'upload',
-						'title' => __('Alt 1 Background Image', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('Upload an image for the Alt-1 alternative background here.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 1 Background Image', 'swift-framework-admin'), 
+						'sub_desc' => __('Upload an image for the Alt-1 alternative background here.', 'swift-framework-admin'),
 						'desc' => ''
 						),
 					array(
 						'id' => 'alt_one_bg_image_size',
 						'type' => 'button_set',
-						'title' => __('Alt 1 Background Size', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 1 Background Size', 'swift-framework-admin'), 
+						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', 'swift-framework-admin'),
 						'desc' => '',
 						'options' => array('cover' => 'Cover','auto' => 'Auto'),
 						'std' => 'auto'
@@ -1233,29 +1263,29 @@ function setup_framework_options(){
 					array(
 					    'id' => 'alt_two_bg_color',
 					    'type' => 'color',
-					    'title' => __('Alt 2 Background Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The background color for the Alt-2 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 2 Background Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The background color for the Alt-2 alternative background.', 'swift-framework-admin'),
 					    'std' => '#FFFFFF'
 						),
 					array(
 					    'id' => 'alt_two_text_color',
 					    'type' => 'color',
-					    'title' => __('Alt 2 Text Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The text color for the Alt-2 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 2 Text Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The text color for the Alt-2 alternative background.', 'swift-framework-admin'),
 					    'std' => '#222222'
 						),
 					array(
 						'id' => 'alt_two_bg_image',
 						'type' => 'upload',
-						'title' => __('Alt 2 Background Image', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('Upload an image for the Alt-2 alternative background here.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 2 Background Image', 'swift-framework-admin'), 
+						'sub_desc' => __('Upload an image for the Alt-2 alternative background here.', 'swift-framework-admin'),
 						'desc' => ''
 						),
 					array(
 						'id' => 'alt_two_bg_image_size',
 						'type' => 'button_set',
-						'title' => __('Alt 2 Background Size', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 2 Background Size', 'swift-framework-admin'), 
+						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', 'swift-framework-admin'),
 						'desc' => '',
 						'options' => array('cover' => 'Cover','auto' => 'Auto'),
 						'std' => 'auto'
@@ -1267,29 +1297,29 @@ function setup_framework_options(){
 					array(
 					    'id' => 'alt_three_bg_color',
 					    'type' => 'color',
-					    'title' => __('Alt 3 Background Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The background color for the Alt-3 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 3 Background Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The background color for the Alt-3 alternative background.', 'swift-framework-admin'),
 					    'std' => '#FFFFFF'
 						),
 					array(
 					    'id' => 'alt_three_text_color',
 					    'type' => 'color',
-					    'title' => __('Alt 3 Text Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The text color for the Alt-3 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 3 Text Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The text color for the Alt-3 alternative background.', 'swift-framework-admin'),
 					    'std' => '#222222'
 						),
 					array(
 						'id' => 'alt_three_bg_image',
 						'type' => 'upload',
-						'title' => __('Alt 3 Background Image', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('Upload an image for the Alt-3 alternative background here.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 3 Background Image', 'swift-framework-admin'), 
+						'sub_desc' => __('Upload an image for the Alt-3 alternative background here.', 'swift-framework-admin'),
 						'desc' => ''
 						),
 					array(
 						'id' => 'alt_three_bg_image_size',
 						'type' => 'button_set',
-						'title' => __('Alt 3 Background Size', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 3 Background Size', 'swift-framework-admin'), 
+						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', 'swift-framework-admin'),
 						'desc' => '',
 						'options' => array('cover' => 'Cover','auto' => 'Auto'),
 						'std' => 'auto'
@@ -1301,29 +1331,29 @@ function setup_framework_options(){
 					array(
 					    'id' => 'alt_four_bg_color',
 					    'type' => 'color',
-					    'title' => __('Alt 4 Background Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The background color for the Alt-4 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 4 Background Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The background color for the Alt-4 alternative background.', 'swift-framework-admin'),
 					    'std' => '#FFFFFF'
 						),
 					array(
 					    'id' => 'alt_four_text_color',
 					    'type' => 'color',
-					    'title' => __('Alt 4 Text Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The text color for the Alt-4 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 4 Text Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The text color for the Alt-4 alternative background.', 'swift-framework-admin'),
 					    'std' => '#222222'
 						),
 					array(
 						'id' => 'alt_four_bg_image',
 						'type' => 'upload',
-						'title' => __('Alt 4 Background Image', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('Upload an image for the Alt-4 alternative background here.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 4 Background Image', 'swift-framework-admin'), 
+						'sub_desc' => __('Upload an image for the Alt-4 alternative background here.', 'swift-framework-admin'),
 						'desc' => ''
 						),
 					array(
 						'id' => 'alt_four_bg_image_size',
 						'type' => 'button_set',
-						'title' => __('Alt 4 Background Size', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 4 Background Size', 'swift-framework-admin'), 
+						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', 'swift-framework-admin'),
 						'desc' => '',
 						'options' => array('cover' => 'Cover','auto' => 'Auto'),
 						'std' => 'auto'
@@ -1335,29 +1365,29 @@ function setup_framework_options(){
 					array(
 					    'id' => 'alt_five_bg_color',
 					    'type' => 'color',
-					    'title' => __('Alt 5 Background Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The background color for the Alt-5 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 5 Background Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The background color for the Alt-5 alternative background.', 'swift-framework-admin'),
 					    'std' => '#FFFFFF'
 						),
 					array(
 					    'id' => 'alt_five_text_color',
 					    'type' => 'color',
-					    'title' => __('Alt 5 Text Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The text color for the Alt-5 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 5 Text Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The text color for the Alt-5 alternative background.', 'swift-framework-admin'),
 					    'std' => '#222222'
 						),
 					array(
 						'id' => 'alt_five_bg_image',
 						'type' => 'upload',
-						'title' => __('Alt 5 Background Image', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('Upload an image for the Alt-5 alternative background here.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 5 Background Image', 'swift-framework-admin'), 
+						'sub_desc' => __('Upload an image for the Alt-5 alternative background here.', 'swift-framework-admin'),
 						'desc' => ''
 						),
 					array(
 						'id' => 'alt_five_bg_image_size',
 						'type' => 'button_set',
-						'title' => __('Alt 5 Background Size', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 5 Background Size', 'swift-framework-admin'), 
+						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', 'swift-framework-admin'),
 						'desc' => '',
 						'options' => array('cover' => 'Cover','auto' => 'Auto'),
 						'std' => 'auto'
@@ -1369,29 +1399,29 @@ function setup_framework_options(){
 					array(
 					    'id' => 'alt_six_bg_color',
 					    'type' => 'color',
-					    'title' => __('Alt 6 Background Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The background color for the Alt-6 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 6 Background Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The background color for the Alt-6 alternative background.', 'swift-framework-admin'),
 					    'std' => '#FFFFFF'
 						),
 					array(
 					    'id' => 'alt_six_text_color',
 					    'type' => 'color',
-					    'title' => __('Alt 6 Text Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The text color for the Alt-6 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 6 Text Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The text color for the Alt-6 alternative background.', 'swift-framework-admin'),
 					    'std' => '#222222'
 						),
 					array(
 						'id' => 'alt_six_bg_image',
 						'type' => 'upload',
-						'title' => __('Alt 6 Background Image', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('Upload an image for the Alt-6 alternative background here.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 6 Background Image', 'swift-framework-admin'), 
+						'sub_desc' => __('Upload an image for the Alt-6 alternative background here.', 'swift-framework-admin'),
 						'desc' => ''
 						),
 					array(
 						'id' => 'alt_six_bg_image_size',
 						'type' => 'button_set',
-						'title' => __('Alt 6 Background Size', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 6 Background Size', 'swift-framework-admin'), 
+						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', 'swift-framework-admin'),
 						'desc' => '',
 						'options' => array('cover' => 'Cover','auto' => 'Auto'),
 						'std' => 'auto'
@@ -1403,29 +1433,29 @@ function setup_framework_options(){
 					array(
 					    'id' => 'alt_seven_bg_color',
 					    'type' => 'color',
-					    'title' => __('Alt 7 Background Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The background color for the Alt-7 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 7 Background Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The background color for the Alt-7 alternative background.', 'swift-framework-admin'),
 					    'std' => '#FFFFFF'
 						),
 					array(
 					    'id' => 'alt_seven_text_color',
 					    'type' => 'color',
-					    'title' => __('Alt 7 Text Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The text color for the Alt-7 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 7 Text Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The text color for the Alt-7 alternative background.', 'swift-framework-admin'),
 					    'std' => '#222222'
 						),
 					array(
 						'id' => 'alt_seven_bg_image',
 						'type' => 'upload',
-						'title' => __('Alt 7 Background Image', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('Upload an image for the Alt-7 alternative background here.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 7 Background Image', 'swift-framework-admin'), 
+						'sub_desc' => __('Upload an image for the Alt-7 alternative background here.', 'swift-framework-admin'),
 						'desc' => ''
 						),
 					array(
 						'id' => 'alt_seven_bg_image_size',
 						'type' => 'button_set',
-						'title' => __('Alt 7 Background Size', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 7 Background Size', 'swift-framework-admin'), 
+						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', 'swift-framework-admin'),
 						'desc' => '',
 						'options' => array('cover' => 'Cover','auto' => 'Auto'),
 						'std' => 'auto'
@@ -1437,29 +1467,29 @@ function setup_framework_options(){
 					array(
 					    'id' => 'alt_eight_bg_color',
 					    'type' => 'color',
-					    'title' => __('Alt 8 Background Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The background color for the Alt-8 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 8 Background Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The background color for the Alt-8 alternative background.', 'swift-framework-admin'),
 					    'std' => '#FFFFFF'
 						),
 					array(
 					    'id' => 'alt_eight_text_color',
 					    'type' => 'color',
-					    'title' => __('Alt 8 Text Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The text color for the Alt-8 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 8 Text Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The text color for the Alt-8 alternative background.', 'swift-framework-admin'),
 					    'std' => '#222222'
 						),
 					array(
 						'id' => 'alt_eight_bg_image',
 						'type' => 'upload',
-						'title' => __('Alt 8 Background Image', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('Upload an image for the Alt-8 alternative background here.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 8 Background Image', 'swift-framework-admin'), 
+						'sub_desc' => __('Upload an image for the Alt-8 alternative background here.', 'swift-framework-admin'),
 						'desc' => ''
 						),
 					array(
 						'id' => 'alt_eight_bg_image_size',
 						'type' => 'button_set',
-						'title' => __('Alt 8 Background Size', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 8 Background Size', 'swift-framework-admin'), 
+						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', 'swift-framework-admin'),
 						'desc' => '',
 						'options' => array('cover' => 'Cover','auto' => 'Auto'),
 						'std' => 'auto'
@@ -1471,29 +1501,29 @@ function setup_framework_options(){
 					array(
 					    'id' => 'alt_nine_bg_color',
 					    'type' => 'color',
-					    'title' => __('Alt 9 Background Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The background color for the Alt-9 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 9 Background Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The background color for the Alt-9 alternative background.', 'swift-framework-admin'),
 					    'std' => '#FFFFFF'
 						),
 					array(
 					    'id' => 'alt_nine_text_color',
 					    'type' => 'color',
-					    'title' => __('Alt 9 Text Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The text color for the Alt-9 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 9 Text Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The text color for the Alt-9 alternative background.', 'swift-framework-admin'),
 					    'std' => '#222222'
 						),
 					array(
 						'id' => 'alt_nine_bg_image',
 						'type' => 'upload',
-						'title' => __('Alt 9 Background Image', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('Upload an image for the Alt-9 alternative background here.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 9 Background Image', 'swift-framework-admin'), 
+						'sub_desc' => __('Upload an image for the Alt-9 alternative background here.', 'swift-framework-admin'),
 						'desc' => ''
 						),
 					array(
 						'id' => 'alt_nine_bg_image_size',
 						'type' => 'button_set',
-						'title' => __('Alt 9 Background Size', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 9 Background Size', 'swift-framework-admin'), 
+						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', 'swift-framework-admin'),
 						'desc' => '',
 						'options' => array('cover' => 'Cover','auto' => 'Auto'),
 						'std' => 'auto'
@@ -1505,29 +1535,29 @@ function setup_framework_options(){
 					array(
 					    'id' => 'alt_ten_bg_color',
 					    'type' => 'color',
-					    'title' => __('Alt 10 Background Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The background color for the Alt-10 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 10 Background Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The background color for the Alt-10 alternative background.', 'swift-framework-admin'),
 					    'std' => '#FFFFFF'
 						),
 					array(
 					    'id' => 'alt_ten_text_color',
 					    'type' => 'color',
-					    'title' => __('Alt 10 Text Color', Redux_TEXT_DOMAIN), 
-					    'sub_desc' => __('The text color for the Alt-10 alternative background.', Redux_TEXT_DOMAIN),
+					    'title' => __('Alt 10 Text Color', 'swift-framework-admin'), 
+					    'sub_desc' => __('The text color for the Alt-10 alternative background.', 'swift-framework-admin'),
 					    'std' => '#222222'
 						),
 					array(
 						'id' => 'alt_ten_bg_image',
 						'type' => 'upload',
-						'title' => __('Alt 10 Background Image', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('Upload an image for the Alt-10 alternative background here.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 10 Background Image', 'swift-framework-admin'), 
+						'sub_desc' => __('Upload an image for the Alt-10 alternative background here.', 'swift-framework-admin'),
 						'desc' => ''
 						),
 					array(
 						'id' => 'alt_ten_bg_image_size',
 						'type' => 'button_set',
-						'title' => __('Alt 10 Background Size', Redux_TEXT_DOMAIN), 
-						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', Redux_TEXT_DOMAIN),
+						'title' => __('Alt 10 Background Size', 'swift-framework-admin'), 
+						'sub_desc' => __('If you are using an image rather than a pattern, select cover to make the image cover the background.', 'swift-framework-admin'),
 						'desc' => '',
 						'options' => array('cover' => 'Cover','auto' => 'Auto'),
 						'std' => 'auto'
@@ -1536,14 +1566,14 @@ function setup_framework_options(){
 				);
    	$sections[] = array(
    					'icon' => 'list',
-   					'icon_class' => 'icon-large',
-   					'title' => __('Archive/Category Options', Redux_TEXT_DOMAIN),
-   					'desc' => __('<p class="description">These are the options for the archive/category pages.</p>', Redux_TEXT_DOMAIN),
+   					'icon_class' => 'fa-lg',
+   					'title' => __('Archive/Category Options', 'swift-framework-admin'),
+   					'desc' => __('<p class="description">These are the options for the archive/category pages.</p>', 'swift-framework-admin'),
    					'fields' => array(
    						array(
    							'id' => 'archive_sidebar_config',
    							'type' => 'select',
-   							'title' => __('Sidebar Config', Redux_TEXT_DOMAIN),
+   							'title' => __('Sidebar Config', 'swift-framework-admin'),
    							'sub_desc' => "Choose the sidebar configuration for the archive/category pages.",
    							'options' => array(
    								'no-sidebars'		=> 'No Sidebars',
@@ -1557,7 +1587,7 @@ function setup_framework_options(){
    						array(
    							'id' => 'archive_sidebar_left',
    							'type' => 'select',
-   							'title' => __('Left Sidebar', Redux_TEXT_DOMAIN),
+   							'title' => __('Left Sidebar', 'swift-framework-admin'),
    							'sub_desc' => "Choose the left sidebar for Left/Both sidebar configs.",
    							'options' => sf_sidebars_array(),
    							'desc' => '',
@@ -1566,7 +1596,7 @@ function setup_framework_options(){
    						array(
    							'id' => 'archive_sidebar_right',
    							'type' => 'select',
-   							'title' => __('Right Sidebar', Redux_TEXT_DOMAIN),
+   							'title' => __('Right Sidebar', 'swift-framework-admin'),
    							'sub_desc' => "Choose the left sidebar for Right/Both sidebar configs.",
    							'options' => sf_sidebars_array(),
    							'desc' => '',
@@ -1575,7 +1605,7 @@ function setup_framework_options(){
    						array(
    							'id' => 'archive_display_type',
    							'type' => 'select',
-   							'title' => __('Display Type', Redux_TEXT_DOMAIN),
+   							'title' => __('Display Type', 'swift-framework-admin'),
    							'sub_desc' => "Select the display type.",
    							'options' => array(
    								'standard'		=> 'Standard',
@@ -1592,7 +1622,7 @@ function setup_framework_options(){
    						array(
    							'id' => 'portfolio_archive_display_type',
    							'type' => 'select',
-   							'title' => __('Portfolio Archive Display Type', Redux_TEXT_DOMAIN),
+   							'title' => __('Portfolio Archive Display Type', 'swift-framework-admin'),
    							'sub_desc' => "Select the display type.",
    							'options' => array(
    								'standard'		=> 'Standard',
@@ -1604,7 +1634,7 @@ function setup_framework_options(){
    						array(
    							'id' => 'portfolio_archive_columns',
    							'type' => 'select',
-   							'title' => __('Portfolio Archive Columns', Redux_TEXT_DOMAIN),
+   							'title' => __('Portfolio Archive Columns', 'swift-framework-admin'),
    							'sub_desc' => "Select the number of columns for the portfolio archive.",
    							'options' => array(
    								'1'		=> '1',
@@ -1619,15 +1649,15 @@ function setup_framework_options(){
    					);
     $sections[] = array(
     				'icon' => 'font',
-    				'icon_class' => 'icon-large',
-    				'title' => __('Font Options', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">These are the options for fonts used within the theme.</p>', Redux_TEXT_DOMAIN),
+    				'icon_class' => 'fa-lg',
+    				'title' => __('Font Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the options for fonts used within the theme.</p>', 'swift-framework-admin'),
     				'fields' => array(
     					array(
     						'id' => 'google_font_subset',
     						'type' => 'multi_select',
-    						'title' => __('Google Font Subset', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('If you are using Google Fonts, and need to use a subset, then please choose it here. Ensure that your chosen font(s) support this subset. NOTE: Hold CMD/CTRL and click to select multiple subsets.', Redux_TEXT_DOMAIN),
+    						'title' => __('Google Font Subset', 'swift-framework-admin'), 
+    						'sub_desc' => __('If you are using Google Fonts, and need to use a subset, then please choose it here. Ensure that your chosen font(s) support this subset. NOTE: Hold CMD/CTRL and click to select multiple subsets.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('none' => 'None', 'latin' => 'Latin', 'latin-ext' => 'Latin Extended', 'greek' => 'Greek', 'greek-ext' => 'Greek Extended', 'cyrillic' => 'Cyrillic Extended'),
     						'std' => 'none'
@@ -1635,8 +1665,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'body_font_option',
     						'type' => 'button_set',
-    						'title' => __('Body Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Choose the type of font that you want to use for the body text.', Redux_TEXT_DOMAIN),
+    						'title' => __('Body Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('Choose the type of font that you want to use for the body text.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('standard' => 'Standard','google' => 'Google', 'fontdeck' => 'FontDeck'),
     						'std' => 'standard'
@@ -1644,8 +1674,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'web_body_font',
     						'type' => 'select',
-    						'title' => __('Body Standard Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('The font that is used as the body text and other small text throughout the theme.', Redux_TEXT_DOMAIN),
+    						'title' => __('Body Standard Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('The font that is used as the body text and other small text throughout the theme.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array(
     										'Arial' => 'Arial',
@@ -1666,16 +1696,16 @@ function setup_framework_options(){
     					array(
     						'id' => 'google_standard_font',
     						'type' => 'google_webfonts',
-    						'title' => __('Standard Google Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('The font that is used as the body text and other small text throughout the theme.', Redux_TEXT_DOMAIN),
+    						'title' => __('Standard Google Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('The font that is used as the body text and other small text throughout the theme.', 'swift-framework-admin'),
     						'desc' => '',
     						'placeholder' => 'Default Font'
     						),
     					array(
     						'id' => 'fontdeck_standard_font',
     						'type' => 'textarea',
-    						'title' => __('Standard FontDeck Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Paste the css here that can be found from step 2 of the FontDeck instructions (<a href="http://neighborhood.swiftideas.net/img/fontdeck_step2.png" class="view" target="_blank">view</a>). NOTE: Make sure you provide the JS code in the box at the bottom for this/all FontDeck fonts you want to use.', Redux_TEXT_DOMAIN),
+    						'title' => __('Standard FontDeck Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('Paste the css here that can be found from step 2 of the FontDeck instructions (<a href="http://neighborhood.swiftideas.net/img/fontdeck_step2.png" class="view" target="_blank">view</a>). NOTE: Make sure you provide the JS code in the box at the bottom for this/all FontDeck fonts you want to use.', 'swift-framework-admin'),
     						'desc' => '',
     						'std' => ''
     						),
@@ -1686,8 +1716,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'headings_font_option',
     						'type' => 'button_set',
-    						'title' => __('Headings Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Choose the type of font that you want to use for the body text.', Redux_TEXT_DOMAIN),
+    						'title' => __('Headings Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('Choose the type of font that you want to use for the body text.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('standard' => 'Standard','google' => 'Google', 'fontdeck' => 'FontDeck'),
     						'std' => 'standard'
@@ -1695,8 +1725,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'web_heading_font',
     						'type' => 'select',
-    						'title' => __('Heading Standard Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('The font that is used for the headings throughout the theme.', Redux_TEXT_DOMAIN),
+    						'title' => __('Heading Standard Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('The font that is used for the headings throughout the theme.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array(
     										'Arial' => 'Arial',
@@ -1717,15 +1747,15 @@ function setup_framework_options(){
     					array(
     						'id' => 'google_heading_font',
     						'type' => 'google_webfonts',//doesnt need to be called for callback fields
-    						'title' => __('Headings Google Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('The font that is used for the headings throughout the theme.', Redux_TEXT_DOMAIN),
+    						'title' => __('Headings Google Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('The font that is used for the headings throughout the theme.', 'swift-framework-admin'),
     						'desc' => ''
     						),
     					array(
     						'id' => 'fontdeck_heading_font',
     						'type' => 'textarea',
-    						'title' => __('Heading FontDeck Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Paste the css here that can be found from step 2 of the FontDeck instructions (<a href="http://neighborhood.swiftideas.net/img/fontdeck_step2.png" class="view" target="_blank">view</a>). NOTE: Make sure you provide the JS code in the box at the bottom for this/all FontDeck fonts you want to use.', Redux_TEXT_DOMAIN),
+    						'title' => __('Heading FontDeck Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('Paste the css here that can be found from step 2 of the FontDeck instructions (<a href="http://neighborhood.swiftideas.net/img/fontdeck_step2.png" class="view" target="_blank">view</a>). NOTE: Make sure you provide the JS code in the box at the bottom for this/all FontDeck fonts you want to use.', 'swift-framework-admin'),
     						'desc' => '',
     						'std' => ''
     						),
@@ -1736,8 +1766,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'menu_font_option',
     						'type' => 'button_set',
-    						'title' => __('Menu Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Choose the type of font that you want to use for the menu text.', Redux_TEXT_DOMAIN),
+    						'title' => __('Menu Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('Choose the type of font that you want to use for the menu text.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array('standard' => 'Standard','google' => 'Google', 'fontdeck' => 'FontDeck'),
     						'std' => 'standard'
@@ -1745,8 +1775,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'web_menu_font',
     						'type' => 'select',
-    						'title' => __('Menu Standard Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('The font that is used for the menu.', Redux_TEXT_DOMAIN),
+    						'title' => __('Menu Standard Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('The font that is used for the menu.', 'swift-framework-admin'),
     						'desc' => '',
     						'options' => array(
     										'Arial' => 'Arial',
@@ -1767,15 +1797,15 @@ function setup_framework_options(){
     					array(
     						'id' => 'google_menu_font',
     						'type' => 'google_webfonts',//doesnt need to be called for callback fields
-    						'title' => __('Menu Google Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('The font that is used for the menu.', Redux_TEXT_DOMAIN),
+    						'title' => __('Menu Google Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('The font that is used for the menu.', 'swift-framework-admin'),
     						'desc' => ''
     						),
     					array(
     						'id' => 'fontdeck_menu_font',
     						'type' => 'textarea',
-    						'title' => __('Menu FontDeck Font', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Paste the css here that can be found from step 2 of the FontDeck instructions (<a href="http://neighborhood.swiftideas.net/img/fontdeck_step2.png" class="view" target="_blank">view</a>). NOTE: Make sure you provide the JS code in the box at the bottom for this/all FontDeck fonts you want to use.', Redux_TEXT_DOMAIN),
+    						'title' => __('Menu FontDeck Font', 'swift-framework-admin'), 
+    						'sub_desc' => __('Paste the css here that can be found from step 2 of the FontDeck instructions (<a href="http://neighborhood.swiftideas.net/img/fontdeck_step2.png" class="view" target="_blank">view</a>). NOTE: Make sure you provide the JS code in the box at the bottom for this/all FontDeck fonts you want to use.', 'swift-framework-admin'),
     						'desc' => '',
     						'std' => ''
     						),
@@ -1786,8 +1816,8 @@ function setup_framework_options(){
     					array(
     						'id' => 'fontdeck_js',
     						'type' => 'textarea',
-    						'title' => __('FontDeck JS Code', Redux_TEXT_DOMAIN), 
-    						'sub_desc' => __('Paste the js code here that can be found from step 1 of the FontDeck instructions (<a href="http://neighborhood.swiftideas.net/img/fontdeck_step1.png" class="view" target="_blank">view</a>).', Redux_TEXT_DOMAIN),
+    						'title' => __('FontDeck JS Code', 'swift-framework-admin'), 
+    						'sub_desc' => __('Paste the js code here that can be found from step 1 of the FontDeck instructions (<a href="http://neighborhood.swiftideas.net/img/fontdeck_step1.png" class="view" target="_blank">view</a>).', 'swift-framework-admin'),
     						'desc' => '',
     						'std' => ''
     						),
@@ -1796,15 +1826,15 @@ function setup_framework_options(){
     				
    	$sections[] = array(
    					'icon' => 'text-height',
-   					'icon_class' => 'icon-large',
-   					'title' => __('Font Size Options', Redux_TEXT_DOMAIN),
-   					'desc' => __('<p class="description">These are the options for fonts used within the theme.</p>', Redux_TEXT_DOMAIN),
+   					'icon_class' => 'fa-lg',
+   					'title' => __('Font Size Options', 'swift-framework-admin'),
+   					'desc' => __('<p class="description">These are the options for fonts used within the theme.</p>', 'swift-framework-admin'),
    					'fields' => array(
    						array(
    							'id' => 'body_font_size',
    							'type' => 'slider',
-   							'title' => __('Body Font Size', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the size of the body font.', Redux_TEXT_DOMAIN),
+   							'title' => __('Body Font Size', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the size of the body font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '100',
@@ -1815,8 +1845,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'body_font_line_height',
    							'type' => 'slider',
-   							'title' => __('Body Font Line Height', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the line height of the body font.', Redux_TEXT_DOMAIN),
+   							'title' => __('Body Font Line Height', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the line height of the body font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '80',
@@ -1831,8 +1861,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'menu_font_size',
    							'type' => 'slider',
-   							'title' => __('Menu Font Size', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the size of the menu font.', Redux_TEXT_DOMAIN),
+   							'title' => __('Menu Font Size', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the size of the menu font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '28',
@@ -1847,8 +1877,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h1_font_size',
    							'type' => 'slider',
-   							'title' => __('H1 Font Size', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the size of the h1 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H1 Font Size', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the size of the h1 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '60',
@@ -1859,8 +1889,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h1_font_line_height',
    							'type' => 'slider',
-   							'title' => __('H1 Font Line Height', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the line height of the h1 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H1 Font Line Height', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the line height of the h1 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '100',
@@ -1875,8 +1905,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h2_font_size',
    							'type' => 'slider',
-   							'title' => __('H2 Font Size', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the size of the h2 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H2 Font Size', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the size of the h2 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '60',
@@ -1887,8 +1917,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h2_font_line_height',
    							'type' => 'slider',
-   							'title' => __('H2 Font Line Height', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the line height of the h2 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H2 Font Line Height', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the line height of the h2 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '100',
@@ -1903,8 +1933,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h3_font_size',
    							'type' => 'slider',
-   							'title' => __('H3 Font Size', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the size of the h3 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H3 Font Size', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the size of the h3 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '60',
@@ -1915,8 +1945,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h3_font_line_height',
    							'type' => 'slider',
-   							'title' => __('H3 Font Line Height', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the line height of the h3 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H3 Font Line Height', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the line height of the h3 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '100',
@@ -1931,8 +1961,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h4_font_size',
    							'type' => 'slider',
-   							'title' => __('H4 Font Size', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the size of the h4 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H4 Font Size', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the size of the h4 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '60',
@@ -1943,8 +1973,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h4_font_line_height',
    							'type' => 'slider',
-   							'title' => __('H4 Font Line Height', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the line height of the h4 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H4 Font Line Height', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the line height of the h4 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '100',
@@ -1959,8 +1989,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h5_font_size',
    							'type' => 'slider',
-   							'title' => __('H5 Font Size', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the size of the h5 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H5 Font Size', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the size of the h5 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '60',
@@ -1971,8 +2001,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h5_font_line_height',
    							'type' => 'slider',
-   							'title' => __('H5 Font Line Height', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the line height of the h5 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H5 Font Line Height', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the line height of the h5 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '100',
@@ -1987,8 +2017,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h6_font_size',
    							'type' => 'slider',
-   							'title' => __('H6 Font Size', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the size of the h6 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H6 Font Size', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the size of the h6 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '60',
@@ -1999,8 +2029,8 @@ function setup_framework_options(){
    						array(
    							'id' => 'h6_font_line_height',
    							'type' => 'slider',
-   							'title' => __('H6 Font Line Height', Redux_TEXT_DOMAIN), 
-   							'sub_desc' => __('Select the line height of the h6 font.', Redux_TEXT_DOMAIN),
+   							'title' => __('H6 Font Line Height', 'swift-framework-admin'), 
+   							'sub_desc' => __('Select the line height of the h6 font.', 'swift-framework-admin'),
    							'desc' => '',
    							'from' => '10',
    							'to' => '100',
@@ -2012,15 +2042,15 @@ function setup_framework_options(){
    				);
 	$sections[] = array(
     				'icon' => 'quote-left',
-    				'icon_class' => 'icon-large',
-    				'title' => __('Testimonials Options', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">These are the options for the Testimonials pages/assets.</p>', Redux_TEXT_DOMAIN),
+    				'icon_class' => 'fa-lg',
+    				'title' => __('Testimonials Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the options for the Testimonials pages/assets.</p>', 'swift-framework-admin'),
     				'fields' => array(
     						array(
     							'id' => 'testimonial_page',
     							'type' => 'pages_select',
-    							'title' => __('Testimonial Page', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('Select the page that is your testimonial index page. This is used to link to the page from various places.', Redux_TEXT_DOMAIN),
+    							'title' => __('Testimonial Page', 'swift-framework-admin'), 
+    							'sub_desc' => __('Select the page that is your testimonial index page. This is used to link to the page from various places.', 'swift-framework-admin'),
     							'desc' => '',
     							'std' => '',
     							'args' => array()
@@ -2029,15 +2059,15 @@ function setup_framework_options(){
     				);
     $sections[] = array(
     				'icon' => 'user',
-    				'icon_class' => 'icon-large',
-    				'title' => __('Jobs Options', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">These are the options for the Jobs pages/assets.</p>', Redux_TEXT_DOMAIN),
+    				'icon_class' => 'fa-lg',
+    				'title' => __('Jobs Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the options for the Jobs pages/assets.</p>', 'swift-framework-admin'),
     				'fields' => array(
     						array(
     							'id' => 'jobs_page',
     							'type' => 'pages_select',
-    							'title' => __('Jobs Page', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('Select the page that is your jobs index page. This is used to link to the page from various places. This setting does not display jobs, but will appear on the Jobs overview asset to link to all jobs.', Redux_TEXT_DOMAIN),
+    							'title' => __('Jobs Page', 'swift-framework-admin'), 
+    							'sub_desc' => __('Select the page that is your jobs index page. This is used to link to the page from various places. This setting does not display jobs, but will appear on the Jobs overview asset to link to all jobs.', 'swift-framework-admin'),
     							'desc' => '',
     							'std' => '',
     							'args' => array()
@@ -2046,15 +2076,15 @@ function setup_framework_options(){
     				);
     $sections[] = array(
     				'icon' => 'shopping-cart',
-    				'icon_class' => 'icon-large',
-    				'title' => __('WooCommerce Options', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">These are the options for the WooCommerce pages.</p>', Redux_TEXT_DOMAIN),
+    				'icon_class' => 'fa-lg',
+    				'title' => __('WooCommerce Options', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the options for the WooCommerce pages.</p>', 'swift-framework-admin'),
     				'fields' => array(
     						array(
     							'id' => 'product_overlay_transition',
     							'type' => 'button_set',
-    							'title' => __('Product Overlay Transition', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('Choose whether you would like the product overlay transition to be enabled.', Redux_TEXT_DOMAIN),
+    							'title' => __('Product Overlay Transition', 'swift-framework-admin'), 
+    							'sub_desc' => __('Choose whether you would like the product overlay transition to be enabled.', 'swift-framework-admin'),
     							'desc' => '',
     							'options' => array('1' => 'On','0' => 'Off'),
     							'std' => '1'
@@ -2062,8 +2092,8 @@ function setup_framework_options(){
     						array(
     							'id' => 'overlay_transition_type',
     							'type' => 'button_set',
-    							'title' => __('Product Overlay Transition Type', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('Choose what type of transition between product images on hover you would like.', Redux_TEXT_DOMAIN),
+    							'title' => __('Product Overlay Transition Type', 'swift-framework-admin'), 
+    							'sub_desc' => __('Choose what type of transition between product images on hover you would like.', 'swift-framework-admin'),
     							'desc' => '',
     							'options' => array('slideup' => 'Slide Up', 'slideleft' => 'Slide Left', 'fade' => 'Fade'),
     							'std' => 'slideup'
@@ -2071,8 +2101,8 @@ function setup_framework_options(){
     						array(
     							'id' => 'enable_pb_product_pages',
     							'type' => 'button_set',
-    							'title' => __('Page Builder on Product Pages', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('Choose whether you would like the page builder to be enabled on product pages or not. If it is enabled, then the description accordion will use the "Short Description" content, and the page builder content will appear below the images/details area.', Redux_TEXT_DOMAIN),
+    							'title' => __('Page Builder on Product Pages', 'swift-framework-admin'), 
+    							'sub_desc' => __('Choose whether you would like the page builder to be enabled on product pages or not. If it is enabled, then the description accordion will use the "Short Description" content, and the page builder content will appear below the images/details area.', 'swift-framework-admin'),
     							'desc' => '',
     							'options' => array('1' => 'On','0' => 'Off'),
     							'std' => '0'
@@ -2080,8 +2110,8 @@ function setup_framework_options(){
     						array(
     							'id' => 'enable_catalog_mode',
     							'type' => 'button_set',
-    							'title' => __('Catalog Mode', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('Enable this setting to set the products into catalog mode, with no price or checkout process.', Redux_TEXT_DOMAIN),
+    							'title' => __('Catalog Mode', 'swift-framework-admin'), 
+    							'sub_desc' => __('Enable this setting to set the products into catalog mode, with no price or checkout process.', 'swift-framework-admin'),
     							'desc' => '',
     							'options' => array('1' => 'On','0' => 'Off'),
     							'std' => '0'
@@ -2089,8 +2119,8 @@ function setup_framework_options(){
     						array(
     							'id' => 'enable_default_tabs',
     							'type' => 'button_set',
-    							'title' => __('Product Description Tabs Mode', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('Enable this setting to revert to the default product description styling tabs - this will allow you to use extensions that add extra tabs to the product tabs.', Redux_TEXT_DOMAIN),
+    							'title' => __('Product Description Tabs Mode', 'swift-framework-admin'), 
+    							'sub_desc' => __('Enable this setting to revert to the default product description styling tabs - this will allow you to use extensions that add extra tabs to the product tabs.', 'swift-framework-admin'),
     							'desc' => '',
     							'options' => array('1' => 'On','0' => 'Off'),
     							'std' => '0'
@@ -2098,8 +2128,8 @@ function setup_framework_options(){
     						array(
     							'id' => 'enable_product_zoom',
     							'type' => 'button_set',
-    							'title' => __('Enable image zoom on product images', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('Choose whether you would like to enable product image zoom functionality on the product detail page images.', Redux_TEXT_DOMAIN),
+    							'title' => __('Enable image zoom on product images', 'swift-framework-admin'), 
+    							'sub_desc' => __('Choose whether you would like to enable product image zoom functionality on the product detail page images.', 'swift-framework-admin'),
     							'desc' => '',
     							'options' => array('1' => 'On','0' => 'Off'),
     							'std' => '0'
@@ -2107,7 +2137,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'woo_sidebar_config',
     							'type' => 'select',
-    							'title' => __('WooCommerce Sidebar Config', Redux_TEXT_DOMAIN),
+    							'title' => __('WooCommerce Sidebar Config', 'swift-framework-admin'),
     							'sub_desc' => "Choose the sidebar config for WooCommerce shop/category pages.",
     							'options' => array(
     								'no-sidebars'		=> 'No Sidebars',
@@ -2121,7 +2151,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'woo_left_sidebar',
     							'type' => 'select',
-    							'title' => __('WooCommerce Left Sidebar', Redux_TEXT_DOMAIN),
+    							'title' => __('WooCommerce Left Sidebar', 'swift-framework-admin'),
     							'sub_desc' => "Choose the left sidebar for WooCommerce shop/category pages.",
     							'options' => sf_sidebars_array(),
     							'desc' => '',
@@ -2130,7 +2160,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'woo_right_sidebar',
     							'type' => 'select',
-    							'title' => __('WooCommerce Right Sidebar', Redux_TEXT_DOMAIN),
+    							'title' => __('WooCommerce Right Sidebar', 'swift-framework-admin'),
     							'sub_desc' => "Choose the right sidebar for WooCommerce shop/category pages.",
     							'options' => sf_sidebars_array(),
     							'desc' => '',
@@ -2139,7 +2169,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'woo_page_heading_bg_alt',
     							'type' => 'select',
-    							'title' => __('WooCommerce Page Heading Background', Redux_TEXT_DOMAIN),
+    							'title' => __('WooCommerce Page Heading Background', 'swift-framework-admin'),
     							'sub_desc' => "Choose the alt background configuration for the shop/category WooCommerce page headings.",
     							'options' => array(
     								'none'		=> 'None',
@@ -2164,7 +2194,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'default_product_sidebar_config',
     							'type' => 'select',
-    							'title' => __('Default Product Sidebar Config', Redux_TEXT_DOMAIN),
+    							'title' => __('Default Product Sidebar Config', 'swift-framework-admin'),
     							'sub_desc' => "Choose the sidebar config for WooCommerce shop/category pages.",
     							'options' => array(
     								'no-sidebars'		=> 'No Sidebars',
@@ -2178,7 +2208,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'default_product_left_sidebar',
     							'type' => 'select',
-    							'title' => __('Default Product Left Sidebar', Redux_TEXT_DOMAIN),
+    							'title' => __('Default Product Left Sidebar', 'swift-framework-admin'),
     							'sub_desc' => "Choose the default left sidebar for WooCommerce product pages.",
     							'options' => sf_sidebars_array(),
     							'desc' => '',
@@ -2187,7 +2217,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'default_product_right_sidebar',
     							'type' => 'select',
-    							'title' => __('Default Product Right Sidebar', Redux_TEXT_DOMAIN),
+    							'title' => __('Default Product Right Sidebar', 'swift-framework-admin'),
     							'sub_desc' => "Choose the default right sidebar for WooCommerce product pages.",
     							'options' => sf_sidebars_array(),
     							'desc' => '',
@@ -2200,56 +2230,56 @@ function setup_framework_options(){
     						array(
     							'id' => 'checkout_new_account_text',
     							'type' => 'textarea',
-    							'title' => __('New account text', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('This text appears in the sign in / sign up area of the checkout process.', Redux_TEXT_DOMAIN),
+    							'title' => __('New account text', 'swift-framework-admin'), 
+    							'sub_desc' => __('This text appears in the sign in / sign up area of the checkout process.', 'swift-framework-admin'),
     							'desc' => '',
     							'std' => 'Creating an account with Neighborhood is quick and easy, and will allow you to move through our checkout quicker. You can also store multiple shipping addresses, gain access to your order history, and much more.'
     							),
     						array(
     							'id' => 'help_bar_text',
     							'type' => 'text',
-    							'title' => __('Help Bar Text', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('This text appears in the help bar on account / checkout pages.', Redux_TEXT_DOMAIN),
+    							'title' => __('Help Bar Text', 'swift-framework-admin'), 
+    							'sub_desc' => __('This text appears in the help bar on account / checkout pages.', 'swift-framework-admin'),
     							'desc' => '',
     							'std' => 'Need help? Call customer services on 0800 123 4567.'
     							),
     						array(
     							'id' => 'email_modal',
     							'type' => 'textarea',
-    							'title' => __('Email customer care modal', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('The content that appears in the modal box for the email customer care help link.', Redux_TEXT_DOMAIN),
+    							'title' => __('Email customer care modal', 'swift-framework-admin'), 
+    							'sub_desc' => __('The content that appears in the modal box for the email customer care help link.', 'swift-framework-admin'),
     							'desc' => '',
     							'std' => 'Enter your contact details or email form shortcode here. (Text/HTML/Shortcodes accepted).'
     							),
     						array(
     							'id' => 'shipping_modal',
     							'type' => 'textarea',
-    							'title' => __('Shipping information modal', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('The content that appears in the modal box for the shipping information help link.', Redux_TEXT_DOMAIN),
+    							'title' => __('Shipping information modal', 'swift-framework-admin'), 
+    							'sub_desc' => __('The content that appears in the modal box for the shipping information help link.', 'swift-framework-admin'),
     							'desc' => '',
     							'std' => 'Enter your shipping information here. (Text/HTML/Shortcodes accepted).'
     							),
     						array(
     							'id' => 'returns_modal',
     							'type' => 'textarea',
-    							'title' => __('Returns & exchange modal', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('The content that appears in the modal box for the returns & exchange help link.', Redux_TEXT_DOMAIN),
+    							'title' => __('Returns & exchange modal', 'swift-framework-admin'), 
+    							'sub_desc' => __('The content that appears in the modal box for the returns & exchange help link.', 'swift-framework-admin'),
     							'desc' => '',
     							'std' => 'Enter your returns and exchange information here. (Text/HTML/Shortcodes accepted).'
     							),
     						array(
     							'id' => 'faqs_modal',
     							'type' => 'textarea',
-    							'title' => __('FAQs modal', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('The content that appears in the modal box for the faqs help link.', Redux_TEXT_DOMAIN),
+    							'title' => __('FAQs modal', 'swift-framework-admin'), 
+    							'sub_desc' => __('The content that appears in the modal box for the faqs help link.', 'swift-framework-admin'),
     							'desc' => '',
     							'std' => 'Enter your faqs here. (Text/HTML/Shortcodes accepted).'
     							),
     						array(
     							'id' => 'feedback_modal',
     							'type' => 'textarea',
-    							'title' => __('Feedback modal', Redux_TEXT_DOMAIN), 
-    							'sub_desc' => __('The content that appears in the modal box for the leave feedback link.', Redux_TEXT_DOMAIN),
+    							'title' => __('Feedback modal', 'swift-framework-admin'), 
+    							'sub_desc' => __('The content that appears in the modal box for the leave feedback link.', 'swift-framework-admin'),
     							'desc' => '',
     							'std' => 'Enter your feedback modal content here. (Text/HTML/Shortcodes accepted).'
     							),
@@ -2257,14 +2287,14 @@ function setup_framework_options(){
     				);			
     $sections[] = array(
     				'icon' => 'twitter',
-    				'icon_class' => 'icon-large',
-    				'title' => __('Social Profiles', Redux_TEXT_DOMAIN),
-    				'desc' => __('<p class="description">These are the fields that power the social shortcode. If you include a link/username here, then the icon will be included in the shortcodes output.</p>', Redux_TEXT_DOMAIN),
+    				'icon_class' => 'fa-lg',
+    				'title' => __('Social Profiles', 'swift-framework-admin'),
+    				'desc' => __('<p class="description">These are the fields that power the social shortcode. If you include a link/username here, then the icon will be included in the shortcodes output.</p>', 'swift-framework-admin'),
     				'fields' => array(
     						array(
     							'id' => 'twitter_username',
     							'type' => 'text',
-    							'title' => __('Twitter', Redux_TEXT_DOMAIN),
+    							'title' => __('Twitter', 'swift-framework-admin'),
     							'sub_desc' => "Your Twitter username (no @).",
     							'desc' => '',
     							'std' => ''
@@ -2272,7 +2302,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'facebook_page_url',
     							'type' => 'text',
-    							'title' => __('Facebook', Redux_TEXT_DOMAIN),
+    							'title' => __('Facebook', 'swift-framework-admin'),
     							'sub_desc' => "Your facebook page/profile url",
     							'desc' => '',
     							'std' => ''
@@ -2280,7 +2310,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'dribbble_username',
     							'type' => 'text',
-    							'title' => __('Dribbble', Redux_TEXT_DOMAIN),
+    							'title' => __('Dribbble', 'swift-framework-admin'),
     							'sub_desc' => "Your Dribbble username",
     							'desc' => '',
     							'std' => ''
@@ -2288,7 +2318,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'vimeo_username',
     							'type' => 'text',
-    							'title' => __('Vimeo', Redux_TEXT_DOMAIN),
+    							'title' => __('Vimeo', 'swift-framework-admin'),
     							'sub_desc' => "Your Vimeo username",
     							'desc' => '',
     							'std' => ''
@@ -2296,7 +2326,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'tumblr_username',
     							'type' => 'text',
-    							'title' => __('Tumblr', Redux_TEXT_DOMAIN),
+    							'title' => __('Tumblr', 'swift-framework-admin'),
     							'sub_desc' => "Your Tumblr username",
     							'desc' => '',
     							'std' => ''
@@ -2304,7 +2334,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'spotify_username',
     							'type' => 'text',
-    							'title' => __('Spotify', Redux_TEXT_DOMAIN),
+    							'title' => __('Spotify', 'swift-framework-admin'),
     							'sub_desc' => "Your Spotify username",
     							'desc' => '',
     							'std' => ''
@@ -2312,7 +2342,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'skype_username',
     							'type' => 'text',
-    							'title' => __('Skype', Redux_TEXT_DOMAIN),
+    							'title' => __('Skype', 'swift-framework-admin'),
     							'sub_desc' => "Your Skype username",
     							'desc' => '',
     							'std' => ''
@@ -2320,7 +2350,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'linkedin_page_url',
     							'type' => 'text',
-    							'title' => __('LinkedIn', Redux_TEXT_DOMAIN),
+    							'title' => __('LinkedIn', 'swift-framework-admin'),
     							'sub_desc' => "Your LinkedIn page/profile url",
     							'desc' => '',
     							'std' => ''
@@ -2328,7 +2358,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'lastfm_username',
     							'type' => 'text',
-    							'title' => __('Last.fm', Redux_TEXT_DOMAIN),
+    							'title' => __('Last.fm', 'swift-framework-admin'),
     							'sub_desc' => "Your Last.fm username",
     							'desc' => '',
     							'std' => ''
@@ -2336,7 +2366,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'googleplus_page_url',
     							'type' => 'text',
-    							'title' => __('Google+', Redux_TEXT_DOMAIN),
+    							'title' => __('Google+', 'swift-framework-admin'),
     							'sub_desc' => "Your Google+ page/profile URL",
     							'desc' => '',
     							'std' => ''
@@ -2344,7 +2374,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'flickr_page_url',
     							'type' => 'text',
-    							'title' => __('Flickr', Redux_TEXT_DOMAIN),
+    							'title' => __('Flickr', 'swift-framework-admin'),
     							'sub_desc' => "Your Flickr page url",
     							'desc' => '',
     							'std' => ''
@@ -2352,7 +2382,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'youtube_username',
     							'type' => 'text',
-    							'title' => __('YouTube', Redux_TEXT_DOMAIN),
+    							'title' => __('YouTube', 'swift-framework-admin'),
     							'sub_desc' => "Your YouTube URL",
     							'desc' => '',
     							'std' => ''
@@ -2360,7 +2390,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'behance_username',
     							'type' => 'text',
-    							'title' => __('Behance', Redux_TEXT_DOMAIN),
+    							'title' => __('Behance', 'swift-framework-admin'),
     							'sub_desc' => "Your Behance username",
     							'desc' => '',
     							'std' => ''
@@ -2368,7 +2398,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'pinterest_username',
     							'type' => 'text',
-    							'title' => __('Pinterest', Redux_TEXT_DOMAIN),
+    							'title' => __('Pinterest', 'swift-framework-admin'),
     							'sub_desc' => "Your Pinterest username",
     							'desc' => '',
     							'std' => ''
@@ -2376,7 +2406,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'yelp_url',
     							'type' => 'text',
-    							'title' => __('Yelp', Redux_TEXT_DOMAIN),
+    							'title' => __('Yelp', 'swift-framework-admin'),
     							'sub_desc' => "Your Yelp URL",
     							'desc' => '',
     							'std' => ''
@@ -2384,7 +2414,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'instagram_username',
     							'type' => 'text',
-    							'title' => __('Instagram', Redux_TEXT_DOMAIN),
+    							'title' => __('Instagram', 'swift-framework-admin'),
     							'sub_desc' => "Your Instagram username",
     							'desc' => '',
     							'std' => ''
@@ -2392,7 +2422,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'xing_url',
     							'type' => 'text',
-    							'title' => __('Xing', Redux_TEXT_DOMAIN),
+    							'title' => __('Xing', 'swift-framework-admin'),
     							'sub_desc' => "Your Xing URL",
     							'desc' => '',
     							'std' => ''

@@ -21,7 +21,7 @@ class SwiftPageBuilderShortcode_fullwidth_text extends SwiftPageBuilderShortcode
 
         $el_class .= ' spb_text_column';
         
-        $sidebar_config = get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
+        $sidebar_config = sf_get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
         
         $sidebars = '';
         if (($sidebar_config == "left-sidebar") || ($sidebar_config == "right-sidebar")) {
@@ -50,47 +50,47 @@ class SwiftPageBuilderShortcode_fullwidth_text extends SwiftPageBuilderShortcode
 }
 
 SPBMap::map( 'fullwidth_text', array(
-    "name"		=> __("Text Block (Full Width)", "swift_page_builder"),
+    "name"		=> __("Text Block (Full Width)", 'swift-framework-admin'),
     "base"		=> "fullwidth_text",
     "class"		=> "fullwidth_text",
     "icon"      => "spb-icon-full-width-text",
     "params"	=> array(
 	    array(
 	        "type" => "textfield",
-	        "heading" => __("Widget title", "swift_page_builder"),
+	        "heading" => __("Widget title", 'swift-framework-admin'),
 	        "param_name" => "title",
 	        "value" => "",
-	        "description" => __("Heading text. Leave it empty if not needed.", "swift_page_builder")
+	        "description" => __("Heading text. Leave it empty if not needed.", 'swift-framework-admin')
 	    ),
 	    array(
 	        "type" => "textarea_html",
 	        "holder" => "div",
 	        "class" => "",
-	        "heading" => __("Text", "swift_page_builder"),
+	        "heading" => __("Text", 'swift-framework-admin'),
 	        "param_name" => "content",
-	        "value" => __("<p>This is a full width text block. Click the edit button to change this text.</p>", "swift_page_builder"),
-	        "description" => __("Enter your content.", "swift_page_builder")
+	        "value" => __("<p>This is a full width text block. Click the edit button to change this text.</p>", 'swift-framework-admin'),
+	        "description" => __("Enter your content.", 'swift-framework-admin')
 	    ),
 	    array(
 	        "type" => "dropdown",
-	        "heading" => __("Show alt background", "swift_page_builder"),
+	        "heading" => __("Show alt background", 'swift-framework-admin'),
 	        "param_name" => "alt_background",
-	        "value" => array(__("None", "swift_page_builder") => "none", __("Alt 1", "swift_page_builder") => "alt-one", __("Alt 2", "swift_page_builder") => "alt-two", __("Alt 3", "swift_page_builder") => "alt-three", __("Alt 4", "swift_page_builder") => "alt-four", __("Alt 5", "swift_page_builder") => "alt-five", __("Alt 6", "swift_page_builder") => "alt-six", __("Alt 7", "swift_page_builder") => "alt-seven", __("Alt 8", "swift_page_builder") => "alt-eight", __("Alt 9", "swift_page_builder") => "alt-nine", __("Alt 10", "swift_page_builder") => "alt-ten"),
-	        "description" => __("Show an alternative background around the asset. These can all be set in Neighborhood Options > Asset Background Options. NOTE: This is only available on a page with the no sidebar setup.", "swift_page_builder")
+	        "value" => array(__("None", 'swift-framework-admin') => "none", __("Alt 1", 'swift-framework-admin') => "alt-one", __("Alt 2", 'swift-framework-admin') => "alt-two", __("Alt 3", 'swift-framework-admin') => "alt-three", __("Alt 4", 'swift-framework-admin') => "alt-four", __("Alt 5", 'swift-framework-admin') => "alt-five", __("Alt 6", 'swift-framework-admin') => "alt-six", __("Alt 7", 'swift-framework-admin') => "alt-seven", __("Alt 8", 'swift-framework-admin') => "alt-eight", __("Alt 9", 'swift-framework-admin') => "alt-nine", __("Alt 10", 'swift-framework-admin') => "alt-ten"),
+	        "description" => __("Show an alternative background around the asset. These can all be set in Neighborhood Options > Asset Background Options. NOTE: This is only available on a page with the no sidebar setup.", 'swift-framework-admin')
 	    ),
 	    array(
 	        "type" => "altbg_preview",
-	        "heading" => __("Alt Background Preview", "swift_page_builder"),
+	        "heading" => __("Alt Background Preview", 'swift-framework-admin'),
 	        "param_name" => "altbg_preview",
 	        "value" => "",
-	        "description" => __("", "swift_page_builder")
+	        "description" => __("", 'swift-framework-admin')
 	    ),
         array(
             "type" => "textfield",
-            "heading" => __("Extra class name", "swift_page_builder"),
+            "heading" => __("Extra class name", 'swift-framework-admin'),
             "param_name" => "el_class",
             "value" => "",
-            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "swift_page_builder")
+            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-admin')
         )
     )
 ) );

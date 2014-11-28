@@ -21,7 +21,7 @@
 	            'type'	=> '',
 	            'href' => '',
 	            'shadow'		=> 'yes',
-	            'title' => __('Text on the button', "swift_page_builder"),
+	            'title' => __('Text on the button', 'swift-framework-admin'),
 	            'position' => 'cta_align_right',
 	            'alt_background'	=> 'none',
 	            'width' => '1/1',
@@ -42,7 +42,7 @@
 			$width = spb_translateColumnWidthToSpan($width);
 	        $el_class = $this->getExtraClass($el_class);
 	        
-	        $sidebar_config = get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
+	        $sidebar_config = sf_get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
 	        
 	        $sidebars = '';
 	        if (($sidebar_config == "left-sidebar") || ($sidebar_config == "right-sidebar")) {

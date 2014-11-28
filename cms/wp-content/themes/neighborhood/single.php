@@ -9,9 +9,9 @@
 	$default_left_sidebar = $options['default_left_sidebar'];
 	$default_right_sidebar = $options['default_right_sidebar'];
 	
-	$show_page_title = get_post_meta($post->ID, 'sf_page_title', true);
-	$page_title_one = get_post_meta($post->ID, 'sf_page_title_one', true);
-	$page_title_bg = get_post_meta($post->ID, 'sf_page_title_bg', true);
+	$show_page_title = sf_get_post_meta($post->ID, 'sf_page_title', true);
+	$page_title_one = sf_get_post_meta($post->ID, 'sf_page_title_one', true);
+	$page_title_bg = sf_get_post_meta($post->ID, 'sf_page_title_bg', true);
 	
 	if ($show_page_title == "") {
 		$show_page_title = $default_show_page_heading;
@@ -20,15 +20,15 @@
 		$page_title_bg = $default_page_heading_bg_alt;
 	}
 	
-	$full_width_display = get_post_meta($post->ID, 'sf_full_width_display', true);
-	$show_author_info = get_post_meta($post->ID, 'sf_author_info', true);
-	$show_social = get_post_meta($post->ID, 'sf_social_sharing', true);
-	$show_related =  get_post_meta($post->ID, 'sf_related_articles', true);
-	$remove_breadcrumbs = get_post_meta($post->ID, 'sf_no_breadcrumbs', true);
+	$full_width_display = sf_get_post_meta($post->ID, 'sf_full_width_display', true);
+	$show_author_info = sf_get_post_meta($post->ID, 'sf_author_info', true);
+	$show_social = sf_get_post_meta($post->ID, 'sf_social_sharing', true);
+	$show_related =  sf_get_post_meta($post->ID, 'sf_related_articles', true);
+	$remove_breadcrumbs = sf_get_post_meta($post->ID, 'sf_no_breadcrumbs', true);
 	
-	$sidebar_config = get_post_meta($post->ID, 'sf_sidebar_config', true);
-	$left_sidebar = get_post_meta($post->ID, 'sf_left_sidebar', true);
-	$right_sidebar = get_post_meta($post->ID, 'sf_right_sidebar', true);
+	$sidebar_config = sf_get_post_meta($post->ID, 'sf_sidebar_config', true);
+	$left_sidebar = sf_get_post_meta($post->ID, 'sf_left_sidebar', true);
+	$right_sidebar = sf_get_post_meta($post->ID, 'sf_right_sidebar', true);
 	
 	if ($sidebar_config == "") {
 		$sidebar_config = $default_sidebar_config;
@@ -84,17 +84,17 @@
 		
 		$media_type = $media_image = $media_video = $media_gallery = '';
 				 
-		$use_thumb_content = get_post_meta($post->ID, 'sf_thumbnail_content_main_detail', true);
+		$use_thumb_content = sf_get_post_meta($post->ID, 'sf_thumbnail_content_main_detail', true);
 		$post_format = get_post_format($post->ID);
 		if ( $post_format == "" ) {
 			$post_format = 'standard';
 		}
 		if ($use_thumb_content) {
-		$media_type = get_post_meta($post->ID, 'sf_thumbnail_type', true);
+		$media_type = sf_get_post_meta($post->ID, 'sf_thumbnail_type', true);
 		} else {
-		$media_type = get_post_meta($post->ID, 'sf_detail_type', true);
+		$media_type = sf_get_post_meta($post->ID, 'sf_detail_type', true);
 		}
-		$media_slider = get_post_meta($post->ID, 'sf_detail_rev_slider_alias', true);
+		$media_slider = sf_get_post_meta($post->ID, 'sf_detail_rev_slider_alias', true);
 		
 		if ((($sidebar_config == "left-sidebar") || ($sidebar_config == "right-sidebar") || ($sidebar_config == "both-sidebars")) && !$full_width_display) {
 		$media_width = 770;
@@ -252,7 +252,7 @@
 						while ($related_posts_query->have_posts()) {
 							$related_posts_query->the_post();
 							$thumb_image = "";
-							$thumb_image = get_post_meta($post->ID, 'sf_thumbnail_image', true);
+							$thumb_image = sf_get_post_meta($post->ID, 'sf_thumbnail_image', true);
 							if (!$thumb_image) {
 								$thumb_image = get_post_thumbnail_id();
 							}

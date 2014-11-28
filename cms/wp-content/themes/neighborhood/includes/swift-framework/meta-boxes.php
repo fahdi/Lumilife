@@ -725,7 +725,7 @@
 				'name' => 'Product Short Description',
 				'desc' => "You can optionally write a short description here, which shows above the variations/shopping bag options.",
 				'id'   => "{$prefix}product_short_description",
-				'type' => 'textarea',
+				'type' => 'wysiwyg',
 				'std'  => "",
 				'cols' => '40',
 				'rows' => '8',
@@ -736,7 +736,7 @@
 				'name' => 'Product Description',
 				'desc' => "You can optionally write a product description here, which shows under the description accordion heading if you have the page builder enabled for product pages.",
 				'id'   => "{$prefix}product_description",
-				'type' => 'textarea',
+				'type' => 'wysiwyg',
 				'std'  => "",
 				'cols' => '40',
 				'rows' => '8',
@@ -1327,7 +1327,7 @@
 		// Check for page template
 		$checked_templates = array( $template_file );
 	
-		$template = get_post_meta( $post_id, '_wp_page_template', true );
+		$template = sf_get_post_meta( $post_id, '_wp_page_template', true );
 		if ( in_array( $template, $checked_templates ) )
 			return true;
 	

@@ -54,7 +54,7 @@ if ( !class_exists( 'RWMB_Posts_Field' ) )
 			$field = wp_parse_args( $field, array(
 				'post_type' => 'post',
 				'field_type' => 'select_advanced',
-				'default'    =>  sprintf( __( 'Select a %s' , 'rwmb' ), $pt_obj->labels->singular_name ), 
+				'default'    =>  sprintf( __( 'Select a %s' , 'swift-framework-admin' ), $pt_obj->labels->singular_name ), 
 				'parent' => false,
 				'query_args' => array()
 			) );

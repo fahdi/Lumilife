@@ -51,7 +51,7 @@ class SwiftPageBuilderShortcode_testimonial extends SwiftPageBuilderShortcode {
         while ( $testimonials->have_posts() ) : $testimonials->the_post();
         	
         	$testimonial_text = get_the_content();
-        	$testimonial_cite = get_post_meta($post->ID, 'sf_testimonial_cite', true);
+        	$testimonial_cite = sf_get_post_meta($post->ID, 'sf_testimonial_cite', true);
         	
         	$items .= '<li class="testimonial">';
         	$items .= '<div class="testimonial-text">'.do_shortcode($testimonial_text).'</div>'; 
@@ -123,7 +123,7 @@ class SwiftPageBuilderShortcode_testimonial extends SwiftPageBuilderShortcode {
 }
 
 SPBMap::map( 'testimonial', array(
-    "name"		=> __("Testimonials", "swift_page_builder"),
+    "name"		=> __("Testimonials", 'swift-framework-admin'),
     "base"		=> "testimonial",
     "class"		=> "",
     "icon"      => "spb-icon-testimonial",
@@ -132,60 +132,60 @@ SPBMap::map( 'testimonial', array(
     "params"	=> array(
     	array(
     	    "type" => "textfield",
-    	    "heading" => __("Widget title", "swift_page_builder"),
+    	    "heading" => __("Widget title", 'swift-framework-admin'),
     	    "param_name" => "title",
     	    "value" => "",
-    	    "description" => __("Heading text. Leave it empty if not needed.", "swift_page_builder")
+    	    "description" => __("Heading text. Leave it empty if not needed.", 'swift-framework-admin')
     	),
         array(
             "type" => "dropdown",
-            "heading" => __("Text size", "swift_page_builder"),
+            "heading" => __("Text size", 'swift-framework-admin'),
             "param_name" => "text_size",
-            "value" => array(__('Normal', "swift_page_builder") => "normal", __('Large', "swift_page_builder") => "large"),
-            "description" => __("Choose the size of the text.", "swift_page_builder")
+            "value" => array(__('Normal', 'swift-framework-admin') => "normal", __('Large', 'swift-framework-admin') => "large"),
+            "description" => __("Choose the size of the text.", 'swift-framework-admin')
         ),
         array(
             "type" => "textfield",
             "class" => "",
-            "heading" => __("Number of items", "swift_page_builder"),
+            "heading" => __("Number of items", 'swift-framework-admin'),
             "param_name" => "item_count",
             "value" => "6",
-            "description" => __("The number of testimonials to show per page. Leave blank to show ALL testimonials.", "swift_page_builder")
+            "description" => __("The number of testimonials to show per page. Leave blank to show ALL testimonials.", 'swift-framework-admin')
         ),
         array(
             "type" => "dropdown",
-            "heading" => __("Testimonials Order", "swift_page_builder"),
+            "heading" => __("Testimonials Order", 'swift-framework-admin'),
             "param_name" => "order",
-            "value" => array(__('Random', "swift_page_builder") => "rand", __('Latest', "swift_page_builder") => "date"),
-            "description" => __("Choose the order of the testimonials.", "swift_page_builder")
+            "value" => array(__('Random', 'swift-framework-admin') => "rand", __('Latest', 'swift-framework-admin') => "date"),
+            "description" => __("Choose the order of the testimonials.", 'swift-framework-admin')
         ),
         array(
             "type" => "select-multiple",
-            "heading" => __("Testimonials category", "swift_page_builder"),
+            "heading" => __("Testimonials category", 'swift-framework-admin'),
             "param_name" => "category",
             "value" => get_category_list('testimonials-category'),
-            "description" => __("Choose the category for the testimonials.", "swift_page_builder")
+            "description" => __("Choose the category for the testimonials.", 'swift-framework-admin')
         ),
         array(
             "type" => "dropdown",
-            "heading" => __("Pagination", "swift_page_builder"),
+            "heading" => __("Pagination", 'swift-framework-admin'),
             "param_name" => "pagination",
-            "value" => array(__('No', "swift_page_builder") => "no", __('Yes', "swift_page_builder") => "yes"),
-            "description" => __("Show testimonial pagination (1/1 width element only).", "swift_page_builder")
+            "value" => array(__('No', 'swift-framework-admin') => "no", __('Yes', 'swift-framework-admin') => "yes"),
+            "description" => __("Show testimonial pagination (1/1 width element only).", 'swift-framework-admin')
         ),
         array(
             "type" => "dropdown",
-            "heading" => __("Testimonials page link", "swift_page_builder"),
+            "heading" => __("Testimonials page link", 'swift-framework-admin'),
             "param_name" => "page_link",
-            "value" => array(__('No', "swift_page_builder") => "no", __('Yes', "swift_page_builder") => "yes"),
-            "description" => __("Include a link to the testimonials page (which you must choose in the theme options).", "swift_page_builder")
+            "value" => array(__('No', 'swift-framework-admin') => "no", __('Yes', 'swift-framework-admin') => "yes"),
+            "description" => __("Include a link to the testimonials page (which you must choose in the theme options).", 'swift-framework-admin')
         ),
         array(
             "type" => "textfield",
-            "heading" => __("Extra class name", "swift_page_builder"),
+            "heading" => __("Extra class name", 'swift-framework-admin'),
             "param_name" => "el_class",
             "value" => "",
-            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "swift_page_builder")
+            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-admin')
         )
     )
 ) );

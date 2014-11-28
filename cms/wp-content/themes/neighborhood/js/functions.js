@@ -6,6 +6,9 @@ Custom jQuery functions.
 
 ================================================== */
 
+// Use SF namespace for all swift framework functions
+var SF = {};
+
 (function(){
 	
 	// USE STRICT
@@ -15,28 +18,39 @@ Custom jQuery functions.
 	// PAGE FUNCTIONS
 	/////////////////////////////////////////////
 	
-	var page = {
+	SF.page = {
 		init: function () {
+			
+			jQuery.browser = {};
+			jQuery.browser.mozilla = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase());
+			jQuery.browser.webkit = /webkit/.test(navigator.userAgent.toLowerCase());
+			jQuery.browser.opera = /opera/.test(navigator.userAgent.toLowerCase());
+			jQuery.browser.msie = /msie/.test(navigator.userAgent.toLowerCase());
+			jQuery.browser.msieMobile10 = /iemobile\/10\.0/.test(navigator.userAgent.toLowerCase());
 			
 			var deviceAgent = navigator.userAgent.toLowerCase(),
 				agentID = deviceAgent.match(/(iphone|ipod|ipad|android|iemobile)/);
 			
 			if (agentID) {
-				jQuery('body').addClass("mobile-browser");
+				body.addClass("mobile-browser");
 			} else {
-				jQuery('body').addClass("standard-browser");
+				body.addClass("standard-browser");
 			}
 			
 			if (jQuery.browser.msie && (parseInt(jQuery.browser.version, 10) <= 10)) {
-				jQuery('body').addClass("browser-ie");
+				body.addClass("browser-ie");
+			}
+		
+			if (jQuery.browser.mozilla) {
+				body.addClass('browser-ff');
 			}
 			
 			if (jQuery.browser.opera) {
-				jQuery('body').addClass("browser-opera");
+				body.addClass("browser-opera");
 			}
 			
-			if (jQuery('body').hasClass("woocommerce-page") && !jQuery('body').hasClass("woocommerce")) {
-				jQuery('body').addClass("woocommerce");
+			if (body.hasClass("woocommerce-page") && !body.hasClass("woocommerce")) {
+				body.addClass("woocommerce");
 			}
 									
 			// FITVIDS
@@ -54,7 +68,7 @@ Custom jQuery functions.
 	// SUPER SEARCH
 	/////////////////////////////////////////////
 		
-	var superSearch = {
+	SF.superSearch = {
 		init: function() {
 			
 			var deviceAgent = navigator.userAgent.toLowerCase(),
@@ -65,8 +79,10 @@ Custom jQuery functions.
 				
 				var option = jQuery(this),
 					dropdown = option.find( 'ul' );
-								
-				if (agentID) {
+				
+				jQuery('.ss-dropdown ul').removeClass('show-dropdown');
+					
+				if (isMobileAlt) {
 					if (dropdown.hasClass('show-dropdown')) {
 						dropdown.removeClass('show-dropdown');
 					} else {
@@ -74,11 +90,9 @@ Custom jQuery functions.
 					}
 				} else {
 					if (dropdown.hasClass('show-dropdown')) {
-						dropdown.css('top', 30);
-						dropdown.removeClass('show-dropdown');
+						dropdown.css('top', 30).removeClass('show-dropdown');
 					} else {
-						dropdown.css('top', -10);
-						dropdown.addClass('show-dropdown');							
+						dropdown.css('top', -10).addClass('show-dropdown');							
 					}
 				}
 			});
@@ -86,14 +100,19 @@ Custom jQuery functions.
 			jQuery('.ss-option').on('click', function(e) {
 				e.preventDefault();
 				
-				var selectedOption = jQuery(this).attr('data-attr_value');
-				var parentOption = jQuery(this).parent().parent().parent();
+				var thisOption = jQuery(this),
+					selectedOption = thisOption.attr('data-attr_value'),
+					parentOption = thisOption.parent().parent().parent();
 								
 				parentOption.find('li').removeClass('selected');
-				jQuery(this).parent().addClass('selected');
+				thisOption.parent().addClass('selected');
 				
 				parentOption.attr('data-attr_value', selectedOption);
-				parentOption.find('span').text(jQuery(this).text());
+				parentOption.find('span').text(thisOption.text());
+				
+				setTimeout(function() {
+					thisOption.parents('ul').first().css('top', 30).removeClass('show-dropdown');
+				}, 100);
 			});
 			
 			jQuery('.swift-search-link').on('click', function(e) {
@@ -116,9 +135,10 @@ Custom jQuery functions.
 			});
 			
 			
-			jQuery('#super-search-go').on('click', function(e) {
+			jQuery('.super-search-go').on('click', function(e) {
 				e.preventDefault();
-				var filterURL = superSearch.urlBuilder(),
+				var parentSearch = jQuery(this).parents('.sf-super-search').first(),
+					filterURL = SF.superSearch.urlBuilder(parentSearch),
 					homeURL = jQuery(this).attr('data-home_url'),
 					shopURL = jQuery(this).attr('data-shop_url');
 				
@@ -130,23 +150,23 @@ Custom jQuery functions.
 				
 			});
 			
-			jQuery('#super-search-close').on('click', function(e) {
+			jQuery('.super-search-close').on('click', function(e) {
 				e.preventDefault();
 				jQuery('#super-search').slideUp(300);
 			});
 		
 		},
-		urlBuilder: function() {
+		urlBuilder: function(searchInstance) {
 			
 			var queryString = "";
 			
-			jQuery('.search-options .ss-dropdown').each(function() {
+			jQuery(searchInstance).find('.search-options .ss-dropdown').each(function() {
 				
 				var attr = jQuery(this).attr('id');
 				var attrValue = jQuery(this).attr('data-attr_value');
 				if (attrValue !== "") {
 					if (attr === "product_cat") {
-						if (queryString == "") {
+						if (queryString === "") {
 							queryString += "?product_cat=" + attrValue;
 						} else {
 							queryString += "&product_cat=" + attrValue;
@@ -186,21 +206,21 @@ Custom jQuery functions.
 		miniHeaderSearch = jQuery('#mini-search').find('input'),
 		miniHeaderSearchLink = jQuery('.mini-search-link');
 		
-	var header = {
+	SF.header = {
 		init: function() {
 			
-			if (jQuery('body').hasClass('header-overlay')) {
-				header.headerOverlaySet();
+			if (body.hasClass('header-overlay')) {
+				SF.header.headerOverlaySet();
 				$window.smartresize(function(){  
-					header.headerOverlaySet();
+					SF.header.headerOverlaySet();
 				});
 			}
 			
 			
-			header.miniHeaderInit();
+			SF.header.miniHeaderInit();
 			
 			navSearchLink.on('click', function(e) {
-				if (jQuery('#container').width() > 767 || jQuery('body').hasClass('responsive-fixed')) {
+				if (jQuery('#container').width() > 979 || body.hasClass('responsive-fixed')) {
 					e.preventDefault();
 					navSearch.animate({
 						opacity: 1,
@@ -211,7 +231,7 @@ Custom jQuery functions.
 			});
 			
 			navSearch.focus(function() {
-				if (jQuery('#container').width() > 767 || jQuery('body').hasClass('responsive-fixed')) {
+				if (jQuery('#container').width() > 979 || body.hasClass('responsive-fixed')) {
 					navSearch.css('display', 'inline-block').animate({
 						opacity: 1,
 						width: 140
@@ -220,7 +240,7 @@ Custom jQuery functions.
 			});
 					
 			navSearch.blur(function() {
-				if (jQuery('#container').width() > 767 || jQuery('body').hasClass('responsive-fixed')) {
+				if (jQuery('#container').width() > 979 || body.hasClass('responsive-fixed')) {
 					jQuery(this).animate({
 						opacity: 0,
 						width: 1
@@ -255,10 +275,10 @@ Custom jQuery functions.
 			});
 			
 			jQuery(window).scroll(function() { 
-				if ((jQuery(this).scrollTop() > 300) && !jQuery('body').hasClass('has-mini-header')) {
-					header.miniHeaderShow();
-				} else if ((jQuery(this).scrollTop() < 250) && jQuery('body').hasClass('has-mini-header')) {
-					header.miniHeaderHide();
+				if ((jQuery(this).scrollTop() > 300) && !body.hasClass('has-mini-header')) {
+					SF.header.miniHeaderShow();
+				} else if ((jQuery(this).scrollTop() < 250) && body.hasClass('has-mini-header')) {
+					SF.header.miniHeaderHide();
 				}
 			});
 			
@@ -281,14 +301,14 @@ Custom jQuery functions.
 			miniHeader.find('a[title="home"]').html('<i class="fa-home"></i>');
 		},
 		miniHeaderShow: function() {
-			jQuery('body').addClass('has-mini-header');
+			body.addClass('has-mini-header');
 			miniHeader.css('display', 'block');
 			miniHeader.animate({
 				"top": "0"
 			}, 400);
 		},
 		miniHeaderHide: function() {
-			jQuery('body').removeClass('has-mini-header');
+			body.removeClass('has-mini-header');
 			miniHeader.animate({
 				"top": "-80"
 			}, 400);
@@ -316,7 +336,7 @@ Custom jQuery functions.
 	// NAVIGATION
 	/////////////////////////////////////////////
 	
-	var nav = {
+	SF.nav = {
 		init: function() {
 			
 			var lastAjaxSearchValue = "",
@@ -328,7 +348,7 @@ Custom jQuery functions.
 			// Menu parent click function
 			jQuery('.menu li.parent > a').on('click', function(e) {
 			
-				if (jQuery('#container').width() < 768 || jQuery('body').hasClass('standard-browser')) {
+				if ((jQuery('#container').width() < 1024 && body.hasClass('mh-tabletland')) || (jQuery('#container').width() < 767 && !body.hasClass('mh-tabletland')) || body.hasClass('standard-browser')) {
 					return e;
 				}
 				
@@ -340,70 +360,26 @@ Custom jQuery functions.
 				}
 			});
 			
-			var menuTop = 40;
-			var menuTopReset = 80;
-			
 			// Enable hover dropdowns for window size above tablet width
 			jQuery("nav").find(".menu li.parent").not(".no-hover").hoverIntent({
 				over: function() {
-					if (jQuery('#container').width() > 767 || jQuery('body').hasClass('responsive-fixed')) {
-						
-						// Setup menuLeft variable, with main menu value
-						var closestSubMenu = jQuery(this).find('ul.sub-menu').first();
-						var subMenuWidth = closestSubMenu.outerWidth(true);
-						var mainMenuItemWidth = jQuery(this).outerWidth(true);
-						var menuLeft = '-' + (Math.round(subMenuWidth / 2) - Math.round(mainMenuItemWidth / 2)) + 'px';
-						var menuContainer = jQuery(this).closest('nav');
-						
-						// Check if this is the top bar menu							
-						if (menuContainer.hasClass("top-menu")) {
-							if (menuContainer.parent().parent().parent().hasClass("top-bar-menu-right")) {
-							menuLeft = "";
-							} else {
-							menuLeft = "-1px";
-							}
-							menuTop = 30;
-							menuTopReset = 40;
-						} else if (menuContainer.hasClass("header-menu")) {
-							menuLeft = "-1px";
-							menuTop = 28;
-							menuTopReset = 40;
-						} else if (menuContainer.hasClass("mini-menu") || menuContainer.parent().hasClass("mini-menu")) {
-							menuTop = 40;
-							menuTopReset = 58;
-						} else {
-							menuTop = 44;
-							menuTopReset = 64;
-						}
-						
-						// Check if second level dropdown
-						if (closestSubMenu.parent().parent().hasClass("sub-menu")) {
-							menuLeft = closestSubMenu.parent().parent().outerWidth(true) - 2;
-						}
-											
-						closestSubMenu.addClass('show-dropdown').css('top', menuTop);
-						closestSubMenu.css('z-index', parseInt(closestSubMenu.css('z-index')) + 1);
+					if ((jQuery('#container').width() > 1024 && body.hasClass('mh-tabletland')) || (jQuery('#container').width() > 767 && !body.hasClass('mh-tabletland')) || body.hasClass('responsive-fixed')) {
+						jQuery(this).find('ul.sub-menu,.mega-menu-sub').first().fadeIn(200);
 					}
 				},
 				out:function() {
-					if (jQuery('#container').width() > 767 || jQuery('body').hasClass('responsive-fixed')) {
-						jQuery(this).find('ul.sub-menu').first().removeClass('show-dropdown').css('top', menuTopReset);
+					if ((jQuery('#container').width() > 1024 && body.hasClass('mh-tabletland')) || (jQuery('#container').width() > 767 && !body.hasClass('mh-tabletland')) || body.hasClass('responsive-fixed')) {
+						jQuery(this).find('ul.sub-menu,.mega-menu-sub').first().fadeOut(150);
 					}
-				}
+				},
+				timeout: 0
 			});
 			
-			jQuery(".shopping-bag-item").live("mouseenter", function() {
-				
-				var subMenuTop = 44;
-				
-				if (jQuery(this).parent().parent().hasClass("mini-menu")) {
-					subMenuTop = 40;
-				}
-				
-				jQuery(this).find('ul.sub-menu').first().addClass('show-dropdown').css('top', subMenuTop);
+			jQuery(".shopping-bag-item").live("mouseenter", function() {	
+				jQuery(this).find('ul.sub-menu').first().fadeIn(200);
 			}).live("mouseleave", function() {
-				if (jQuery('#container').width() > 767 || jQuery('body').hasClass('responsive-fixed')) {
-					jQuery(this).find('ul.sub-menu').first().removeClass('show-dropdown').css('top', 64);
+				if ((jQuery('#container').width() > 1024 && body.hasClass('mh-tabletland')) || (jQuery('#container').width() > 767 && !body.hasClass('mh-tabletland')) || body.hasClass('responsive-fixed')) {
+					jQuery(this).find('ul.sub-menu').first().fadeOut(150);
 				}
 			});
 		
@@ -419,7 +395,8 @@ Custom jQuery functions.
 			});
 			
 			$window.smartresize(function(){  
-				if (jQuery('#container').width() > 767 || jQuery('body').hasClass('responsive-fixed')) {
+				if ((jQuery('#container').width() > 1024 && body.hasClass('mh-tabletland')) || (jQuery('#container').width() > 767 && !body.hasClass('mh-tabletland')) || body.hasClass('responsive-fixed')) {
+					jQuery('#main-navigation').css('display', '');
 					var menus = jQuery('nav').find('ul.menu');
 					menus.each(function() {
 						jQuery(this).css("display", "");
@@ -428,9 +405,9 @@ Custom jQuery functions.
 			});
 			
 			// Set current language to top bar item
-			var currentLanguage = jQuery('li.aux-languages').find('.current-language span').text();
+			var currentLanguage = jQuery('li.aux-languages').find('.current-language').html();
 			if (currentLanguage !== "") {
-				jQuery('li.aux-languages > a').text(currentLanguage);
+				jQuery('li.aux-languages > a').html(currentLanguage);
 			}
 			
 			
@@ -439,21 +416,15 @@ Custom jQuery functions.
 				e.preventDefault();
 				
 				var subSearchMenu = jQuery(this).parent().find('.sub-menu'),
-					menuContainer = jQuery(this).closest('nav'),
-					menuTop = 44,
-					menuTopReset = 64;
-				
-				if (menuContainer.hasClass("mini-menu") || menuContainer.parent().hasClass("mini-menu")) {
-					menuTop = 40;
-					menuTopReset = 58;
-				}
-				
+					menuContainer = jQuery(this).closest('nav');
+
 				if (!subSearchMenu.hasClass('show-dropdown')) {
-					subSearchMenu.addClass('show-dropdown').css('top', menuTop);
-					subSearchMenu.css('z-index', parseInt(subSearchMenu.css('z-index')) + 1);
+					subSearchMenu.addClass('show-dropdown');
+					subSearchMenu.fadeIn(200);
+					subSearchMenu.find('input').focus();
 				} else {
-					if (jQuery('#container').width() > 767 || jQuery('body').hasClass('responsive-fixed')) {
-						subSearchMenu.removeClass('show-dropdown').css('top', menuTopReset);
+					if ((jQuery('#container').width() > 1024 && body.hasClass('mh-tabletland')) || (jQuery('#container').width() > 767 && !body.hasClass('mh-tabletland')) || body.hasClass('responsive-fixed')) {
+						subSearchMenu.removeClass('show-dropdown').fadeOut(150);
 					}
 				}
 				
@@ -465,7 +436,7 @@ Custom jQuery functions.
 				clearTimeout(searchTimer);								
 	            if (lastAjaxSearchValue != jQuery.trim(searchvalue) && searchvalue.length >= 3) {
 	                searchTimer = setTimeout( function() {
-	                	nav.ajaxSearch(e);
+	                	SF.nav.ajaxSearch(e);
 	                }, 400);
 	            }
 			});
@@ -492,7 +463,7 @@ Custom jQuery functions.
 					loadingIndicator.fadeIn(50);
 				},
 				success: function(response) {
-				    if (response == 0) {
+				    if (response === 0) {
 				    	response = "";
 			        } else {
 			        	results.html(response);
@@ -511,7 +482,7 @@ Custom jQuery functions.
 	// WOOCOMMERCE FUNCTIONS
 	/////////////////////////////////////////////
 	
-	var woocommerce = {
+	SF.woocommerce = {
 		init: function() {
 			jQuery('figcaption .add_to_cart_button').on('click', function() {
 				var button = jQuery(this);
@@ -522,15 +493,16 @@ Custom jQuery functions.
 			
 			jQuery('.show-products-link').on('click', function(e) {
 				e.preventDefault();
-				var linkHref = jQuery(this).attr('href').replace('?', '');
-				var currentQuery = document.location.search;
+				var linkHref = jQuery(this).attr('href').replace('?', ''),
+					currentURL = document.location.href.replace(/\/page\/\d+/, ''),
+					currentQuery = document.location.search;
 				
 				if (currentQuery.indexOf('?show') >= 0) {				
 					window.location = jQuery(this).attr('href');
 				} else if (currentQuery.indexOf('?') >= 0) {
-					window.location = currentQuery + '&' + linkHref;
+					window.location = currentURL + '&' + linkHref;
 				} else {
-					window.location = document.location + '?' + linkHref;
+					window.location = currentURL + '?' + linkHref;
 				}
 			});
 						
@@ -547,10 +519,10 @@ Custom jQuery functions.
 			});
 			
 			if (jQuery.fn.imagesLoaded) {
-				woocommerce.productSetup();
+				//SF.woocommerce.productSetup();
 				
 				$window.smartresize(function(){  
-					woocommerce.productSetupResize();
+				//	SF.woocommerce.productSetupResize();
 				});
 			}
 			
@@ -562,29 +534,36 @@ Custom jQuery functions.
 	        
 		},
 		productSetup: function() {
-			jQuery('ul.products').imagesLoaded(function() {
-				var products = jQuery('ul.products');
-				setTimeout(function() {
-					var product = products.find('li').first();
-					var productImageHeight = product.find('.product-image > img').height();
-					if (jQuery('#container').width() <= 1024 && product.find('figure > figcaption').is(":visible")) {
-						productImageHeight = productImageHeight + 20;
-					}
-					products.find('li').each(function() {
-						jQuery(this).find('figure').css('padding-bottom', productImageHeight  + 'px');
-					});
-					woocommerce.resizeCarousel();
-				}, 300);
+			jQuery('ul.products').each(function() {
+				
+				var products = jQuery(this);
+				
+				products.imagesLoaded(function() {
+					
+					setTimeout(function() {
+						var product = products.find('li.type-product').first();
+						var productImageHeight = product.find('.product-image > img').height();
+						if (jQuery('#container').width() <= 1024 && product.find('figure > figcaption').is(":visible")) {
+							productImageHeight = productImageHeight + 20;
+						}
+						if (!productImageHeight || productImageHeight === 0) {
+						productImageHeight = 270;
+						}
+						products.find('li.type-product').each(function() {
+							jQuery(this).find('figure').css('padding-bottom', productImageHeight  + 'px');
+						});
+						SF.woocommerce.resizeCarousel();
+					}, 300);
+				});
 			});
 		},
 		productSetupResize: function() {
 			var products = jQuery('ul.products');
-			var productImageHeight = products.find('li').first().find('.product-image > img').height();
-			console.log(productImageHeight);
+			var productImageHeight = products.find('li.type-product').first().find('.product-image > img').height();
 			if (jQuery('#container').width() <= 1024 && jQuery(this).find('figure > figcaption').is(":visible")) {
 				productImageHeight = productImageHeight + 20;
 			}
-			products.find('li').each(function() {
+			products.find('li.type-product').each(function() {
 				jQuery(this).find('figure').css('padding-bottom', productImageHeight  + 'px');
 			});
 		},
@@ -597,22 +576,33 @@ Custom jQuery functions.
 			var carousel = products.find('ul.products');
 			
 			carousel.each(function() {
-				var carouselPrev = jQuery(this).parent().parent().find('.prev');
-				var carouselNext = jQuery(this).parent().parent().find('.next');
-				var carouselColumns = parseInt(jQuery(this).parent().parent().attr("data-columns"), 10);
-			
-				if (isMobileAlt & jQuery(window).width() <= 480) {
-					carouselColumns = 2;
-				} else if (isMobileAlt & jQuery(window).width() <= 320) {
-					carouselColumsn = 1;
+				var thisCarousel = jQuery(this),
+					carouselItems = thisCarousel.find("> li").length,
+					carouselWrap = thisCarousel.parent().parent(),
+					carouselPrev = carouselWrap.find('.prev'),
+					carouselNext = carouselWrap.find('.next'),
+					carouselColumns = parseInt(carouselWrap.attr("data-columns"), 10),
+					itemCount = thisCarousel.children().length;
+				
+				if (carouselItems <= carouselColumns) {
+					thisCarousel.parents('.product-carousel').addClass('carousel-disabled');
+					carouselWrap.addClass('carousel-inactive');
+					thisCarousel.find('> li:first').css('margin-left', '0');
+					return;
 				}
 				
-				jQuery(this).imagesLoaded(function () {
-					jQuery(this).carouFredSel({
+				if (isMobileAlt && jQuery(window).width() <= 480) {
+					carouselColumns = 2;
+				} else if (isMobileAlt && jQuery(window).width() <= 320) {
+					carouselColumns = 1;
+				}
+				
+				thisCarousel.imagesLoaded(function () {
+					thisCarousel.carouFredSel({
 						items				: carouselColumns,
 						scroll : {
 							visible			: {
-												width: carousel.find("> li:first").width(),
+												width: thisCarousel.find("> li:first").width(),
 												min: 1,
 												max: carouselColumns
 											},
@@ -632,9 +622,11 @@ Custom jQuery functions.
 							key				: "right"
 						},
 						onCreate : function() {
-							woocommerce.resizeCarousel();
+							carouselWrap.addClass('carousel-active');
+							SF.widgets.resizeAssets();
+							SF.woocommerce.resizeCarousel();
 							$window.smartresize(function() {
-								woocommerce.resizeCarousel();
+								SF.woocommerce.resizeCarousel();
 							});
 						}	
 					});
@@ -645,17 +637,24 @@ Custom jQuery functions.
 			var carousel = jQuery('.product-carousel').find('.products');
 			
 			carousel.each(function() {
-				var carouselItem = jQuery(this).find('li');
-				var itemWidth = carouselItem.width() + carouselItem.css('margin-left');
-				var visible = parseInt(carousel.parent().parent().attr("data-columns"), 10);
 				
-				if (jQuery('#container').width() < 460 && jQuery('body').hasClass('responsive-fluid')) {
+				var thisCarousel = jQuery(this),
+					carouselItem = thisCarousel.find('li'),
+					carouselWrap = thisCarousel.parent().parent(),
+					itemWidth = carouselItem.width() + carouselItem.css('margin-left'),
+					visible = parseInt(carouselWrap.attr("data-columns"), 10);
+				
+				if (carouselWrap.hasClass('carousel-disabled')) {
+					return;
+				}
+				
+				if (jQuery('#container').width() < 460 && body.hasClass('responsive-fluid')) {
 					visible = 1;
-				} else if (jQuery('#container').width() < 768 && jQuery('body').hasClass('responsive-fluid')) {
+				} else if (jQuery('#container').width() < 768 && body.hasClass('responsive-fluid')) {
 					visible = 2;
 				}
 				
-				carousel.trigger("configuration", {
+				thisCarousel.trigger("configuration", {
 					items : {
 						width : itemWidth
 					},
@@ -671,32 +670,31 @@ Custom jQuery functions.
 				var variationSelect = jQuery(this);
 				variationSelect.live("change", function(){
 					if (jQuery('#sf-included').hasClass('has-productzoom')) {
-						jQuery('.zoomContainer').remove();
+						jQuery('#product-img-slider').flexslider(0);
 						setTimeout(function() {
 							jQuery('.product-slider-image').each(function() {
 								jQuery(this).data('zoom-image', jQuery(this).parent().find('a.zoom').attr('href'));
 							});
-							jQuery('#product-img-slider li:first').find('.product-slider-image').elevateZoom({
-								zoomType: "inner",
-								cursor: "crosshair",
-								responsive: true,
-								zoomWindowFadeIn: 500,
-								zoomWindowFadeOut: 750
-							});
-							jQuery('#product-img-slider').flexslider(0);
+							var currentImage = jQuery('#product-img-slider li:first').find('.product-slider-image');
+							currentImage.parent().trigger('zoom.destroy');
+							SF.woocommerce.productZoom(currentImage);
 						}, 500);
 					} else {
+						jQuery('#product-img-slider').flexslider(0);
 						setTimeout(function() {
-		                    jQuery('#product-img-slider').flexslider(0);
 		                    var flexViewport = jQuery('#product-img-slider').find('.flex-viewport'),
 		                        flexsliderHeight = flexViewport.find('ul.slides').css('height');
 			                flexViewport.animate({
 			                	'height': flexsliderHeight
 			                }, 300);
-			                jQuery('#product-img-slider').flexslider(0);
 		                }, 500);
 					}
 				});
+			});
+		},
+		productZoom: function(zoomObject) {
+			zoomObject.parent().zoom({
+				duration: 400
 			});
 		}
 	};
@@ -705,72 +703,56 @@ Custom jQuery functions.
 	// FLEXSLIDER FUNCTION
 	/////////////////////////////////////////////
 	
-	var flexSlider = {
+	SF.flexSlider = {		
 		init: function() {
 			
-			var hasProductZoom = false;
-			
-			if (jQuery('#sf-included').hasClass('has-productzoom') && !jQuery('body').hasClass('mobile-browser')) {
-				hasProductZoom = true;
-			}
-			
 			if(jQuery('.recent-posts').length > 0) {
-				flexSlider.thumb();
+				SF.flexSlider.thumb();
 			}
 			
 			jQuery('#product-img-nav').flexslider({
 				animation: "slide",
-				directionNav: false,
+				directionNav: true,
 				controlNav: false,
 				animationLoop: false,
 				slideshow: false,
 				itemWidth: 70,
-				itemMargin: 30,
+				itemMargin: 20,
 				asNavFor: '#product-img-slider'
 			});
-
+			
+			var currentImage = "";
+			
 			jQuery('#product-img-slider').flexslider({
 				animation: "slide",
 				controlNav: false,
 				smoothHeight: true,
 				animationLoop: false,
 				slideshow: false,
+				touch: !hasProductZoom,
 				sync: "#product-img-nav",
 				start: function(productSlider) {
+
 					if (hasProductZoom) {
 						if (productSlider.slides) {
-							productSlider.slides.eq(productSlider.currentSlide).find('.product-slider-image').elevateZoom({
-							    zoomType: "inner",
-								cursor: "crosshair",
-								responsive: true,
-								zoomWindowFadeIn: 500,
-								zoomWindowFadeOut: 750
-							});
+							currentImage = productSlider.slides.eq(productSlider.currentSlide).find('.product-slider-image');
+							SF.woocommerce.productZoom(currentImage);
 						} else {
-							jQuery('#product-img-slider').find('.product-slider-image').elevateZoom({
-							    zoomType: "inner",
-								cursor: "crosshair",
-								responsive: true,
-								zoomWindowFadeIn: 500,
-								zoomWindowFadeOut: 750
-							});
+							currentImage = jQuery('#product-img-slider').find('.product-slider-image');
+							SF.woocommerce.productZoom(currentImage);
 						}
 					}
 				},
 				before: function(productSlider) {
 					if (hasProductZoom) {
-						jQuery('.zoomContainer').remove();
+						currentImage.parent().trigger('zoom.destroy');
 					}
 				},
 				after: function(productSlider) {
 					if (hasProductZoom) {
-						productSlider.slides.eq(productSlider.currentSlide).find('.product-slider-image').elevateZoom({
-						    zoomType: "inner",
-							cursor: "crosshair",
-							responsive: true,
-							zoomWindowFadeIn: 500,
-							zoomWindowFadeOut: 750
-						});
+						var currentImage = productSlider.slides.eq(productSlider.currentSlide).find('.product-slider-image');
+						currentImage.parent().trigger('zoom.destroy');
+						SF.woocommerce.productZoom(currentImage);
 					}
 				}
 			});
@@ -825,7 +807,7 @@ Custom jQuery functions.
 						postsSlider.slides.eq(postsSlider.currentSlide).addClass('flex-active-slide'); 
 						if (postsSlider.slides.eq(postsSlider.currentSlide).has('.flex-caption-large')) {
 							var chart = postsSlider.slides.eq(postsSlider.currentSlide).find('.fw-chart');
-							if (jQuery('body').hasClass("browser-ie")) {
+							if (body.hasClass("browser-ie")) {
 							chart = postsSlider.slides.eq(postsSlider.currentSlide).find('.chart');
 							}
 							chart.each( function() {
@@ -842,7 +824,7 @@ Custom jQuery functions.
 					if (postsSlider.slides) {
 						if (postsSlider.slides.eq(postsSlider.currentSlide).has('.flex-caption-large')) {
 							var chart = postsSlider.slides.eq(postsSlider.currentSlide).find('.fw-chart');
-							if (jQuery('body').hasClass("browser-ie")) {
+							if (body.hasClass("browser-ie")) {
 							chart = postsSlider.slides.eq(postsSlider.currentSlide).find('.chart');
 							}
 							chart.each( function() {
@@ -854,7 +836,7 @@ Custom jQuery functions.
 							postsSlider.slides.eq(postsSlider.currentSlide).addClass('flex-active-slide');
 							if (postsSlider.slides.eq(postsSlider.currentSlide).has('.flex-caption-large')) {
 								var chart = postsSlider.slides.eq(postsSlider.currentSlide).find('.fw-chart');
-								if (jQuery('body').hasClass("browser-ie")) {
+								if (body.hasClass("browser-ie")) {
 								chart = postsSlider.slides.eq(postsSlider.currentSlide).find('.chart');
 								}
 								chart.each( function() {
@@ -945,18 +927,17 @@ Custom jQuery functions.
 	
 	var portfolioContainer = jQuery('.portfolio-wrap').find('.filterable-items');
 	
-	var portfolio = {
+	SF.portfolio = {
 		init: function() {
+			SF.portfolio.standardSetup();
 			
-			
-			portfolio.standardSetup();
 			
 			// SET ITEM HEIGHTS
-			portfolio.setItemHeight();
+			SF.portfolio.setItemHeight();
 			
 			// PORTFOLIO WINDOW RESIZE
 			$window.smartresize(function(){  
-					portfolio.windowResized();
+					SF.portfolio.windowResized();
 			});
 			
 			// Enable filter options on when there are items from that skill
@@ -1007,18 +988,19 @@ Custom jQuery functions.
 				resizable: true,
 				layoutMode: 'fitRows'
 			});
-			flexSlider.thumb();
-			portfolioContainer.isotope("reLayout");
+			SF.flexSlider.thumb();
+			portfolioContainer.isotope("layout");
 		},
 		setItemHeight: function() {
 			if (!portfolioContainer.hasClass('single-column')) {
 				portfolioContainer.children().css('min-height','0');
 				portfolioContainer.equalHeights();
+				portfolioContainer.isotope("layout");
 			}
 		},
 		windowResized: function() {
 			if (!portfolioContainer.hasClass('single-column')) {
-				portfolio.setItemHeight();
+				SF.portfolio.setItemHeight();
 			}
 		}
 	};
@@ -1031,27 +1013,27 @@ Custom jQuery functions.
 	var blogItems = jQuery('.blog-wrap').find('.blog-items'),
 		masonryPagination = jQuery('.blog-wrap').find('.masonry-pagination');
 	
-	var blog = {
+	SF.blog = {
 		init: function() {
 		
 			// BLOG ITEM SETUP
 			if (blogItems.hasClass('masonry-items')) {
 				jQuery('.masonry-items').fitVids();
-				blog.masonrySetup();
+				SF.blog.masonrySetup();
 				blogItems.imagesLoaded(function () {
 					blogItems.animate({opacity: 1}, 800);
 					masonryPagination.fadeIn(1000);
-					blog.masonrySetup();
+					SF.blog.masonrySetup();
 				});
-				flexSlider.thumb();
-				blogItems.isotope("reLayout");
+				SF.flexSlider.thumb();
+				blogItems.isotope("layout");
 				
 				// BLOG WINDOW RESIZE
 				$window.smartresize(function(){  
-						blog.windowResized();
+						SF.blog.windowResized();
 				});
 			} else {
-				flexSlider.thumb();
+				SF.flexSlider.thumb();
 			}
 			
 			
@@ -1119,7 +1101,7 @@ Custom jQuery functions.
 			});
 		},
 		windowResized: function() {
-			blogItems.isotope("reLayout");
+			blogItems.isotope("layout");
 		}	
 	};
 	
@@ -1128,20 +1110,30 @@ Custom jQuery functions.
 	// CAROUSEL FUNCTIONS
 	/////////////////////////////////////////////
 	
-	var carouselWidgets = {
+	SF.carouselWidgets = {
 		init: function() {
 	
 			// CAROUSELS
 			var carousel = jQuery('.carousel-items');
 			
 			carousel.each(function() {
-				var carouselInstance = jQuery('#'+jQuery(this).attr('id'));
-				var carouselPrev = carouselInstance.parent().parent().find('.prev');
-				var carouselNext = carouselInstance.parent().parent().find('.next');
-				var carouselColumns = parseInt(carouselInstance.attr("data-columns"), 10);
+				var thisCarousel = jQuery(this),
+					carouselWrap = thisCarousel.parent().parent(),
+					carouselItems = thisCarousel.find("> li").length,
+					carouselPrev = thisCarousel.parent().parent().find('.prev'),
+					carouselNext = thisCarousel.parent().parent().find('.next'),
+					carouselColumns = parseInt(thisCarousel.attr("data-columns"), 10);
+								
+				if (carouselItems <= carouselColumns) {
+					thisCarousel.find('> li:first').css('margin-left', '0');
+					thisCarousel.fitVids();
+					SF.flexSlider.thumb();
+					carouselWrap.addClass('carousel-inactive');
+					return;
+				}
 				
-				carouselInstance.imagesLoaded(function () {
-					jQuery(this).carouFredSel({
+				thisCarousel.imagesLoaded(function () {
+					thisCarousel.carouFredSel({
 						items				: carouselColumns,
 						scroll : {
 							visible			: {
@@ -1165,11 +1157,12 @@ Custom jQuery functions.
 							key				: "right"
 						},
 						onCreate : function() {
-							jQuery(this).fitVids();
-							flexSlider.thumb();
-							carouselWidgets.resizeCarousels();
+							thisCarousel.fitVids();
+							SF.flexSlider.thumb();
+							SF.carouselWidgets.resizeCarousels();
+							carouselWrap.addClass('carousel-active');
 							$window.smartresize(function() {
-								carouselWidgets.resizeCarousels();	
+								SF.carouselWidgets.resizeCarousels();	
 							});
 						}	
 					});
@@ -1184,9 +1177,9 @@ Custom jQuery functions.
 				var itemWidth = carouselItem.width() + carouselItem.css('margin-left');
 				var visible = parseInt(carousel.parent().parent().attr("data-columns"), 10);
 				
-				if (jQuery('#container').width() < 460 && jQuery('body').hasClass('responsive-fluid')) {
+				if (jQuery('#container').width() < 460 && body.hasClass('responsive-fluid')) {
 					visible = 1;
-				} else if (jQuery('#container').width() < 768 && jQuery('body').hasClass('responsive-fluid')) {
+				} else if (jQuery('#container').width() < 768 && body.hasClass('responsive-fluid')) {
 					visible = 2;
 				}
 				
@@ -1208,7 +1201,7 @@ Custom jQuery functions.
 	// WIDGET FUNCTIONS
 	/////////////////////////////////////////////
 	
-	var widgets = {
+	SF.widgets = {
 		init: function() {
 			
 			// CHARTS
@@ -1227,19 +1220,19 @@ Custom jQuery functions.
 			}
 			
 			// LOAD WIDGETS
-			widgets.accordion();
-			widgets.tabs();
-			widgets.toggle();	
-			widgets.introAnimations();
+			SF.widgets.accordion();
+			SF.widgets.tabs();
+			SF.widgets.toggle();	
+			SF.widgets.introAnimations();
 			
 			if (sfIncluded.hasClass('has-imagebanner')) {
-			widgets.imageBanners();
+			SF.widgets.imageBanners();
 			}
 			
 			// RESIZE ASSETS
-			widgets.resizeAssets();
+			SF.widgets.resizeAssets();
 			$window.smartresize(function() {  
-				widgets.resizeAssets();
+				SF.widgets.resizeAssets();
 			});
 			
 			// SF TOOLTIPS
@@ -1247,17 +1240,17 @@ Custom jQuery functions.
 			
 		},
 		resizeAssets: function() {	
-			var carousels = jQuery('.carousel-items,.product-carousel .products');
+			var carousels = jQuery('.carousel-active .carousel-items,.carousel-active .products');
 			var assets = jQuery('.alt-bg');
 			var assetWidth = 0;
 			
-			if (jQuery('#container').width() < 460 && jQuery('body').hasClass('responsive-fluid')) {
+			if (jQuery('#container').width() < 460 && body.hasClass('responsive-fluid')) {
 				assetWidth = jQuery('#container').width() - 40;			
 				carousels.find('.carousel-item,.product').each(function() {
 					jQuery(this).css("width", assetWidth + "px");
 					
 				});
-			} else if (jQuery('#container').width() < 768 && jQuery('body').hasClass('responsive-fluid')) {
+			} else if (jQuery('#container').width() < 768 && body.hasClass('responsive-fluid')) {
 				if (carousels.hasClass('testimonials')) {
 				assetWidth = jQuery('#container').width() - 40;	
 				} else {
@@ -1266,13 +1259,13 @@ Custom jQuery functions.
 				carousels.find('.carousel-item,.product').each(function() {
 					jQuery(this).css("width", assetWidth + "px");
 				});
-			} else if (jQuery('body').hasClass('responsive-fluid')) {
+			} else if (body.hasClass('responsive-fluid')) {
 				carousels.find('.carousel-item,.product').each(function() {
 					jQuery(this).css("width", "");
 				});
 			}
 			
-			if (jQuery('#container').width() < 768 && jQuery('body').hasClass('responsive-fluid')) {
+			if (jQuery('#container').width() < 768 && body.hasClass('responsive-fluid')) {
 				assetWidth = jQuery('#container').width();
 				assets.each(function() {
 					jQuery(this).css("width", assetWidth + "px");
@@ -1327,9 +1320,9 @@ Custom jQuery functions.
 		},
 		initSkillBars: function() {		
 			// SKILL BARS
-			widgets.animateSkillBars();			
+			SF.widgets.animateSkillBars();			
 			jQuery(window).scroll(function() { 
-				widgets.animateSkillBars();
+				SF.widgets.animateSkillBars();
 			});
 		},
 		animateSkillBars: function() {
@@ -1347,9 +1340,9 @@ Custom jQuery functions.
 			});
 		},
 		charts: function() {
-			widgets.animateCharts();
+			SF.widgets.animateCharts();
 			jQuery(window).scroll(function() { 
-				widgets.animateCharts();
+				SF.widgets.animateCharts();
 			});	
 		},
 		animateCharts: function() {
@@ -1422,7 +1415,7 @@ Custom jQuery functions.
 	// TEAM MEMBERS FUNCTION
 	/////////////////////////////////////////////
 	
-	var teamMembers = {
+	SF.teamMembers = {
 		init: function() {
 			// TEAM EQUAL HEIGHTS
 			var team = jQuery('.team-members');
@@ -1440,52 +1433,59 @@ Custom jQuery functions.
 	
 	
 	/////////////////////////////////////////////
-	// PRETTYPHOTO FUNCTION
+	// LIGHTBOX FUNCTION
 	/////////////////////////////////////////////
 	
-	var prettyPhoto = {
+	SF.lightbox = {
 		init: function() {
-			jQuery("a[rel^='prettyPhoto']").prettyPhoto({
-				theme: 'pp_woocommerce'
+			// Lightbox Social
+			var lightboxSocial = {};
+			if (lightboxSharing) {
+				lightboxSocial = {
+					facebook: true,
+					twitter: true,
+					googleplus: true,
+					pinterest: {
+						source: "https://pinterest.com/pin/create/bookmarklet/?url={URL}",
+						text: "Share on Pinterest"
+					}
+				};
+			}
+					
+			// Lightbox Galleries
+			var galleryArr = [];
+			jQuery('[data-rel^="ilightbox["]').each(function () {
+				var attr = this.getAttribute("data-rel");
+				if (jQuery.inArray(attr, galleryArr) == -1 ) {
+					galleryArr.push(attr);
+				}
+			});
+			jQuery.each(galleryArr, function (b, c) {
+				jQuery('[data-rel="' + c + '"]').iLightBox({
+					skin: lightboxSkin,
+					social: {
+						buttons: lightboxSocial
+					},
+					path: 'horizontal',
+					thumbnails: {
+						maxWidth: 120,
+						maxHeight: 120
+					},
+					controls: {
+						arrows: lightboxControlArrows,
+						thumbnail: lightboxThumbs
+					}
+				});
 			});
 		}
 	};
-	
-	
-	/////////////////////////////////////////////
-	// PARALLAX FUNCTION
-	/////////////////////////////////////////////
-	
-	var parallax = {
-		init: function() {
-			var controller = jQuery.superscrollorama({
-				triggerAtCenter: true,
-				playoutAnimations: true,
-				reverse: false
-			});
-//			controller.addTween('.fade-it', TweenMax.from( jQuery('.fade-it'), .5, {css:{opacity: 0}}));
-//			controller.addTween('.fly-it', TweenMax.from( jQuery('.fly-it'), .25, {css:{right:'1000px'}, ease:Quad.easeInOut}));
-//			controller.addTween('.spin-it', TweenMax.from( jQuery('.spin-it'), .25, {css:{opacity:0, rotation: 720}, ease:Quad.easeOut}));
-//			controller.addTween('.smush-it', TweenMax.fromTo( jQuery('.smush-it'), .25, {css:{opacity:0, 'letter-spacing':'30px'}, immediateRender:true, ease:Quad.easeInOut}, {css:{opacity:1, 'letter-spacing':'-10px'}, ease:Quad.easeInOut}), 0, 100); // 100 px offset for better timing
-			// parallax example
-//			controller.addTween('.sf-parallax', (new TimelineLite()).append([
-//				TweenMax.fromTo(jQuery('.spb_content_wrapper'), 1, 
-//					{css:{opacity: 0}, immediateRender:true}, 
-//					{css:{opacity: 1}})
-//				]),
-//				300 // scroll duration of tween
-//			);
-			
-		}
-	};
-	
 	
 	
 	/////////////////////////////////////////////
 	// MAP FUNCTIONS
 	/////////////////////////////////////////////
 	
-	var map = {
+	SF.map = {
 		init:function() {
 			
 			var maps = jQuery('.map-canvas');
@@ -1496,13 +1496,20 @@ Custom jQuery functions.
 					mapType = mapContainer.getAttribute('data-maptype'),
 					pinLogoURL = mapContainer.getAttribute('data-pinimage');
 				
-				map.getCoordinates(mapAddress, mapContainer, mapZoom, mapType, pinLogoURL);
+				SF.map.getCoordinates(mapAddress, mapContainer, mapZoom, mapType, pinLogoURL);
 								
 			});
 			
-			map.fullscreenMap();
+			SF.map.fullscreenMap();
 			$window.smartresize(function(){
-				map.fullscreenMap();
+				SF.map.fullscreenMap();
+			});
+			
+			jQuery('ul.nav-tabs li a').click(function(){
+				var thisTabHref = jQuery(this).attr('href');
+				if (jQuery(thisTabHref).find('.spb_gmaps_widget').length > 0) {
+					map.init();
+				}
 			});
 			
 		},
@@ -1598,7 +1605,7 @@ Custom jQuery functions.
 	// RELOAD FUNCTIONS
 	/////////////////////////////////////////////
 	
-	var reloadFunctions = {
+	SF.reloadFunctions = {
 		init:function() {	
 			
 			var deviceAgent = navigator.userAgent.toLowerCase(),
@@ -1664,59 +1671,70 @@ Custom jQuery functions.
 	/////////////////////////////////////////////
 	
 	var $window = jQuery(window),
+		body = jQuery('body'),
 		sfIncluded = jQuery('#sf-included'),
+		sfOptionParams = jQuery('#sf-option-params'),
 		deviceAgent = navigator.userAgent.toLowerCase(),
-		isMobileAlt = deviceAgent.match(/(iphone|ipod|ipad|android|iemobile)/);
+		isMobileAlt = deviceAgent.match(/(iphone|ipod|ipad|android|iemobile)/),
+		lightboxControlArrows = true,
+		lightboxThumbs = true,
+		lightboxSkin = "metro-white",
+		lightboxSharing = true,
+//		lightboxControlArrows = sfOptionParams.data('lightbox-nav') === "arrows" ? true : false,
+//		lightboxThumbs = sfOptionParams.data('lightbox-thumbs') ? true : false,
+//		lightboxSkin = sfOptionParams.data('lightbox-skin') === "dark" ? "metro-black" : "metro-white",
+//		lightboxSharing = sfOptionParams.data('lightbox-sharing') ? true : false,
+		hasProductZoom = jQuery('#sf-included').hasClass('has-productzoom') && !body.hasClass('mobile-browser') ? true : false;
 	
-	var onReady = {
+	SF.onReady = {
 		init: function(){
-			page.init();
-			superSearch.init();
-			header.init();
-			nav.init();
-			if (sfIncluded.hasClass('has-products') || jQuery('body').hasClass('woocommerce-cart') || jQuery('body').hasClass('woocommerce-account')) {
-			woocommerce.init();
+			SF.page.init();
+			SF.superSearch.init();
+			SF.header.init();
+			SF.nav.init();
+			if (sfIncluded.hasClass('has-products') || body.hasClass('woocommerce-cart') || body.hasClass('woocommerce-account')) {
+			SF.woocommerce.init();
 			}
-			widgets.init();
 			if (sfIncluded.hasClass('has-team')) {
-			teamMembers.init();
+			SF.teamMembers.init();
 			}
-			prettyPhoto.init();
+			SF.lightbox.init();
 			if (sfIncluded.hasClass('has-carousel')) {
-			carouselWidgets.init();
-			woocommerce.productCarousel();
+			SF.carouselWidgets.init();
+			SF.woocommerce.productCarousel();
 			}
+			SF.widgets.init();
 			if (sfIncluded.hasClass('has-parallax')) {
-			parallax.init();
+			SF.parallax.init();
 			}
-			reloadFunctions.init();
+			SF.reloadFunctions.init();
 		}
 	};
-	var onLoad = {
+	SF.onLoad = {
 		init: function(){
-			flexSlider.init();
+			SF.flexSlider.init();
 			if (sfIncluded.hasClass('has-portfolio')) {
-			portfolio.init();
+			SF.portfolio.init();
 			}
 			if (sfIncluded.hasClass('has-blog')) {
-			blog.init();
+			SF.blog.init();
 			}
 			if (sfIncluded.hasClass('has-chart')) {
-				widgets.charts();
+				SF.widgets.charts();
 			}
 			if (sfIncluded.hasClass('has-progress-bar')) {
-				widgets.initSkillBars();
+				SF.widgets.initSkillBars();
 			}
 			if (sfIncluded.hasClass('has-map')) {
-			map.init();
+			SF.map.init();
 			}
-			reloadFunctions.load();
-			woocommerce.variations();
+			SF.reloadFunctions.load();
+			SF.woocommerce.variations();
 		}
 	};
 	
-	jQuery(document).ready(onReady.init);
-	jQuery(window).load(onLoad.init);
+	jQuery(document).ready(SF.onReady.init);
+	jQuery(window).load(SF.onLoad.init);
 	
 })(jQuery);
 
@@ -1998,20 +2016,6 @@ Custom jQuery functions.
 // VIEWPORT PLUGIN
 /////////////////////////////////////////////
 
-/*
- * Viewport - jQuery selectors for finding elements in viewport
- *
- * Copyright (c) 2008-2009 Mika Tuupola
- *
- * Licensed under the MIT license:
- *   http://www.opensource.org/licenses/mit-license.php
- *
- * Project home:
- *  http://www.appelsiini.net/projects/viewport
- *
- */
-
-
 (function($) {
 
 	// USE STRICT
@@ -2062,170 +2066,9 @@ Custom jQuery functions.
     
 })(jQuery);
 
-
-/*!
- * jquery.customSelect() - v0.4.1
- * http://adam.co/lab/jquery/customselect/
- * 2013-05-13
- *
- * Copyright 2013 Adam Coulombe
- * @license http://www.opensource.org/licenses/mit-license.html MIT License
- * @license http://www.gnu.org/licenses/gpl.html GPL2 License 
- */
-
-(function ($) {
-    'use strict';
-
-    $.fn.extend({
-        customSelect: function (options) {
-            // filter out <= IE6
-            if (typeof document.body.style.maxHeight === 'undefined') {
-                return this;
-            }
-            var defaults = {
-                    customClass: 'customSelect',
-                    mapClass:    true,
-                    mapStyle:    true
-            },
-            options = $.extend(defaults, options),
-            prefix = options.customClass,
-            changed = function ($select,customSelectSpan) {
-                var currentSelected = $select.find(':selected'),
-                customSelectSpanInner = customSelectSpan.children(':first'),
-                html = currentSelected.html() || '&nbsp;';
-
-                customSelectSpanInner.html(html);
-                
-                if (currentSelected.attr('disabled')) {
-                	customSelectSpan.addClass(getClass('DisabledOption'));
-                } else {
-                	customSelectSpan.removeClass(getClass('DisabledOption'));
-                }
-                
-                setTimeout(function () {
-                    customSelectSpan.removeClass(getClass('Open'));
-                    $(document).off('mouseup.'+getClass('Open'));                  
-                }, 60);
-            },
-            getClass = function(suffix){
-                return prefix + suffix;
-            };
-
-            return this.each(function () {
-                var $select = $(this),
-                    customSelectInnerSpan = $('<span />').addClass(getClass('Inner')),
-                    customSelectSpan = $('<span />');
-
-                $select.after(customSelectSpan.append(customSelectInnerSpan));
-                
-                customSelectSpan.addClass(prefix);
-
-                if (options.mapClass) {
-                    customSelectSpan.addClass($select.attr('class'));
-                }
-                if (options.mapStyle) {
-                    customSelectSpan.attr('style', $select.attr('style'));
-                }
-
-                $select
-                    .addClass('hasCustomSelect')
-                    .on('update', function () {
-						changed($select,customSelectSpan);
-						
-                        var selectBoxWidth = parseInt($select.outerWidth(), 10) -
-                                (parseInt(customSelectSpan.outerWidth(), 10) -
-                                    parseInt(customSelectSpan.width(), 10));
-						
-						// Set to inline-block before calculating outerHeight
-						customSelectSpan.css({
-                            display: 'inline-block'
-                        });
-						
-                        var selectBoxHeight = customSelectSpan.outerHeight();
-
-                        if ($select.attr('disabled')) {
-                            customSelectSpan.addClass(getClass('Disabled'));
-                        } else {
-                            customSelectSpan.removeClass(getClass('Disabled'));
-                        }
-
-                        customSelectInnerSpan.css({
-                            width:   selectBoxWidth,
-                            display: 'inline-block'
-                        });
-
-                        $select.css({
-                            '-webkit-appearance': 'menulist-button',
-                            width:                customSelectSpan.outerWidth(),
-                            position:             'absolute',
-                            opacity:              0,
-                            height:               selectBoxHeight,
-                            fontSize:             customSelectSpan.css('font-size')
-                        });
-                    })
-                    .on('change', function () {
-                        customSelectSpan.addClass(getClass('Changed'));
-                        changed($select,customSelectSpan);
-                    })
-                    .on('keyup', function (e) {
-                        if(!customSelectSpan.hasClass(getClass('Open'))){
-                            $select.blur();
-                            $select.focus();
-                        }else{
-                            if(e.which==13||e.which==27){
-                                changed($select,customSelectSpan);
-                            }
-                        }
-                    })
-                    .on('mousedown', function (e) {
-                        customSelectSpan.removeClass(getClass('Changed'));
-                    })
-                    .on('mouseup', function (e) {
-                        
-                        if( !customSelectSpan.hasClass(getClass('Open'))){
-                            // if FF and there are other selects open, just apply focus
-                            if($('.'+getClass('Open')).not(customSelectSpan).length>0 && typeof InstallTrigger !== 'undefined'){
-                                $select.focus();
-                            }else{
-                                customSelectSpan.addClass(getClass('Open'));
-                                e.stopPropagation();
-                                $(document).one('mouseup.'+getClass('Open'), function (e) {
-                                    if( e.target != $select.get(0) && $.inArray(e.target,$select.find('*').get()) < 0 ){
-                                        $select.blur();
-                                    }else{
-                                        changed($select,customSelectSpan);
-                                    }
-                                });
-                            }
-                        }
-                    })
-                    .focus(function () {
-                        customSelectSpan.removeClass(getClass('Changed')).addClass(getClass('Focus'));
-                    })
-                    .blur(function () {
-                        customSelectSpan.removeClass(getClass('Focus')+' '+getClass('Open'));
-                    })
-                    .hover(function () {
-                        customSelectSpan.addClass(getClass('Hover'));
-                    }, function () {
-                        customSelectSpan.removeClass(getClass('Hover'));
-                    })
-                    .trigger('update');
-            });
-        }
-    });
-})(jQuery);
-
-
-/*
- * jQuery.appear
- * https://github.com/bas2k/jquery.appear/
- * http://code.google.com/p/jquery-appear/
- *
- * Copyright (c) 2009 Michael Hixson
- * Copyright (c) 2012 Alexander Brovikov
- * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
- */
+/////////////////////////////////////////////
+// APPEAR PLUGIN
+/////////////////////////////////////////////
 (function($) {
     $.fn.appear = function(fn, options) {
 

@@ -16,6 +16,12 @@
 	remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0);
 	add_action('woocommerce_before_main_content', 'my_theme_wrapper_start', 10);
 	add_action('woocommerce_after_main_content', 'my_theme_wrapper_end', 10);
+	
+	/* Remove default thumbnail output */
+	remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
+	
+	/* Remove default sale flash output */
+	remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10 );
 	 
 	function my_theme_wrapper_start() {
 	  echo '<div class="page-content clearfix">';
@@ -39,6 +45,23 @@
         
         return $product_item_text;
 	}
+	
+
+	/* REMOVE WOOCOMMERCE PRETTYPHOTO STYLES/SCRIPTS
+    ================================================== */
+    function sf_remove_woo_lightbox_js() {
+        wp_dequeue_script( 'prettyPhoto' );
+        wp_dequeue_script( 'prettyPhoto-init' );
+    }
+
+    add_action( 'wp_enqueue_scripts', 'sf_remove_woo_lightbox_js', 99 );
+
+    function sf_remove_woo_lightbox_css() {
+        wp_dequeue_style( 'woocommerce_prettyPhoto_css' );
+    }
+
+    add_action( 'wp_enqueue_styles', 'sf_remove_woo_lightbox_css', 99 );
+	
 	
 	
 	/* WOOCOMMERCE CONTENT FUNCTIONS
@@ -84,7 +107,7 @@
 	function is_out_of_stock() {
 	    global $post;
 	    $post_id = $post->ID;
-	    $stock_status = get_post_meta($post_id, '_stock_status',true);
+	    $stock_status = sf_get_post_meta($post_id, '_stock_status',true);
 	    
 	    if ($stock_status == 'outofstock') {
 	    return true;
@@ -104,17 +127,26 @@
 			
 			$cart_count = $woocommerce->cart->cart_contents_count;
 			$cart_count_text = sf_product_items_text($cart_count);
-					
+			
+			$options = get_option('sf_neighborhood_options');				
+			$show_cart_count = false;
+			if (isset($options['show_cart_count'])) {
+				$show_cart_count = $options['show_cart_count'];
+			}	
 			?>	
 				
 			<li class="parent shopping-bag-item">
-				<a class="cart-contents" href="<?php echo $woocommerce->cart->get_cart_url(); ?>" title="<?php _e('View your shopping cart', 'swiftframework'); ?>"><i class="sf-cart"></i><?php echo $woocommerce->cart->get_cart_total(); ?></a>
+				<?php if ($show_cart_count) { ?>
+				<a class="cart-contents" href="<?php echo $woocommerce->cart->get_cart_url(); ?>" title="<?php _e('View your shopping bag', 'swiftframework'); ?>"><i class="sf-cart"></i><?php echo $woocommerce->cart->get_cart_total(); ?> (<?php echo $cart_count; ?>)</a>
+				<?php } else { ?>
+				<a class="cart-contents" href="<?php echo $woocommerce->cart->get_cart_url(); ?>" title="<?php _e('View your shopping bag', 'swiftframework'); ?>"><i class="sf-cart"></i><?php echo $woocommerce->cart->get_cart_total(); ?></a>
+				<?php }  ?>
 			
 				<ul class="sub-menu">     
 					<li>                                      
 						<div class="shopping-bag">
-			 
-							<?php if ( sizeof($cart_count)>0 ) { ?>
+			 				
+							<?php if ( sizeof($woocommerce->cart->cart_contents)>0 ) { ?>
 					
 								<div class="bag-header"><?php echo $cart_count_text; ?> <?php _e('in the shopping bag', 'swiftframework'); ?></div>
 								
@@ -253,100 +285,24 @@
 	remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
 	remove_action( 'woocommerce_product_tabs', 'woocommerce_product_description_tab', 10 );
 	remove_action( 'woocommerce_product_tab_panels', 'woocommerce_product_description_panel', 10 );
-	
-	$options = get_option('sf_neighborhood_options');
-	if (isset($options['enable_default_tabs'])) {
-		$enable_default_tabs = $options['enable_default_tabs'];
-	} else {
-		$enable_default_tabs = false;
-	}
-	
-	if ($enable_default_tabs) {	
+
 	add_action( 'woocommerce_single_product_summary', 'woocommerce_output_product_data_tabs', 35);	
-	} else {
-	add_action( 'woocommerce_single_product_summary', 'sf_product_accordion', 35);	
-	}
 	add_action( 'woocommerce_single_product_summary', 'sf_product_share', 45);
-	
-	if (!function_exists('sf_product_accordion')) {
-		function sf_product_accordion() {
-			global $woocommerce, $product, $post;
-			
-			$options = get_option('sf_neighborhood_options');
-			if (isset($options['enable_pb_product_pages'])) {
-				$enable_pb_product_pages = $options['enable_pb_product_pages'];
-			} else {
-				$enable_pb_product_pages = false;
-			}
-			
-			$product_description = get_post_meta($post->ID, 'sf_product_description', true);
-		?>
-			<div class="accordion" id="product-accordion">
-							
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle" data-toggle="collapse" data-parent="#product-accordion" href="#product-desc">
-							<?php _e("Description", "swiftframework"); ?>
-						</a>
-			    	</div>
-			    	<div id="product-desc" class="accordion-body collapse in">
-			      		<div class="accordion-inner">
-			      			<?php 
-			      				if ($enable_pb_product_pages) {
-			       					echo do_shortcode(sf_add_formatting($product_description));
-			       				} else {
-			       					the_content();
-			       				}
-			       			?>
-			      		</div>
-			  		</div>
-				</div>
-							
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#product-accordion" href="#additional-information">
-							<?php _e("Additional Information", "swiftframework"); ?>
-						</a>
-					</div>
-					<div id="additional-information" class="accordion-body collapse">
-				  		<div class="accordion-inner">
-				   			<?php $product->list_attributes(); ?>
-				  		</div>
-					</div>
-				</div>
-				<?php if ( comments_open() ) : ?>
-				<div class="accordion-group">
-					<div class="accordion-heading">
-						<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#product-accordion" href="#reviews">
-							<?php _e("Reviews", "swiftframework"); ?> (<?php echo comments_number( '0', '1', '%' ); ?>)
-						</a>
-					</div>
-					<div id="reviews" class="accordion-body collapse">
-				  		<div class="accordion-inner">			   						   			
-				   			<?php comments_template(); ?>
-				  		</div>
-					</div>
-				</div>
-				<?php endif; ?>
-			</div>
-		<?php 
-		}
-	}
 	
 	if (!function_exists('sf_product_share')) {
 		function sf_product_share() {
 			global $post;
 			$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), false, '' );
 		?>
-			<div class="product-share clearfix">
+			<div class="product-share share-links clearfix">
 				<span><?php _e("Share", "swiftframework"); ?></span>
 				<ul>
 				    <li><a href="mailto:?subject=<?php the_title(); ?>&body=<?php echo strip_tags(apply_filters( 'woocommerce_short_description', $post->post_excerpt )); ?> <?php the_permalink(); ?>" class="product_share_email"><i class="fa-envelope"></i></a></li>
 				    <li><a href="http://www.facebook.com/sharer.php?u=<?php the_permalink(); ?>" onclick="javascript:window.open(this.href,
 				      '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="product_share_facebook"><i class="fa-facebook"></i></a></li>
-				    <li><a href="https://twitter.com/share?url=<?php the_permalink(); ?>" onclick="javascript:window.open(this.href,
+				    <li><a href="https://twitter.com/share?url=<?php the_permalink(); ?>&text=<?php the_title(); ?>" onclick="javascript:window.open(this.href,
 				      '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="product_share_twitter"><i class="fa-twitter"></i></a></li>   
-				    <li><a href="https://plus.google.com/share?url=<?php the_permalink(); ?>" onclick="javascript:window.open(this.href,
+				    <li><a href="https://plus.google.com/share?url=<?php the_permalink(); ?>&title=<?php the_title(); ?>" onclick="javascript:window.open(this.href,
 				      '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa-google-plus"></i></a></li>
 				    <li><a href="//pinterest.com/pin/create/button/?url=<?php the_permalink(); ?>&media=<?php echo $src[0]; ?>&description=<?php the_title(); ?>" onclick="javascript:window.open(this.href,
 				      '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="product_share_pinterest"><i class="fa-pinterest"></i></a></li>
@@ -367,17 +323,17 @@
 			<div class="help-bar clearfix">
 				<span><?php echo do_shortcode($help_bar_text); ?></span>
 				<ul>
-				    <li><a href="#email-form" class="inline" data-toggle="modal"><?php _e("Email customer care", "swiftframework"); ?></a></li>
-				    <li><a href="#shipping-information" class="inline" data-toggle="modal"><?php _e("Shipping information", "swiftframework"); ?></a></li>
-				    <li><a href="#returns-exchange" class="inline" data-toggle="modal"><?php _e("Returns & exchange", "swiftframework"); ?></a></li>
-				    <li><a href="#faqs" class="inline" data-toggle="modal"><?php _e("F.A.Q.'s", "swiftframework"); ?></a></li>
+				    <li><a href="#email-form" class="inline" data-toggle="modal"><?php _e("Email Customer Care", "swiftframework"); ?></a></li>
+				    <li><a href="#shipping-information" class="inline" data-toggle="modal"><?php _e("Shipping Information", "swiftframework"); ?></a></li>
+				    <li><a href="#returns-exchange" class="inline" data-toggle="modal"><?php _e("Returns & Exchange", "swiftframework"); ?></a></li>
+				    <li><a href="#faqs" class="inline" data-toggle="modal"><?php _e("FAQs", "swiftframework"); ?></a></li>
 				</ul>
 			</div>
 			
 			<div id="email-form" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="email-form-modal" aria-hidden="true">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="email-form-modal"><?php _e("Email customer care", "swiftframework"); ?></h3>
+					<h3 id="email-form-modal"><?php _e("Email Customer Care", "swiftframework"); ?></h3>
 				</div>
 				<div class="modal-body">
 					
@@ -389,7 +345,7 @@
 			<div id="shipping-information" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="shipping-modal" aria-hidden="true">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="shipping-modal"><?php _e("Shipping information", "swiftframework"); ?></h3>
+					<h3 id="shipping-modal"><?php _e("Shipping Information", "swiftframework"); ?></h3>
 				</div>
 				<div class="modal-body">
 					
@@ -401,7 +357,7 @@
 			<div id="returns-exchange" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="returns-modal" aria-hidden="true">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="returns-modal"><?php _e("Returns & exchange", "swiftframework"); ?></h3>
+					<h3 id="returns-modal"><?php _e("Returns & Exchange", "swiftframework"); ?></h3>
 				</div>
 				<div class="modal-body">
 					
@@ -413,7 +369,7 @@
 			<div id="faqs" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="faqs-modal" aria-hidden="true">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="faqs-modal"><?php _e("F.A.Q.'s", "swiftframework"); ?></h3>
+					<h3 id="faqs-modal"><?php _e("FAQs", "swiftframework"); ?></h3>
 				</div>
 				<div class="modal-body">
 					

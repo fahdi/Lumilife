@@ -30,24 +30,24 @@ class SwiftPageBuilderShortcode_spb_revslider extends SwiftPageBuilderShortcode 
 }
 
 SPBMap::map( 'spb_revslider', array(
-    "name"		=> __("Revolution Slider", "swift_page_builder"),
+    "name"		=> __("Revolution Slider", 'swift-framework-admin'),
     "base"		=> "spb_revslider",
     "class"		=> "spb_revslider",
     "icon"      => "spb-icon-revslider",
     "params"	=> array(
         array(
             "type" => "textfield",
-            "heading" => __("Revolution Slider Alias", "swift_page_builder"),
+            "heading" => __("Revolution Slider Alias", 'swift-framework-admin'),
             "param_name" => "revslider_shortcode",
             "value" => "",
-            "description" => __("Enter the Revolution Slider alias here for the one that you wish to show. This can be found within the Revolution Slider Admin Panel.", "swift_page_builder")
+            "description" => __("Enter the Revolution Slider alias here for the one that you wish to show. This can be found within the Revolution Slider Admin Panel.", 'swift-framework-admin')
         ),
         array(
             "type" => "textfield",
-            "heading" => __("Extra class name", "swift_page_builder"),
+            "heading" => __("Extra class name", 'swift-framework-admin'),
             "param_name" => "el_class",
             "value" => "",
-            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "swift_page_builder")
+            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-admin')
         )
     )
 ) );

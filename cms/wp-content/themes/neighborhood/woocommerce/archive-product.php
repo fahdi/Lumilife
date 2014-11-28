@@ -39,16 +39,6 @@
 	global $sidebars, $woocommerce_loop;
 	
 	$columns = 4;
-			
-	if ($sidebars == "no-sidebars") {
-		$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
-	} else if ($sidebars == "both-sidebars") {
-		$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 2 );
-		$columns = 2;
-	} else {
-		$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 3 );
-		$columns = 3;
-	}
 	
 	$page_wrap_class = $page_class = $content_class = '';
 	$page_wrap_class = "woocommerce-shop-page ";
@@ -141,50 +131,33 @@
 		<!-- OPEN section -->
 		<section class="<?php echo $page_class; ?>">
 		
-			<div class="page-content <?php echo $content_class; ?>">
+			<!-- OPEN page-content -->
+			<section class="page-content <?php echo $content_class; ?>">
 			
-			<?php if ( version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0 ) {
-			
-				wc_get_template( 'loop/result-count.php' );
-				
-				global $woocommerce;
-	
-				$orderby = isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
-		
-				wc_get_template( 'loop/orderby.php', array( 'orderby' => $orderby ) );
-						
-			} else if ( version_compare( WOOCOMMERCE_VERSION, "2.0.0" ) >= 0 ) {
-				
-				woocommerce_get_template( 'loop/result-count.php' );
-				
-				global $woocommerce;
-	
-				$orderby = isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
-		
-				woocommerce_get_template( 'loop/orderby.php', array( 'orderby' => $orderby ) );
-	        
-	        } else { ?>
-	
-                <form class="woocommerce-ordering" method="POST">
-                    <select name="sort" class="orderby">
-                        <?php
-                            $catalog_orderby = apply_filters('woocommerce_catalog_orderby', array(
-                                'menu_order' 	=> __('Default sorting', 'woocommerce'),
-                                'title' 		=> __('Sort alphabetically', 'woocommerce'),
-                                'date' 			=> __('Sort by most recent', 'woocommerce'),
-                                'price' 		=> __('Sort by price', 'woocommerce')
-                            ));
-                
-                            foreach ( $catalog_orderby as $id => $name )
-                                echo '<option value="' . $id . '" ' . selected( $_SESSION['orderby'], $id, false ) . '>' . $name . '</option>';
-                        ?>
-                    </select>
-                </form>
-	            
-	        <?php } ?>
+			<?php
+				/**
+				 * woocommerce_before_shop_loop hook
+				 *
+				 * @hooked woocommerce_result_count - 20
+				 * @hooked woocommerce_catalog_ordering - 30
+				 */
+				do_action( 'woocommerce_before_shop_loop' );
+			?>
 			
 			<?php do_action( 'woocommerce_archive_description' ); ?>
-	
+			
+			<?php
+				if ($sidebars == "no-sidebars") {
+					$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
+				} else if ($sidebars == "both-sidebars") {
+					$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 2 );
+					$columns = 2;
+				} else {
+					$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 3 );
+					$columns = 3;
+				}
+			?>
+
 			<?php if ( have_posts() ) : ?>
 				
 				<?php if ( version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0 ) { ?>
@@ -197,7 +170,7 @@
 		
 							<?php wc_get_template_part( 'content', 'product' ); ?>
 		
-						<?php endwhile; // end of the loop. ?>
+						<?php endwhile; // end of the loop. ?>	
 		
 					<?php woocommerce_product_loop_end(); ?>
 				
@@ -230,7 +203,7 @@
 					</ul>
 				
 				<?php } ?>
-	
+				
 				<?php
 					/**
 					 * woocommerce_after_shop_loop hook
@@ -246,8 +219,9 @@
 	
 			<?php endif; ?>
 			
-			</div>
-	
+			<!-- CLOSE page-content -->
+			</section>
+				
 			<?php if ($sidebar_config == "both-sidebars") { ?>
 			<aside class="sidebar left-sidebar span3">
 				<?php dynamic_sidebar($left_sidebar); ?>
@@ -278,5 +252,14 @@
 		<?php } ?>		
 			
 	</div>
+	
+	<?php
+		/**
+		 * woocommerce_after_main_content hook
+		 *
+		 * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
+		 */
+		do_action( 'woocommerce_after_main_content' );
+	?>
 
 <?php get_footer('shop'); ?>

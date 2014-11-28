@@ -41,6 +41,7 @@
 	
 	if ( sf_woocommerce_activated() ) {
 	require_once( $shortcodes_dir . 'products.php' );
+	require_once( $shortcodes_dir . 'supersearch.php' );	
 	}
 	
 	require_once( $shortcodes_dir . 'clients.php' );
@@ -64,4 +65,5 @@
 	require_once( $shortcodes_dir . 'search.php' );
 	require_once( $shortcodes_dir . 'latest-tweets.php' );	
 	require_once( $shortcodes_dir . 'tweets-slider.php' );	
+
 ?>

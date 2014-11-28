@@ -57,7 +57,7 @@ if ( ! class_exists( 'RWMB_Fieldset_Text_Field' ) )
      */
     static function meta( $meta, $post_id, $saved, $field )
     {
-      $meta = get_post_meta( $post_id, $field['id'] );
+      $meta = sf_get_post_meta( $post_id, $field['id'] );
 
       if (is_array($meta) && !empty($meta)) {
         $meta = $meta[0];

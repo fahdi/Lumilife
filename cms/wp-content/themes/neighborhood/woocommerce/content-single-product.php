@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		$enable_pb_product_pages = false;
 	}
 	
-	$product_short_description = get_post_meta($post->ID, 'sf_product_short_description', true);
+	$product_short_description = sf_get_post_meta($post->ID, 'sf_product_short_description', true);
 	
 	/**
 	 * woocommerce_before_single_product hook
@@ -87,7 +87,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 											
 						$reviews_text = sprintf(_n('%d Review', '%d Reviews', $count, 'swiftframework'), $count);
 						
-				        echo '<div class="review-summary"><div class="star-rating" title="'.sprintf(__('Rated %s out of 5', 'woocommerce'), $average).'"><span style="width:'.($average*16).'px"><span itemprop="ratingValue" class="rating">'.$average.'</span> '.__('out of 5', 'woocommerce').'</span></div><div class="reviews-text">'.$reviews_text.'</div></div>';
+				        echo '<div class="review-summary"><div class="star-rating" title="'.sprintf(__('Rated %s out of 5', 'woocommerce'), $average).'"><span style="width:'.($average*16).'px"><span class="rating">'.$average.'</span> '.__('out of 5', 'woocommerce').'</span></div><div class="reviews-text">'.$reviews_text.'</div></div>';
 				
 				    }
 				}
@@ -95,7 +95,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			<?php
 				$has_cat = get_the_terms( $post->ID, 'product_cat' );
 			?>
-			<?php if (function_exists('be_previous_post_link') && $has_cat != 0) { ?>
+			<?php if ($has_cat != 0) { ?>
 			<div class="product-navigation">
 				<div class="nav-previous"><?php previous_post_link( '%link', '<i class="fa-angle-right"></i>', true, '', 'product_cat' ); ?></div>
 				<div class="nav-next"><?php next_post_link( '%link', '<i class="fa-angle-left"></i>', true, '', 'product_cat' ); ?></div>

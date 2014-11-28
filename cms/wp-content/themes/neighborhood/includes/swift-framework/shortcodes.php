@@ -24,19 +24,29 @@
 	    return $plugins;  
 	} 
 	
-	function custom_mce_styles( $init ) {
-	    $init['theme_advanced_buttons2_add_before'] = 'styleselect';
-	    $init['theme_advanced_styles'] = 'Impact Text=impact-text';
-	    return $init;
+	function sf_custom_mce_styles( $args ) {
+				
+		$style_formats = array (
+		    array( 'title' => 'Impact Text', 'selector' => 'p', 'classes' => 'impact-text' ),
+		);
+		
+		$args['style_formats'] = json_encode( $style_formats );
+		
+		return $args;
 	}
 	 
-	add_filter( 'tiny_mce_before_init', 'custom_mce_styles'  );
-	 
-	function sf_mce_css() {
-	    return get_template_directory_uri() . '/css/editor-style.css';
+	add_filter('tiny_mce_before_init', 'sf_custom_mce_styles');
+	
+	function sf_mce_add_buttons( $buttons ){
+	    array_splice( $buttons, 1, 0, 'styleselect' );
+	    return $buttons;
 	}
-	 
-	add_filter( 'mce_css', 'sf_mce_css' );
+	add_filter( 'mce_buttons_2', 'sf_mce_add_buttons' );
+	
+	function sf_add_editor_styles() {
+	    add_editor_style( '/css/editor-style.css' );
+	}
+	add_action( 'init', 'sf_add_editor_styles' );
 	
 	
 	
@@ -962,11 +972,56 @@
 		</div>';
 		
 		return $modal_output;
-	}
-	
+	}	
 	add_shortcode('sf_modal', 'modal');	
 	
 	
+	/* SWIFT SUPER SEARCH SHORTCODE
+	================================================= */
+
+    function sf_supersearch() {
+        if ( function_exists( 'sf_super_search' ) ) {
+            return sf_super_search();
+        } else {
+            return "";
+        }
+
+    }
+    add_shortcode( 'sf_supersearch', 'sf_supersearch' );
+	    
+	
+	/* SHARE LINKS SHORTCODE
+	================================================= */
+
+    function sf_share_links() {
+    	
+    	global $post;
+    	$share_output = $img_url = "";
+    	$title = get_the_title();
+		$desc = get_the_excerpt();
+		$url = get_the_permalink();
+		$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), false, '' );
+		if (!empty($src)) {
+			$img_url = $src[0];
+		}
+		$window_code = "javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false";
+		
+		$share_output .= '<div class="share-shortcode share-links clearfix">';
+		$share_output .= '<span>'. __("Share", "swiftframework") .'</span>';
+		$share_output .= '<ul>';
+		$share_output .= '<li><a href="mailto:?subject='.$title.'&body='.$desc.' '.$url.'" class="share_email"><i class="fa-envelope"></i></a></li>';
+		$share_output .= '<li><a href="http://www.facebook.com/sharer.php?u='.$url.'" onclick="'.$window_code.'" class="share_facebook"><i class="fa-facebook"></i></a></li>';
+		$share_output .= '<li><a href="https://twitter.com/share?url='.$url.'" onclick="'.$window_code.'"class="share_twitter"><i class="fa-twitter"></i></a></li>';
+	 	$share_output .= '<li><a href="https://plus.google.com/share?url='.$url.'" onclick="'.$window_code.'"><i class="fa-google-plus"></i></a></li>';
+		$share_output .= '<li><a href="//pinterest.com/pin/create/button/?url='.$url.'&media='.$img_url.'&description='.$title.'" onclick="'.$window_code.'" class="share_pinterest"><i class="fa-pinterest"></i></a></li>';
+		$share_output .= '</ul>';
+		$share_output .= '</div>';
+		
+		return $share_output;
+	}
+	add_shortcode( 'sf_share', 'sf_share_links' );
+	    
+	    
 	/* RESPONSIVE VISIBILITY SHORTCODE
 	================================================= */
 	

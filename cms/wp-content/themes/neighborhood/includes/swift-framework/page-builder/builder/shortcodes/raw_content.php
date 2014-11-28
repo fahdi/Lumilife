@@ -10,7 +10,7 @@ class SwiftPageBuilderShortcode_spb_raw_html extends SwiftPageBuilderShortcode {
         $old_names = array('yellow_message', 'blue_message', 'green_message', 'button_green', 'button_grey', 'button_yellow', 'button_blue', 'button_red', 'button_orange');
         $new_names = array('alert-block', 'alert-info', 'alert-success', 'btn-success', 'btn', 'btn-info', 'btn-primary', 'btn-danger', 'btn-warning');
         $value = str_ireplace($old_names, $new_names, $value);
-        //$value = __($value, "swift_page_builder");
+        //$value = __($value, 'swift-framework-admin');
         //
         $param_name = isset($param['param_name']) ? $param['param_name'] : '';
         $type = isset($param['type']) ? $param['type'] : '';

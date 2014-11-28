@@ -18,7 +18,7 @@ if (isset($options['enable_pb_product_pages'])) {
 	$enable_pb_product_pages = false;
 }
 
-$product_description = get_post_meta($post->ID, 'sf_product_description', true);
+$product_description = sf_get_post_meta($post->ID, 'sf_product_description', true);
 
 ?>
 

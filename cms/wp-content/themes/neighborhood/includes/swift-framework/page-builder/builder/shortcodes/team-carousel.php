@@ -40,7 +40,7 @@ class SwiftPageBuilderShortcode_team_carousel extends SwiftPageBuilderShortcode 
     		
     		$count = $columns = 0;
  		
-    		$sidebar_config = get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
+    		$sidebar_config = sf_get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
     		
     		if (is_singular('portfolio')) {
     		$sidebar_config = "no-sidebars";
@@ -76,17 +76,17 @@ class SwiftPageBuilderShortcode_team_carousel extends SwiftPageBuilderShortcode 
     				the_post();
     				
     				$member_name = get_the_title();
-    				$member_position = get_post_meta($post->ID, 'sf_team_member_position', true);
+    				$member_position = sf_get_post_meta($post->ID, 'sf_team_member_position', true);
     				$member_bio = get_the_content();
-    				$member_email = get_post_meta($post->ID, 'sf_team_member_email', true);
-    				$member_phone = get_post_meta($post->ID, 'sf_team_member_phone_number', true);
-    				$member_twitter = get_post_meta($post->ID, 'sf_team_member_twitter', true);
-    				$member_facebook = get_post_meta($post->ID, 'sf_team_member_facebook', true);
-    				$member_linkedin = get_post_meta($post->ID, 'sf_team_member_linkedin', true);
-    				$member_google_plus = get_post_meta($post->ID, 'sf_team_member_google_plus', true);
-    				$member_skype = get_post_meta($post->ID, 'sf_team_member_skype', true);
-    				$member_instagram = get_post_meta($post->ID, 'sf_team_member_instagram', true);
-    				$member_dribbble = get_post_meta($post->ID, 'sf_team_member_dribbble', true);
+    				$member_email = sf_get_post_meta($post->ID, 'sf_team_member_email', true);
+    				$member_phone = sf_get_post_meta($post->ID, 'sf_team_member_phone_number', true);
+    				$member_twitter = sf_get_post_meta($post->ID, 'sf_team_member_twitter', true);
+    				$member_facebook = sf_get_post_meta($post->ID, 'sf_team_member_facebook', true);
+    				$member_linkedin = sf_get_post_meta($post->ID, 'sf_team_member_linkedin', true);
+    				$member_google_plus = sf_get_post_meta($post->ID, 'sf_team_member_google_plus', true);
+    				$member_skype = sf_get_post_meta($post->ID, 'sf_team_member_skype', true);
+    				$member_instagram = sf_get_post_meta($post->ID, 'sf_team_member_instagram', true);
+    				$member_dribbble = sf_get_post_meta($post->ID, 'sf_team_member_dribbble', true);
     				$member_image = get_post_thumbnail_id();
     				   	
     				$items .= '<li itemscope data-id="id-'. $count .'" class="clearfix carousel-item team-member '.$item_class.'">';
@@ -180,38 +180,38 @@ class SwiftPageBuilderShortcode_team_carousel extends SwiftPageBuilderShortcode 
 }
 
 SPBMap::map( 'team_carousel', array(
-    "name"		=> __("Team Carousel", "swift_page_builder"),
+    "name"		=> __("Team Carousel", 'swift-framework-admin'),
     "base"		=> "team_carousel",
     "class"		=> "team_carousel spb_carousel",
     "icon"      => "spb-icon-team-carousel",
     "params"	=> array(
 	    array(
 	        "type" => "textfield",
-	        "heading" => __("Widget title", "swift_page_builder"),
+	        "heading" => __("Widget title", 'swift-framework-admin'),
 	        "param_name" => "title",
 	        "value" => "",
-	        "description" => __("Heading text. Leave it empty if not needed.", "swift_page_builder")
+	        "description" => __("Heading text. Leave it empty if not needed.", 'swift-framework-admin')
 	    ),
         array(
             "type" => "select-multiple",
-            "heading" => __("Team category", "swift_page_builder"),
+            "heading" => __("Team category", 'swift-framework-admin'),
             "param_name" => "category",
             "value" => get_category_list('team-category'),
-            "description" => __("Choose the category for the portfolio items.", "swift_page_builder")
+            "description" => __("Choose the category for the portfolio items.", 'swift-framework-admin')
 		),
 		array(
 		    "type" => "dropdown",
-		    "heading" => __("Social icon type", "swift_page_builder"),
+		    "heading" => __("Social icon type", 'swift-framework-admin'),
 		    "param_name" => "social_icon_type",
-		    "value" => array(__('Dark', "swift_page_builder") => "dark", __('Light', "swift_page_builder") => "light", __('Coloured', "swift_page_builder") => "coloured"),
-		    "description" => __("Choose the social icon type to show.", "swift_page_builder")
+		    "value" => array(__('Dark', 'swift-framework-admin') => "dark", __('Light', 'swift-framework-admin') => "light", __('Coloured', 'swift-framework-admin') => "coloured"),
+		    "description" => __("Choose the social icon type to show.", 'swift-framework-admin')
 		),
         array(
             "type" => "textfield",
-            "heading" => __("Extra class name", "swift_page_builder"),
+            "heading" => __("Extra class name", 'swift-framework-admin'),
             "param_name" => "el_class",
             "value" => "",
-            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "swift_page_builder")
+            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-admin')
         )
     )
 ) );

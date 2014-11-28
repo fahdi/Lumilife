@@ -1,16 +1,16 @@
 <?php get_header(); ?>
 
 <?php	
-	$member_position = get_post_meta($post->ID, 'sf_team_member_position', true);
-	$member_email = get_post_meta($post->ID, 'sf_team_member_email', true);
-	$member_phone = get_post_meta($post->ID, 'sf_team_member_phone_number', true);
-	$member_twitter = get_post_meta($post->ID, 'sf_team_member_twitter', true);
-	$member_facebook = get_post_meta($post->ID, 'sf_team_member_facebook', true);
-	$member_linkedin = get_post_meta($post->ID, 'sf_team_member_linkedin', true);
-	$member_skype = get_post_meta($post->ID, 'sf_team_member_skype', true);
-	$member_google_plus = get_post_meta($post->ID, 'sf_team_member_google_plus', true);
-	$member_instagram = get_post_meta($post->ID, 'sf_team_member_instagram', true);
-	$member_dribbble = get_post_meta($post->ID, 'sf_team_member_dribbble', true);
+	$member_position = sf_get_post_meta($post->ID, 'sf_team_member_position', true);
+	$member_email = sf_get_post_meta($post->ID, 'sf_team_member_email', true);
+	$member_phone = sf_get_post_meta($post->ID, 'sf_team_member_phone_number', true);
+	$member_twitter = sf_get_post_meta($post->ID, 'sf_team_member_twitter', true);
+	$member_facebook = sf_get_post_meta($post->ID, 'sf_team_member_facebook', true);
+	$member_linkedin = sf_get_post_meta($post->ID, 'sf_team_member_linkedin', true);
+	$member_skype = sf_get_post_meta($post->ID, 'sf_team_member_skype', true);
+	$member_google_plus = sf_get_post_meta($post->ID, 'sf_team_member_google_plus', true);
+	$member_instagram = sf_get_post_meta($post->ID, 'sf_team_member_instagram', true);
+	$member_dribbble = sf_get_post_meta($post->ID, 'sf_team_member_dribbble', true);
 	$member_image_url = wp_get_attachment_url( get_post_thumbnail_id(), 'full' )
 ?>
 

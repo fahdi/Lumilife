@@ -103,16 +103,16 @@
 	        if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return $post_id;
 	        $value = $this->post( 'spb_js_status' );
 	        if ($value !== null) {
-	            //var_dump(get_post_meta($post_id, '_spb_js_status'));
+	            //var_dump(sf_get_post_meta($post_id, '_spb_js_status'));
 	            // Get the value
 	            //var_dump($value);
 	
 	            // Add value
-	            if ( get_post_meta( $post_id, '_spb_js_status' ) == '' ) { add_post_meta( $post_id, '_spb_js_status', $value, true );	}
+	            if ( sf_get_post_meta( $post_id, '_spb_js_status' ) == '' ) { add_post_meta( $post_id, '_spb_js_status', $value, true );	}
 	            // Update value
-	            elseif ( $value != get_post_meta( $post_id, '_spb_js_status', true ) ) { update_post_meta( $post_id, '_spb_js_status', $value ); }
+	            elseif ( $value != sf_get_post_meta( $post_id, '_spb_js_status', true ) ) { update_post_meta( $post_id, '_spb_js_status', $value ); }
 	            // Delete value
-	            elseif ( $value == '' ) { delete_post_meta( $post_id, '_spb_js_status', get_post_meta( $post_id, '_spb_js_status', true ) ); }
+	            elseif ( $value == '' ) { delete_post_meta( $post_id, '_spb_js_status', sf_get_post_meta( $post_id, '_spb_js_status', true ) ); }
 	        }
 	    }
 	
@@ -124,7 +124,11 @@
 	        if ( $data_element == 'spb_column' && $this->post( 'data_width' )!==null ) {
 	            $output = do_shortcode( '[spb_column width="'. $this->post( 'data_width' ).'"]' );
 	            echo $output;
-	        } else {
+	        }else  if ( $data_element == 'spb_text_block'){
+				         $output = do_shortcode( '[spb_text_block]'.__("<p>This is a text block. Click the edit button to change this text.</p>", "swift-framework-admin").'[/spb_text_block]' );
+	            	echo $output;
+	        }
+			 else {
 	            $output = do_shortcode( '['.$data_element.']' );
 	            echo $output;
 	        }
@@ -613,7 +617,7 @@
 	        	
 	        	<a class="read-more" href="#">Find out more <i class="fa-chevron-right">&gt;</i></a>
 	        	
-	        	[/spb_text_block] [blank_spacer height="30px" width="1/1" el_position="first last"] [spb_text_block title="Page Templates" icon="fa-file-alt" pb_margin_bottom="no" pb_border_bottom="no" width="1/4" el_position="first"]
+	        	[/spb_text_block] [blank_spacer height="30px" width="1/1" el_position="first last"] [spb_text_block title="Page Templates" icon="fa-file-o" pb_margin_bottom="no" pb_border_bottom="no" width="1/4" el_position="first"]
 	        	
 	        	Lorem ipsum dolor sit amet, cons tet ur adipisicing et elit, sed mod. incidid un ut out labore et dolore magna minim veniam, quis.
 	        	

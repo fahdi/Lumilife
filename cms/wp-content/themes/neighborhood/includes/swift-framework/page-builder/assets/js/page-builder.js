@@ -124,7 +124,11 @@
                 jQuery('body').css('overflow', '');
                 //$('.spb_main_sortable, #spb-elements, .spb_switch-to-builder').show();
                 $('.spb_tinymce').each(function () {
-                    tinyMCE.execCommand("mceRemoveControl", true, $(this).attr('id'));
+                    if (tinyMCE.majorVersion >= 4) {
+                    	tinyMCE.execCommand("mceRemoveEditor", true, $(this).attr('id'));
+                    } else {
+                    	tinyMCE.execCommand("mceRemoveControl", true, $(this).attr('id'));
+                    }
                 });
                 $('#spb_edit_form').html('').fadeOut();
                 //$('body, html').scrollTop(current_scroll_pos);
@@ -232,7 +236,8 @@
             if ( isTinyMceActive() != true ) {
                 $('#content').val(shortcodes);
             } else {
-                tinyMCE.activeEditor.setContent(shortcodes, {format : 'html'});
+                //tinyMCE.activeEditor.setContent(shortcodes, {format : 'html'});
+                tinyMCE.get('content').setContent(shortcodes, {format : 'html'});
             }
         }
     }
@@ -1139,13 +1144,17 @@ function getTinyMceHtml(obj) {
 
 	var mce_id = obj.attr('id'),
 		html_back;
-
-	//html_back = tinyMCE.get(mce_id).getContent();
-
-	//tinyMCE.execCommand('mceRemoveControl', false, mce_id);
+	
+	// Switch back to visual editor
+	window.switchEditors.go(mce_id, 'tmce');
+	
 	try {
 		html_back = tinyMCE.get(mce_id).getContent();
-		tinyMCE.execCommand('mceRemoveControl', false, mce_id);
+		if (tinyMCE.majorVersion >= 4) {
+			tinyMCE.execCommand("mceRemoveEditor", true, mce_id);
+		} else {
+			tinyMCE.execCommand("mceRemoveControl", true, mce_id);
+		}
 	}
 	catch (err) {
 		html_back = switchEditors.wpautop(obj.val());
@@ -1155,24 +1164,30 @@ function getTinyMceHtml(obj) {
 }
 
 function initTinyMce(element) {
-//	spb_def_wp_editor = tinyMCE.activeEditor;
-
-	var textfield_id = element.attr("id");
-	tinyMCE.execCommand("mceAddControl", true, textfield_id);
-
-	element.closest('.edit_form_line').find('.wp-switch-editor').removeAttr("onclick");
-	element.closest('.edit_form_line').find('.switch-tmce').click(function() {
-		element.closest('.edit_form_line').find('.wp-editor-wrap').removeClass('html-active').addClass('tmce-active');
-
-		var val = switchEditors.wpautop( jQuery(this).closest('.edit_form_line').find("textarea.spb_tinymce").val() );
-		jQuery("textarea.spb_tinymce").val(val);
-		// Add tinymce
-		tinyMCE.execCommand("mceAddControl", true, textfield_id);
+	var qt, textfield_id = element.attr("id"),
+	    form_line = element.closest('.edit_form_line'),
+	   	content_holder = form_line.find('.spb-textarea.textarea_html');
+	    content = content_holder.val();
+	    
+	window.tinyMCEPreInit.mceInit[textfield_id] = _.extend({}, tinyMCEPreInit.mceInit['content'], {
+		resize: 'vertical',
+		height: 200
 	});
-	element.closest('.edit_form_line').find('.switch-html').click(function() {
-		element.closest('.edit_form_line').find('.wp-editor-wrap').removeClass('tmce-active').addClass('html-active');
-		tinyMCE.execCommand("mceRemoveControl", true, textfield_id);
-	});
+	
+	if (_.isUndefined(tinyMCEPreInit.qtInit[textfield_id])) {
+	    window.tinyMCEPreInit.qtInit[textfield_id] = _.extend({}, tinyMCEPreInit.qtInit['replycontent'], {
+	    	id: textfield_id
+	    });
+	}
+	
+	element.val(content_holder.val());
+	qt = quicktags( window.tinyMCEPreInit.qtInit[textfield_id] );
+	QTags._buttonsInit();
+	window.switchEditors.go(textfield_id, 'tmce');
+	
+	if (tinymce.majorVersion >= "4") {
+		tinymce.execCommand( 'mceAddEditor', true, textfield_id );
+	}
 }
 
 function isTinyMceActive() {
@@ -1244,10 +1259,10 @@ jQuery.swift_page_builder.addLastClass(jQuery(".spb_main_sortable"));
 	if ( isTinyMceActive() != true ) {
 		jQuery('#content').val(shortcodes);
 	} else {
-		tinyMCE.activeEditor.setContent(shortcodes, {format : 'html'});
-		if (tinyMCE.get('excerpt')) {
-		tinyMCE.get('excerpt').setContent(shortcodes);
-		}
+		//tinyMCE.activeEditor.setContent(shortcodes, {format : 'html'});
+//		if (tinyMCE.get('excerpt')) {
+//		tinyMCE.get('excerpt').setContent(shortcodes);
+//		}
 		if (tinyMCE.get('content')) {
 		tinyMCE.get('content').setContent(shortcodes);
 		}

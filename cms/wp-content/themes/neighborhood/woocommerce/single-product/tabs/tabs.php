@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 function sf_add_desc_tab($tabs = array()) {
 	global $post;
-	$product_description = get_post_meta($post->ID, 'sf_product_description', true);
+	$product_description = sf_get_post_meta($post->ID, 'sf_product_description', true);
 	if ($product_description != "") {
 		$tabs['description'] = array(
 			'title'    => __( 'Description', 'woocommerce' ),
@@ -32,7 +32,16 @@ add_filter('woocommerce_product_tabs', 'sf_add_desc_tab', 0);
  
 $tabs = apply_filters( 'woocommerce_product_tabs', array() );
 
-if ( ! empty( $tabs ) ) : ?>
+$options = get_option('sf_neighborhood_options');
+if (isset($options['enable_default_tabs'])) {
+	$enable_default_tabs = $options['enable_default_tabs'];
+} else {
+	$enable_default_tabs = false;
+}
+
+if ( ! empty( $tabs ) ) : ?>	
+	
+	<?php if ($enable_default_tabs) { ?>
 
 	<div class="woocommerce-tabs">
 		<ul class="tabs">
@@ -52,5 +61,29 @@ if ( ! empty( $tabs ) ) : ?>
 
 		<?php endforeach; ?>
 	</div>
+	
+	<?php } else { ?>
+			
+	<div class="accordion" id="product-accordion">
+					
+		<?php foreach ( $tabs as $key => $tab ) : ?>			
+		
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#product-accordion" href="#product-<?php echo $key ?>">
+					<?php echo apply_filters( 'woocommerce_product_' . $key . '_tab_title', $tab['title'], $key ) ?>
+				</a>
+	    	</div>
+	    	<div id="product-<?php echo $key ?>" class="accordion-body collapse">
+	      		<div class="accordion-inner">
+	      			<?php call_user_func( $tab['callback'], $key, $tab ) ?>
+	      		</div>
+	  		</div>
+		</div>
+		<?php endforeach; ?>
+		
+	</div>
+	
+	<?php } ?>
 
 <?php endif; ?>

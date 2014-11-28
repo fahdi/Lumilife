@@ -152,7 +152,7 @@ if (version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0) {
 			
 				<?php woocommerce_cart_totals(); ?>
 				
-				<input type="submit" class="update-cart-button button" name="update_cart" value="<?php _e( 'Update Shopping Bag', 'swiftframework' ); ?>" /> <input type="submit" class="checkout-button button alt" name="proceed" value="<?php _e( 'Proceed to Checkout', 'swiftframework' ); ?>" />
+				<input type="submit" class="update-cart-button button" name="update_cart" value="<?php _e( 'Update shopping bag', 'swiftframework' ); ?>" /> <input type="submit" class="checkout-button button alt" name="proceed" value="<?php _e( 'Proceed to Checkout', 'swiftframework' ); ?>" />
 				
 				<?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
 				
@@ -373,7 +373,7 @@ if (version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0) {
 			
 			<?php woocommerce_cart_totals(); ?>
 			
-			<input type="submit" class="update-cart-button button" name="update_cart" value="<?php _e( 'Update Shopping Bag', 'swiftframework' ); ?>" /> <input type="submit" class="checkout-button button alt" name="proceed" value="<?php _e( 'Proceed to Checkout', 'swiftframework' ); ?>" />
+			<input type="submit" class="update-cart-button button" name="update_cart" value="<?php _e( 'Update shopping bag', 'swiftframework' ); ?>" /> <input type="submit" class="checkout-button button alt" name="proceed" value="<?php _e( 'Proceed to Checkout', 'swiftframework' ); ?>" />
 			
 			<?php do_action('woocommerce_proceed_to_checkout'); ?>
 			

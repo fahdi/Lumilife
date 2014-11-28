@@ -48,7 +48,7 @@ class SwiftPageBuilderShortcode_clients extends SwiftPageBuilderShortcode {
 			
 				$client_image = get_post_thumbnail_id();
 				$client_img_url = wp_get_attachment_url( $client_image, 'full' );
-				$client_link_url = get_post_meta($post->ID, 'sf_client_link', true);
+				$client_link_url = sf_get_post_meta($post->ID, 'sf_client_link', true);
 				    				
 				$items .= '<li class="clearfix client-item">';
 				    				
@@ -106,46 +106,46 @@ class SwiftPageBuilderShortcode_clients extends SwiftPageBuilderShortcode {
 }
 
 SPBMap::map( 'clients', array(
-    "name"		=> __("Clients", "swift_page_builder"),
+    "name"		=> __("Clients", 'swift-framework-admin'),
     "base"		=> "clients",
     "class"		=> "clients",
     "icon"      => "spb-icon-clients",
     "params"	=> array(
     	array(
     	    "type" => "textfield",
-    	    "heading" => __("Widget title", "swift_page_builder"),
+    	    "heading" => __("Widget title", 'swift-framework-admin'),
     	    "param_name" => "title",
     	    "value" => "",
-    	    "description" => __("Heading text. Leave it empty if not needed.", "swift_page_builder")
+    	    "description" => __("Heading text. Leave it empty if not needed.", 'swift-framework-admin')
     	),
         array(
             "type" => "textfield",
             "class" => "",
-            "heading" => __("Number of items", "swift_page_builder"),
+            "heading" => __("Number of items", 'swift-framework-admin'),
             "param_name" => "item_count",
             "value" => "12",
-            "description" => __("The number of clients to show per page. Leave blank to show ALL clients.", "swift_page_builder")
+            "description" => __("The number of clients to show per page. Leave blank to show ALL clients.", 'swift-framework-admin')
         ),
         array(
             "type" => "select-multiple",
-            "heading" => __("Clients category", "swift_page_builder"),
+            "heading" => __("Clients category", 'swift-framework-admin'),
             "param_name" => "category",
             "value" => get_category_list('clients-category'),
-            "description" => __("Choose the category for the client items.", "swift_page_builder")
+            "description" => __("Choose the category for the client items.", 'swift-framework-admin')
         ),
         array(
             "type" => "dropdown",
-            "heading" => __("Pagination", "swift_page_builder"),
+            "heading" => __("Pagination", 'swift-framework-admin'),
             "param_name" => "pagination",
-            "value" => array(__('No', "swift_page_builder") => "no", __('Yes', "swift_page_builder") => "yes"),
-            "description" => __("Show clients pagination.", "swift_page_builder")
+            "value" => array(__('No', 'swift-framework-admin') => "no", __('Yes', 'swift-framework-admin') => "yes"),
+            "description" => __("Show clients pagination.", 'swift-framework-admin')
         ),
         array(
             "type" => "textfield",
-            "heading" => __("Extra class name", "swift_page_builder"),
+            "heading" => __("Extra class name", 'swift-framework-admin'),
             "param_name" => "el_class",
             "value" => "",
-            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "swift_page_builder")
+            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-admin')
         )
     )
 ) );
@@ -175,7 +175,7 @@ class SwiftPageBuilderShortcode_clients_featured extends SwiftPageBuilderShortco
     		
     		global $post, $wp_query;
     		
-    		$sidebar_config = get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
+    		$sidebar_config = sf_get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
     		
     		$sidebars = '';
     		if (($sidebar_config == "left-sidebar") || ($sidebar_config == "right-sidebar")) {
@@ -212,7 +212,7 @@ class SwiftPageBuilderShortcode_clients_featured extends SwiftPageBuilderShortco
 			
 				$client_image = get_post_thumbnail_id();
 				$client_img_url = wp_get_attachment_url( $client_image, 'full' );
-				$client_link_url = get_post_meta($post->ID, 'sf_client_link', true);
+				$client_link_url = sf_get_post_meta($post->ID, 'sf_client_link', true);
 				    				
 				$items .= '<li class="clearfix span2">';
 				    				
@@ -261,45 +261,45 @@ class SwiftPageBuilderShortcode_clients_featured extends SwiftPageBuilderShortco
 }
 
 SPBMap::map( 'clients_featured', array(
-    "name"		=> __("Clients (Featured)", "swift_page_builder"),
+    "name"		=> __("Clients (Featured)", 'swift-framework-admin'),
     "base"		=> "clients_featured",
     "class"		=> "clients_featured",
     "icon"      => "spb-icon-clients-featured",
     "params"	=> array(
     	array(
     	    "type" => "textfield",
-    	    "heading" => __("Widget title", "swift_page_builder"),
+    	    "heading" => __("Widget title", 'swift-framework-admin'),
     	    "param_name" => "title",
     	    "value" => "",
-    	    "description" => __("Heading text. Leave it empty if not needed.", "swift_page_builder")
+    	    "description" => __("Heading text. Leave it empty if not needed.", 'swift-framework-admin')
     	),
         array(
             "type" => "select-multiple",
-            "heading" => __("Clients category", "swift_page_builder"),
+            "heading" => __("Clients category", 'swift-framework-admin'),
             "param_name" => "category",
             "value" => get_category_list('clients-category'),
-            "description" => __("Choose the category for the client items.", "swift_page_builder")
+            "description" => __("Choose the category for the client items.", 'swift-framework-admin')
         ),
         array(
             "type" => "dropdown",
-            "heading" => __("Show alt background", "swift_page_builder"),
+            "heading" => __("Show alt background", 'swift-framework-admin'),
             "param_name" => "alt_background",
-            "value" => array(__("None", "swift_page_builder") => "none", __("Alt 1", "swift_page_builder") => "alt-one", __("Alt 2", "swift_page_builder") => "alt-two", __("Alt 3", "swift_page_builder") => "alt-three", __("Alt 4", "swift_page_builder") => "alt-four", __("Alt 5", "swift_page_builder") => "alt-five", __("Alt 6", "swift_page_builder") => "alt-six", __("Alt 7", "swift_page_builder") => "alt-seven", __("Alt 8", "swift_page_builder") => "alt-eight", __("Alt 9", "swift_page_builder") => "alt-nine", __("Alt 10", "swift_page_builder") => "alt-ten"),
-            "description" => __("Show an alternative background around the asset. These can all be set in Neighborhood Options > Asset Background Options. NOTE: This is only available on a page with the no sidebar setup.", "swift_page_builder")
+            "value" => array(__("None", 'swift-framework-admin') => "none", __("Alt 1", 'swift-framework-admin') => "alt-one", __("Alt 2", 'swift-framework-admin') => "alt-two", __("Alt 3", 'swift-framework-admin') => "alt-three", __("Alt 4", 'swift-framework-admin') => "alt-four", __("Alt 5", 'swift-framework-admin') => "alt-five", __("Alt 6", 'swift-framework-admin') => "alt-six", __("Alt 7", 'swift-framework-admin') => "alt-seven", __("Alt 8", 'swift-framework-admin') => "alt-eight", __("Alt 9", 'swift-framework-admin') => "alt-nine", __("Alt 10", 'swift-framework-admin') => "alt-ten"),
+            "description" => __("Show an alternative background around the asset. These can all be set in Neighborhood Options > Asset Background Options. NOTE: This is only available on a page with the no sidebar setup.", 'swift-framework-admin')
         ),
         array(
             "type" => "altbg_preview",
-            "heading" => __("Alt Background Preview", "swift_page_builder"),
+            "heading" => __("Alt Background Preview", 'swift-framework-admin'),
             "param_name" => "altbg_preview",
             "value" => "",
-            "description" => __("", "swift_page_builder")
+            "description" => __("", 'swift-framework-admin')
         ),
         array(
             "type" => "textfield",
-            "heading" => __("Extra class name", "swift_page_builder"),
+            "heading" => __("Extra class name", 'swift-framework-admin'),
             "param_name" => "el_class",
             "value" => "",
-            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "swift_page_builder")
+            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-admin')
         )
     )
 ) );

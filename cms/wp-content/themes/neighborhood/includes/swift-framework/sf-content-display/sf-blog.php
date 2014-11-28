@@ -38,14 +38,31 @@
 		$paged = 1;
 		}
 		    		
-		$blog_args = array(
-			'post_type' => 'post',
-			'post_status' => 'publish',
-			'paged' => $paged,
-			'category_name' => $category_slug,
-			'posts_per_page' => $item_count,
-			'cat' => '"'.$exclude_categories.'"'
+		$blog_args = array();
+		$category_array = explode(",", $category_slug);
+		if (isset($category_array) && $category_array[0] != "") {
+			$blog_args = array(
+				'post_type' => 'post',
+				'post_status' => 'publish',
+				'paged' => $paged,
+				'posts_per_page' => $item_count,
+				'tax_query' => array(
+							array(
+								'taxonomy' => 'category',
+								'field' => 'slug',
+								'terms' => $category_array
+							)
+						)
+				
 			);
+		} else {
+			$blog_args = array(
+				'post_type' => 'post',
+				'post_status' => 'publish',
+				'paged' => $paged,
+				'posts_per_page' => $item_count,
+			);
+		}
 			    		
 		$blog_items = new WP_Query( $blog_args );
 		

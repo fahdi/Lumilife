@@ -27,7 +27,7 @@
 	    protected $selected_objects_list = '';
 	    public function __construct() {
 	        parent::__construct();
-	        $this->title = __('Image Gallery', 'swift_page_builder');
+	        $this->title = __('Image Gallery', 'swift-framework-admin');
 	        $this->pageLimit = 10;
 	        $this->selected_ids = $this->get('paged') ? Array() : preg_split('/\,/', preg_replace('/\s\t/', '', $this->get('selected_ids')));
 	        /* show tab only if $_GET['tab'] == 'spb_images' */
@@ -116,7 +116,7 @@
 	        ));
 	
 	        if ( $page_links )
-	            echo '<br/><div class="tablenav"><div id="spb_spinner" style="display: none;"> '.__("Loading, please wait...", "swift_page_builder").'</div><div class="tablenav-pages">' . $page_links . '</div></div>';
+	            echo '<br/><div class="tablenav"><div id="spb_spinner" style="display: none;"> '.__("Loading, please wait...", 'swift-framework-admin').'</div><div class="tablenav-pages">' . $page_links . '</div></div>';
 	
 	    }
 	
@@ -151,7 +151,7 @@
 	        <div class="log"></div>
 	        <div class="spb_media_tab row-fluid">
 	            <div class="<?php echo (int)$this->get('single_image')==0 ? 'span6' : 'span12' ?>">
-	            <h2 class="media-title"><?php _e('Click image from media library or drag it to the "Selected images" area', 'swift_page_builder'); ?></h2>
+	            <h2 class="media-title"><?php _e('Click image from media library or drag it to the "Selected images" area', 'swift-framework-admin'); ?></h2>
 	            <div id="spb_media_list">
 	                <?php echo $this->getContentList(); ?>
 	            </div>
@@ -163,7 +163,7 @@
 	                <input type="hidden" name="post_id" id="post_id" value="<?php echo (int) $post_id; ?>" />
 	                <?php wp_nonce_field('media-form'); ?>
 	
-	                <h2 class="media-title"><?php _e('or add images from your computer.', 'swift_page_builder'); ?></h2>
+	                <h2 class="media-title"><?php _e('or add images from your computer.', 'swift-framework-admin'); ?></h2>
 	
 	                <?php media_upload_form( $this->errors ); ?>
 	
@@ -222,8 +222,8 @@
 				</script>
 	            <?php if($this->get('single_image')!= 'true'): ?>
 	            <div class="span6 selected_items">
-	                <h2><?php _e('Selected images', 'swift_page_builder') ?></h2>
-	                <p><?php _e('Use your mouse to drag images around to place them in the desired order.', 'swift_page_builder') ?></p>
+	                <h2><?php _e('Selected images', 'swift-framework-admin') ?></h2>
+	                <p><?php _e('Use your mouse to drag images around to place them in the desired order.', 'swift-framework-admin') ?></p>
 	                <div class="border">
 	                    <ul id="spb-media-items-list">
 	                       <?php echo $this->selected_objects_list; ?>
@@ -231,7 +231,7 @@
 	                    <div style="clear:both;"></div>
 	                </div>
 	                <br/>
-	                <button class="button-primary" id="vpb_send_selected_files"><?php _e('Update files list', 'swift_page_builder') ?></button>
+	                <button class="button-primary" id="vpb_send_selected_files"><?php _e('Update files list', 'swift-framework-admin') ?></button>
 	            </div>
 	            <script type="text/javascript">
 	                jQuery(document).ready(function($){

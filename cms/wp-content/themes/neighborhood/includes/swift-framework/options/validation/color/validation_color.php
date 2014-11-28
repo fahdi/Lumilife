@@ -11,7 +11,7 @@ class Redux_Validation_color extends Redux_Options {
 	function __construct($field, $value, $current) {
 		parent::__construct();
 		$this->field = $field;
-		$this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('This field must be a valid color value.', Redux_TEXT_DOMAIN);
+		$this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('This field must be a valid color value.', "swiftframework");
 		$this->value = $value;
 		$this->current = $current;
 		$this->validate();

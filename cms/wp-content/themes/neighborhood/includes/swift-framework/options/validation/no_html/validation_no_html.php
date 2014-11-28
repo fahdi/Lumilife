@@ -11,7 +11,7 @@ class Redux_Validation_no_html extends Redux_Options{
 	function __construct($field, $value, $current) {
 		parent::__construct();
 		$this->field = $field;
-		$this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('You must not enter any HTML in this field, all HTML tags have been removed.', Redux_TEXT_DOMAIN);
+		$this->field['msg'] = (isset($this->field['msg'])) ? $this->field['msg'] : __('You must not enter any HTML in this field, all HTML tags have been removed.', "swiftframework");
 		$this->value = $value;
 		$this->current = $current;
 		$this->validate();

@@ -1,15 +1,19 @@
 <?php get_header(); ?>
 	
 <?php
+	
+	global $sidebars;
+	$sidebars = 'no-sidebars';
+	
 	$options = get_option('sf_neighborhood_options');
 	$default_show_page_heading = $options['default_show_page_heading'];
 	$default_page_heading_bg_alt = $options['default_page_heading_bg_alt'];
 	
-	$portfolio_data = get_post_meta( $post->ID, 'portfolio', true );
+	$portfolio_data = sf_get_post_meta( $post->ID, 'portfolio', true );
 	$current_item_id = $post->ID;	
-	$show_page_title = get_post_meta($post->ID, 'sf_page_title', true);
-	$page_title_one = get_post_meta($post->ID, 'sf_page_title_one', true);
-	$page_title_bg = get_post_meta($post->ID, 'sf_page_title_bg', true);
+	$show_page_title = sf_get_post_meta($post->ID, 'sf_page_title', true);
+	$page_title_one = sf_get_post_meta($post->ID, 'sf_page_title_one', true);
+	$page_title_bg = sf_get_post_meta($post->ID, 'sf_page_title_bg', true);
 	
 	if ($show_page_title == "") {
 		$show_page_title = $default_show_page_heading;
@@ -44,21 +48,21 @@
 				
 				$media_type = $media_image = $media_video = $media_gallery = '';
 				 
-				$use_thumb_content = get_post_meta($post->ID, 'sf_thumbnail_content_main_detail', true);
-				$hide_details = get_post_meta($post->ID, 'sf_hide_details', true);
+				$use_thumb_content = sf_get_post_meta($post->ID, 'sf_thumbnail_content_main_detail', true);
+				$hide_details = sf_get_post_meta($post->ID, 'sf_hide_details', true);
 				
 				if ($use_thumb_content) {
-				$media_type = get_post_meta($post->ID, 'sf_thumbnail_type', true);
+				$media_type = sf_get_post_meta($post->ID, 'sf_thumbnail_type', true);
 				$media_image = rwmb_meta('sf_thumbnail_image', 'type=image&size=full');
-				$media_video = get_post_meta($post->ID, 'sf_thumbnail_video_url', true);
+				$media_video = sf_get_post_meta($post->ID, 'sf_thumbnail_video_url', true);
 				$media_gallery = rwmb_meta( 'sf_thumbnail_gallery', 'type=image&size=thumb-image-onecol' );
 				} else {
-				$media_type = get_post_meta($post->ID, 'sf_detail_type', true);
+				$media_type = sf_get_post_meta($post->ID, 'sf_detail_type', true);
 				$media_image = rwmb_meta('sf_detail_image', 'type=image&size=full');
-				$media_video = get_post_meta($post->ID, 'sf_detail_video_url', true);
+				$media_video = sf_get_post_meta($post->ID, 'sf_detail_video_url', true);
 				$media_gallery = rwmb_meta( 'sf_detail_gallery', 'type=image&size=thumb-image-onecol' );
-				$media_slider = get_post_meta($post->ID, 'sf_detail_rev_slider_alias', true);
-				$custom_media = get_post_meta($post->ID, 'sf_custom_media', true);
+				$media_slider = sf_get_post_meta($post->ID, 'sf_detail_rev_slider_alias', true);
+				$custom_media = sf_get_post_meta($post->ID, 'sf_custom_media', true);
 				}
 				
 				foreach ($media_image as $detail_image) {
@@ -130,11 +134,11 @@
 			<section class="article-body-wrap">
 				
 				<?php 
-					$item_client = get_post_meta($post->ID, 'sf_portfolio_client', true);
+					$item_client = sf_get_post_meta($post->ID, 'sf_portfolio_client', true);
 					$item_date = get_the_date();
 					$item_categories = get_the_term_list($post->ID, 'portfolio-category', '', ', ');
-					$item_link = get_post_meta($post->ID, 'sf_portfolio_external_link', true);
-					$show_social = get_post_meta($post->ID, 'sf_social_sharing', true);
+					$item_link = sf_get_post_meta($post->ID, 'sf_portfolio_external_link', true);
+					$show_social = sf_get_post_meta($post->ID, 'sf_social_sharing', true);
 				?>
 				
 				<?php if (!$hide_details) { ?>

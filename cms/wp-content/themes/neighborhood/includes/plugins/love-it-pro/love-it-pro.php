@@ -30,7 +30,7 @@ $lip_options = get_option('lip_settings');
 /***************************
 * language files
 ***************************/
-load_plugin_textdomain( 'love_it', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+load_plugin_textdomain( 'swiftframework', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 /***************************
 * includes

@@ -1,86 +1,98 @@
 <?php
 
-/* ==================================================
+    /* ==================================================
 
-Portfolio Post Type Functions
+    Portfolio Post Type Functions
 
-================================================== */
+    ================================================== */
 
-$args = array(
-    "label" 						=> __("Portfolio Categories", "swiftframework"), 
-    "singular_label" 				=> __("Portfolio Category", "swiftframework"), 
-    'public'                        => true,
-    'hierarchical'                  => true,
-    'show_ui'                       => true,
-    'show_in_nav_menus'             => false,
-    'args'                          => array( 'orderby' => 'term_order' ),
-    'rewrite'                       => false,
-    'query_var'                     => true
-);
 
-register_taxonomy( 'portfolio-category', 'portfolio', $args );
+    /* PORTFOLIO CATEGORY
+    ================================================== */
+    function sf_portfolio_category_register() {
 
-    
-add_action('init', 'portfolio_register');  
-  
-function portfolio_register() {  
+        $portfolio_permalinks = get_option( 'sf_portfolio_permalinks' );
 
-    $labels = array(
-        'name' => _x('Portfolio', 'post type general name', "swiftframework"),
-        'singular_name' => _x('Portfolio Item', 'post type singular name', "swiftframework"),
-        'add_new' => _x('Add New', 'portfolio item', "swiftframework"),
-        'add_new_item' => __('Add New Portfolio Item', "swiftframework"),
-        'edit_item' => __('Edit Portfolio Item', "swiftframework"),
-        'new_item' => __('New Portfolio Item', "swiftframework"),
-        'view_item' => __('View Portfolio Item', "swiftframework"),
-        'search_items' => __('Search Portfolio', "swiftframework"),
-        'not_found' =>  __('No portfolio items have been added yet', "swiftframework"),
-        'not_found_in_trash' => __('Nothing found in Trash', "swiftframework"),
-        'parent_item_colon' => ''
-    );
+        $args = array(
+            "label"             => __( 'Portfolio Categories', "swift-framework-admin" ),
+            "singular_label"    => __( 'Portfolio Category', "swift-framework-admin" ),
+            'public'            => true,
+            'hierarchical'      => true,
+            'show_ui'           => true,
+            'show_in_nav_menus' => false,
+            'args'              => array( 'orderby' => 'term_order' ),
+            'rewrite'           => array(
+                'slug'       => empty( $portfolio_permalinks['category_base'] ) ? __( 'portfolio-category', 'swift-framework-admin' ) : $portfolio_permalinks['category_base'],
+                'with_front' => false
+            ),
+            'query_var'         => true
+        );
+        register_taxonomy( 'portfolio-category', 'portfolio', $args );
+    }
 
-    $args = array(  
-        'labels' => $labels,  
-        'public' => true,  
-        'show_ui' => true,
-        'show_in_menu' => true,
-        'show_in_nav_menus' => false,
-        'menu_icon' => 'dashicons-format-image',
-        'rewrite' => false,
-        'supports' => array('title', 'editor', 'thumbnail'),
-        'has_archive' => true,
-        'taxonomies' => array('portfolio-category')
-       );  
-  
-    register_post_type( 'portfolio' , $args );  
-}  
+    add_action( 'init', 'sf_portfolio_category_register' );
 
-add_filter("manage_edit-portfolio_columns", "portfolio_edit_columns");   
-  
-function portfolio_edit_columns($columns){  
-        $columns = array(  
-            "cb" => "<input type=\"checkbox\" />",  
-            "title" => "Portfolio Item",
-            "description" => "Description",
-            "portfolio-category" => "Categories"  
-        );  
-  
-        return $columns;  
-}  
 
-add_action("manage_posts_custom_column",  "portfolio_custom_columns"); 
-  
-function portfolio_custom_columns($column){  
-        global $post;  
-        switch ($column)  
-        {  
-            case "description":  
-                the_excerpt();  
-                break;
-            case "portfolio-category":
-                echo get_the_term_list($post->ID, 'portfolio-category', '', ', ','');
-                break;
-        }  
-}  
+    /* PORTFOLIO POST TYPE
+    ================================================== */
+    function sf_portfolio_register() {
+
+        $portfolio_permalinks = get_option( 'sf_portfolio_permalinks' );
+        $portfolio_permalink  = empty( $portfolio_permalinks['portfolio_base'] ) ? __( 'portfolio', 'swift-framework-admin' ) : $portfolio_permalinks['portfolio_base'];
+
+        $labels = array(
+            'name'               => __( 'Portfolio', "swift-framework-admin" ),
+            'singular_name'      => __( 'Portfolio Item', "swift-framework-admin" ),
+            'add_new'            => __( 'Add New', 'portfolio item', "swift-framework-admin" ),
+            'add_new_item'       => __( 'Add New Portfolio Item', "swift-framework-admin" ),
+            'edit_item'          => __( 'Edit Portfolio Item', "swift-framework-admin" ),
+            'new_item'           => __( 'New Portfolio Item', "swift-framework-admin" ),
+            'view_item'          => __( 'View Portfolio Item', "swift-framework-admin" ),
+            'search_items'       => __( 'Search Portfolio', "swift-framework-admin" ),
+            'not_found'          => __( 'No portfolio items have been added yet', "swift-framework-admin" ),
+            'not_found_in_trash' => __( 'Nothing found in Trash', "swift-framework-admin" ),
+            'parent_item_colon'  => ''
+        );
+
+        $args = array(
+            'labels'            => $labels,
+            'public'            => true,
+            'show_ui'           => true,
+            'show_in_menu'      => true,
+            'show_in_nav_menus' => true,
+            'menu_icon'         => 'dashicons-format-image',
+            'hierarchical'      => false,
+            'rewrite'           => $portfolio_permalink != "portfolio" ? array(
+                'slug'       => untrailingslashit( $portfolio_permalink ),
+                'with_front' => false,
+                'feeds'      => true
+            )
+                : false,
+            'supports'          => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'excerpt' ),
+            'has_archive'       => true,
+            'taxonomies'        => array( 'portfolio-category' )
+        );
+
+        register_post_type( 'portfolio', $args );
+    }
+
+    add_action( 'init', 'sf_portfolio_register' );
+
+
+    /* PORTFOLIO POST TYPE COLUMNS
+    ================================================== */
+    function sf_portfolio_edit_columns( $columns ) {
+        $columns = array(
+            "cb"                 => "<input type=\"checkbox\" />",
+            "thumbnail"          => "",
+            "title"              => __( "Portfolio Item", "swift-framework-admin" ),
+            "description"        => __( "Description", "swift-framework-admin" ),
+            "portfolio-category" => __( "Categories", "swift-framework-admin" )
+        );
+
+        return $columns;
+    }
+
+    add_filter( "manage_edit-portfolio_columns", "sf_portfolio_edit_columns" );
 
 ?>

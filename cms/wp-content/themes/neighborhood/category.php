@@ -42,7 +42,7 @@
 		} else if ($sidebar_config == "right-sidebar" || $sidebar_config == "left-sidebar") {
 		$item_class = "span8";
 		} else {
-		$item_class = "span10";
+		$item_class = "span12";
 		}
 	}
 	

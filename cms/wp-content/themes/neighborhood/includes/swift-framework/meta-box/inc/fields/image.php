@@ -59,7 +59,7 @@ if ( ! class_exists( 'RWMB_Image_Field' ) )
 				add_post_meta( $post_id, $field_id, $item, false );
 			}
 
-			RW_Meta_Box::ajax_response( __( 'Order saved', 'rwmb' ), 'success' );
+			RW_Meta_Box::ajax_response( __( 'Order saved', 'swift-framework-admin' ), 'success' );
 		}
 
 		/**
@@ -73,8 +73,8 @@ if ( ! class_exists( 'RWMB_Image_Field' ) )
 		 */
 		static function html( $html, $meta, $field )
 		{
-			$i18n_title = apply_filters( 'rwmb_image_upload_string', _x( 'Upload Images', 'image upload', 'rwmb' ), $field );
-			$i18n_more  = apply_filters( 'rwmb_image_add_string', _x( '+ Add new image', 'image upload', 'rwmb' ), $field );
+			$i18n_title = apply_filters( 'rwmb_image_upload_string', _x( 'Upload Images', 'image upload', 'swift-framework-admin' ), $field );
+			$i18n_more  = apply_filters( 'rwmb_image_add_string', _x( '+ Add new image', 'image upload', 'swift-framework-admin' ), $field );
 
 			// Uploaded images
 			$html .= self::get_uploaded_images( $meta, $field );
@@ -139,8 +139,8 @@ if ( ! class_exists( 'RWMB_Image_Field' ) )
 		 */
 		static function img_html( $image )
 		{
-			$i18n_delete = apply_filters( 'rwmb_image_delete_string', _x( 'Delete', 'image upload', 'rwmb' ) );
-			$i18n_edit   = apply_filters( 'rwmb_image_edit_string', _x( 'Edit', 'image upload', 'rwmb' ) );
+			$i18n_delete = apply_filters( 'rwmb_image_delete_string', _x( 'Delete', 'image upload', 'swift-framework-admin' ) );
+			$i18n_edit   = apply_filters( 'rwmb_image_edit_string', _x( 'Edit', 'image upload', 'swift-framework-admin' ) );
 			$li = '
 				<li id="item_%s">
 					<img src="%s" />
